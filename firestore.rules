@@ -1,0 +1,43 @@
+rules_version = '2';
+// N(app)ra Gépek — Firestore biztonsági szabályok
+// Szerepek: pending (aktiválásra vár) · member (beíró) · commander (parancsnok) · tech (technikus) · admin
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function userDoc() { return /databases/$(database)/documents/users/$(request.auth.uid); }
+    function role() { return signedIn() && exists(userDoc()) ? get(userDoc()).data.role : 'none'; }
+    function isMember() { return role() in ['member', 'commander', 'tech', 'admin']; }
+    function isTech() { return role() in ['tech', 'admin']; }
+    function isAdmin() { return role() == 'admin'; }
+
+    // Felhasználók: mindenki a saját profilját hozza létre "pending" szereppel,
+    // a nevét később módosíthatja, a szerepét csak admin állíthatja.
+    match /users/{uid} {
+      allow read: if isMember() || (signedIn() && request.auth.uid == uid);
+      allow create: if signedIn() && request.auth.uid == uid
+                    && request.resource.data.role == 'pending';
+      allow update: if isAdmin()
+                    || (signedIn() && request.auth.uid == uid
+                        && request.resource.data.role == resource.data.role);
+      allow delete: if isAdmin();
+    }
+
+    // Kérelmek: minden aktív tag beküldhet a saját nevében, döntést csak technikus hoz.
+    match /requests/{id} {
+      allow read: if isMember();
+      allow create: if isMember()
+                    && request.resource.data.by == request.auth.uid
+                    && request.resource.data.status == 'pending';
+      allow update: if isTech();
+      allow delete: if isAdmin();
+    }
+
+    // Törzsadatok: mindenki olvassa, csak technikus (és admin) írja.
+    match /{col}/{id} {
+      allow read: if isMember() && !(col in ['users', 'requests']);
+      allow write: if isTech() && col in ['vehicles', 'readings', 'fuel', 'trips', 'faults',
+                                          'drivers', 'events', 'moves', 'photos'];
+    }
+  }
+}
