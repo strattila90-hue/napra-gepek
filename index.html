@@ -346,7 +346,8 @@ nav.bottom .mlic .pp{transition:fill .25s}nav.bottom button.mlon .mlic .pp{fill:
 #harc .dwrap{position:relative;flex:1;display:flex}#harc .dwrap canvas{flex:1;width:100%;height:100%}
 #harc .dinfo{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;text-align:left;font-size:12px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:8px 10px;margin:4px 0 10px}#harc .dinfo b{grid-column:1/-1;color:#E8C547;font-size:12.5px;margin-bottom:2px}#harc .dinfo span{opacity:.7}#harc .dinfo i{font-style:normal;font-weight:800}
 #harc #dAmmo{white-space:nowrap;padding:3px 8px;border-radius:8px;background:rgba(0,0,0,.4)}#harc #dAmmo.rl{color:#ffd166;animation:hblink .5s steps(2) infinite}@keyframes hblink{50%{opacity:.45}}
-#harc .dstat{position:absolute;left:12px;top:34px;padding:4px 9px;border-radius:8px;font-size:12px;font-weight:800;background:rgba(0,0,0,.55);pointer-events:none;white-space:nowrap}#harc .dstat.rep{color:#ffd166}#harc .dstat.flt{color:#ff9f43;animation:hblink .6s steps(2) infinite}#harc .dstat.ovr{color:#ff5a4e}
+#harc .dspd{position:absolute;right:12px;top:34px;display:flex;gap:6px;pointer-events:none;font-size:12px;font-weight:800;text-shadow:0 1px 2px #000}#harc .dspd span{background:rgba(0,0,0,.55);padding:4px 8px;border-radius:8px;white-space:nowrap}#harc .dspd .kmh{font-size:15px;color:#fff}#harc .dspd .hot{color:#ff6b5e}#harc .dspd .fan{color:#7fd8ff}
+#harc .dstat{position:absolute;left:12px;top:64px;padding:4px 9px;border-radius:8px;font-size:12px;font-weight:800;background:rgba(0,0,0,.55);pointer-events:none;white-space:nowrap}#harc .dstat.rep{color:#ffd166}#harc .dstat.flt{color:#ff9f43;animation:hblink .6s steps(2) infinite}#harc .dstat.ovr{color:#ff5a4e}
 #harc .dbtn{position:absolute;bottom:calc(26px + env(safe-area-inset-bottom,0px));width:76px;height:76px;border-radius:18px;border:0;font:inherit;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;touch-action:none;user-select:none;-webkit-user-select:none;overflow:hidden;box-shadow:0 6px 16px rgba(0,0,0,.45),inset 0 -4px 0 rgba(0,0,0,.3)}
 #harc .dbtn b{font-size:11.5px;line-height:1.05;text-align:center;letter-spacing:.02em;position:relative;z-index:2}#harc .dbtn small{font-size:8.5px;opacity:.8;position:relative;z-index:2}
 #harc .dbtn i{position:absolute;inset:0;z-index:3;pointer-events:none}#harc .dbtn em{position:absolute;left:0;right:0;bottom:4px;font-style:normal;font-size:12px;font-weight:900;z-index:4;text-align:center;text-shadow:0 1px 2px #000}
@@ -365,7 +366,7 @@ nav.bottom .mlic .pp{transition:fill .25s}nav.bottom button.mlon .mlic .pp{fill:
 #harc .dpedal small{font-family:var(--f-body,sans-serif);font-size:10px;letter-spacing:0;opacity:.85}
 #harc .dpedal.gas{right:16px;background:radial-gradient(circle at 40% 35%,#3ccf6a,#1a7a37)}#harc .dpedal.brake{left:16px;background:radial-gradient(circle at 40% 35%,#ff6b5e,#9b1a12)}
 #harc .dpedal.on{transform:scale(.93);box-shadow:0 3px 10px rgba(0,0,0,.45),inset 0 4px 0 rgba(0,0,0,.25)}
-#harc .dhint{position:absolute;left:50%;top:66px;transform:translateX(-50%);background:rgba(0,0,0,.5);padding:6px 12px;border-radius:12px;font-size:13px;font-weight:700;pointer-events:none}
+#harc .dhint{position:absolute;left:50%;top:96px;transform:translateX(-50%);background:rgba(0,0,0,.5);padding:6px 12px;border-radius:12px;font-size:13px;font-weight:700;pointer-events:none}
 #harcBtn{display:none!important}
 body.nav8 nav.bottom button{font-size:9px;padding-inline:0;letter-spacing:0}body.nav8 nav.bottom svg{width:19px;height:19px}
 nav.bottom .navbear{width:22px;height:22px;border-radius:50%;box-shadow:0 0 0 1.5px #FF5A4E}
@@ -643,7 +644,7 @@ const BEAR=`<g>
  <g style="fill:var(--hero-fg)"><path d="M40 63l3 7 3-7zM54 63l3 7 3-7z"/><ellipse cx="50" cy="57" rx="6" ry="4"/></g>
 </g>`;
 const LOGO_FULL=document.getElementById('splashLogo')?.src||'';
-const APP_VER='2.6.0',APP_DATE='2026.10.09.';document.getElementById('spv').textContent='v'+APP_VER;
+const APP_VER='2.7.0',APP_DATE='2026.10.09.';document.getElementById('spv').textContent='v'+APP_VER;
 
 /* ===== típusok és sziluettek (oldalnézet, jobbra néz) ===== */
 const SIL={
@@ -1214,7 +1215,7 @@ function drGround(x){const t=Math.max(0,Math.min(1,(x-200)/900));const sm=t*t*(3
 function drBest(){try{return Number(localStorage.getItem('medve-drone-best')||0)}catch(e){return 0}}
 function droneOpen(){const el=$('#harc');el.hidden=false;document.body.classList.add('harcon');
   el.innerHTML=`<div class="hbar"><div class="htitle">Drone<b>Run</b></div><div class="hstat"><span>Táv <b id="dDist">0</b> m</span><span>Drón <b id="dKills">0</b></span><span>Rekord <b id="dBest">${drBest()}</b></span></div><button class="hx" id="dClose" aria-label="Bezárás">✕</button></div>
-   <div class="dwrap"><canvas id="dCv"></canvas><div class="dhud"><div class="dhp"><i id="dHp"></i></div><span id="dAmmo">FN MAG 120</span></div>
+   <div class="dwrap"><canvas id="dCv"></canvas><div class="dhud"><div class="dhp"><i id="dHp"></i></div><span id="dAmmo">FN MAG 120</span></div><div class="dspd" id="dSpd"></div>
    <div class="dstat" id="dStat" hidden></div><button class="dbtn dsmoke" id="dSmoke"><b>KÖD</b><small>76 mm gránátvető</small><i></i><em></em></button><button class="dbtn dvesz" id="dVesz"><span class="sw"><span class="lid"></span><span class="seal"></span></span><b>VÉSZ ÁTHIDALÓ</b><i></i><em></em></button>
    <button class="dpedal brake" id="dBrake">FÉK<small>hátra</small></button><button class="dpedal gas" id="dGas">GÁZ</button>
    <div class="dhint" id="dHint">Érintsd az eget a géppuska tüzéhez!</div></div>
@@ -1236,46 +1237,63 @@ function droneSetup(){const cv=$('#dCv');const dpr=Math.min(2,devicePixelRatio||
   DR.key=e=>{const d=e.type==='keydown'?1:0;if(e.key==='ArrowRight'||e.key==='d')DR.gas=d;if(e.key==='ArrowLeft'||e.key==='a')DR.brake=d;if(e.key===' '&&d)DR.aim={sx:DR.W*.7,sy:DR.H*.25};if(e.key===' '&&!d)DR.aim=null};
   addEventListener('keydown',DR.key);addEventListener('keyup',DR.key);
   drReset();DR.last=performance.now();DR.raf=requestAnimationFrame(drLoop)}
-function drReset(){Object.assign(DR,{t:{x:120,y:drGround(120)-40,a:0,vx:0,vy:0,w:0,dist:0,trk:0},wheels:D_WHEELS.map(w=>({...w,c:0,cx:0,cy:0})),hp:100,kills:0,ammo:200,res:1800,reload:0,fireT:0,bullets:[],cas:[],sa:[],saT:3,mines:[],nextMine:900,trk0:0,trkDone:0,lostTrk:null,smoke:0,smokeCd:0,sm:[],ovr:0,ovrCd:0,fault:null,faultT:18+Math.random()*12,repT:0,drones:[],grenades:[],fx:[],flipT:0,run:false,dead:false,spawnT:2.5,camX:0,camY:0,maxD:1,bgx:[],trc:[],bgT:.6,dying:null,shake:0,flash:0})}
+function drReset(){Object.assign(DR,{t:{x:120,y:drGround(120)-40,a:0,vx:0,vy:0,w:0,dist:0,trk:0},wheels:D_WHEELS.map(w=>({...w,c:0,cx:0,cy:0})),hp:100,kills:0,ammo:200,res:1800,reload:0,fireT:0,bullets:[],cas:[],sa:[],saT:3,mines:[],nextMine:900,trk0:0,trkDone:0,rpm:650,temp:82,fan:0,lostTrk:null,smoke:0,smokeCd:0,sm:[],ovr:0,ovrCd:0,fault:null,faultT:18+Math.random()*12,repT:0,drones:[],grenades:[],fx:[],flipT:0,run:false,dead:false,spawnT:2.5,camX:0,camY:0,maxD:1,bgx:[],trc:[],bgT:.6,dying:null,shake:0,flash:0})}
 function droneStart(){$('#dStart').hidden=true;$('#dOver').hidden=true;drReset();DR.run=true;DR.last=performance.now();drSoundStart();sndDrum();musStart()}
 /* hang */
-/* MTU MT 881 V8 dízel – szintetizált motorhang */
-function drSoundStart(){if(!SOUND||!ac())return;const a=AC;
-  const out=a.createGain();out.gain.value=0;
-  const shp=a.createWaveShaper();const cur=new Float32Array(1024);for(let i=0;i<1024;i++){const x=i/512-1;cur[i]=Math.tanh(x*2.6)}shp.curve=cur;
-  const lp=a.createBiquadFilter();lp.type='lowpass';lp.frequency.value=380;lp.Q.value=.9;
-  const body=a.createBiquadFilter();body.type='peaking';body.frequency.value=90;body.gain.value=9;body.Q.value=1.1;
-  shp.connect(body).connect(lp).connect(out).connect(MASTER);
-  const pre=a.createGain();pre.gain.value=.55;pre.connect(shp);
-  // égésütemek: V8 → 4 gyújtás / fordulat
-  const f1=a.createOscillator();f1.type='sawtooth';const g1=a.createGain();g1.gain.value=.5;f1.connect(g1).connect(pre);
-  const f2=a.createOscillator();f2.type='square';const g2=a.createGain();g2.gain.value=.38;f2.connect(g2).connect(pre);   // fél-rend: keresztsíkú V8 "dübörgés"
-  const f3=a.createOscillator();f3.type='sine';const g3=a.createGain();g3.gain.value=.7;f3.connect(g3).connect(pre);     // főtengely-mély
-  // égési zaj
-  const nz=a.createBufferSource();nz.buffer=NOISE;nz.loop=true;const bp=a.createBiquadFilter();bp.type='bandpass';bp.frequency.value=260;bp.Q.value=.8;const gn=a.createGain();gn.gain.value=.22;nz.connect(bp).connect(gn).connect(pre);
-  // egyenetlen járás (lope): amplitúdó-moduláció
-  const lfo=a.createOscillator();lfo.type='triangle';const lg=a.createGain();lg.gain.value=.18;lfo.connect(lg).connect(pre.gain);
-  // turbófütty
-  const tb=a.createOscillator();tb.type='sine';const tg=a.createGain();tg.gain.value=0;tb.connect(tg).connect(MASTER);
-  // drón
-  const dg=a.createGain();dg.gain.value=0;const dhp=a.createBiquadFilter();dhp.type='highpass';dhp.frequency.value=120;const dsh=a.createWaveShaper();const dc=new Float32Array(512);for(let i=0;i<512;i++){const x=i/256-1;dc[i]=Math.tanh(x*3)}dsh.curve=dc;
-  const am=a.createGain();am.gain.value=.7;const blade=a.createOscillator();blade.type='square';blade.frequency.value=38;const bg=a.createGain();bg.gain.value=.3;blade.connect(bg).connect(am.gain);
-  am.connect(dsh).connect(dhp).connect(dg).connect(typeof hOut==='function'?hOut():MASTER);
-  const dm=[1,1.017,.986,1.031].map((k,i)=>{const o=a.createOscillator();o.type=i%2?'sawtooth':'square';o.frequency.value=230*k;const g=a.createGain();g.gain.value=.22;o.connect(g).connect(am);return o});
-  const dn=a.createBufferSource();dn.buffer=NOISE;dn.loop=true;const dbp=a.createBiquadFilter();dbp.type='bandpass';dbp.frequency.value=2100;dbp.Q.value=.9;const dng=a.createGain();dng.gain.value=.5;dn.connect(dbp).connect(dng).connect(am);
-  const d=dm[0];[f1,f2,f3,lfo,tb,blade,...dm].forEach(o=>o.start());nz.start();dn.start();
-  DR.snd={out,lp,f1,f2,f3,lfo,tb,tg,bp,gn,d,dg,dm,dbp,blade,nz,rpm:650,all:[f1,f2,f3,lfo,tb,blade,...dm,nz,dn]};out.gain.setTargetAtTime(.32,a.currentTime,.4)}
-function drSoundStop(){if(DR.snd){const S2=DR.snd;try{S2.out.gain.setTargetAtTime(0,AC.currentTime,.08)}catch(e){}setTimeout(()=>{try{S2.all.forEach(o=>o.stop())}catch(e){}},400);DR.snd=null}}
-function drSoundTick(dt,now){const S2=DR.snd;if(!S2)return;const T=DR.t;const sp=Math.abs(T.vx);
-  const target=DR.run?Math.min(DR.ovr>0?2900:2500,650+sp*6.2+(DR.gas?650:0)+(DR.brake&&sp<15?300:0)+(DR.ovr>0?500:0)-(DR.fault&&!(DR.ovr>0)?350:0)):650;S2.rpm+=(target-S2.rpm)*Math.min(1,dt*(target>S2.rpm?2.2:1.4));
-  const fire=S2.rpm/60*4,t=AC.currentTime;S2.f1.frequency.setTargetAtTime(fire,t,.03);S2.f2.frequency.setTargetAtTime(fire/2,t,.03);S2.f3.frequency.setTargetAtTime(fire/4,t,.03);S2.lfo.frequency.setTargetAtTime(S2.rpm/60/2,t,.05);
-  S2.lp.frequency.setTargetAtTime(260+(S2.rpm-650)*.32+(DR.gas?260:0),t,.05);S2.bp.frequency.setTargetAtTime(fire*3.2,t,.05);S2.gn.gain.setTargetAtTime(DR.gas?.34:.18,t,.06);
-  S2.tb.frequency.setTargetAtTime(S2.rpm*2.1,t,.1);S2.tg.gain.setTargetAtTime(DR.run&&DR.gas?.006+(S2.rpm-650)/2500*.01:.0015,t,.15);
-  S2.out.gain.setTargetAtTime(DR.run?.3+(DR.gas?.12:0):.18,t,.12);
+/* MTU MT 881 V8 dízel – öblös, terhelt motorhang + turbó + hűtőventilátor + drónraj */
+function drSoundStart(){if(!SOUND||!ac())return;const a=AC,dst=typeof hOut==='function'?hOut():MASTER;
+  const bq=(type,f,q,g)=>{const b=a.createBiquadFilter();b.type=type;b.frequency.value=f;if(q!=null)b.Q.value=q;if(g!=null)b.gain.value=g;return b};
+  const osc=(type,f)=>{const o=a.createOscillator();o.type=type;o.frequency.value=f;return o};
+  const gn=v=>{const g=a.createGain();g.gain.value=v;return g};
+  const noise=()=>{const n=a.createBufferSource();n.buffer=NOISE;n.loop=true;return n};
+  // --- motor ---
+  const out=gn(0);const shp=a.createWaveShaper();const cur=new Float32Array(2048);for(let i=0;i<2048;i++){const x=i/1024-1;cur[i]=Math.tanh(x*3.6)}shp.curve=cur;shp.oversample='2x';
+  const drive=gn(.6),lp=bq('lowpass',420,1.1),b1=bq('peaking',58,1.2,11),b2=bq('peaking',118,1,7),box=bq('peaking',330,2.2,4);
+  drive.connect(shp).connect(b1).connect(b2).connect(box).connect(lp).connect(out).connect(dst);
+  const f1=osc('sawtooth',43),f2=osc('square',21),f3=osc('sine',43);f1.connect(gn(.5)).connect(drive);f2.connect(gn(.42)).connect(drive);f3.connect(gn(.85)).connect(drive);
+  const nz=noise(),bp=bq('bandpass',260,.8),ng=gn(.2);nz.connect(bp).connect(ng).connect(drive);
+  const lfo=osc('triangle',5),lg=gn(.2);lfo.connect(lg).connect(drive.gain);
+  // --- turbó: fütty + szívás-zúgás ---
+  const tw=osc('sine',1800),tw2=osc('sine',2700),twg=gn(0),tw2g=gn(0);tw.connect(twg).connect(dst);tw2.connect(tw2g).connect(dst);
+  const tn=noise(),tbp=bq('bandpass',1200,3.5),tng=gn(0);tn.connect(tbp).connect(tng).connect(dst);
+  // --- hűtőventilátor ("cirkó") ---
+  const fn=noise(),flp=bq('lowpass',1100,.7),fhp=bq('highpass',140,.7),fg=gn(0);fn.connect(flp).connect(fhp).connect(fg).connect(dst);
+  const fb=osc('sawtooth',20),fbl=bq('lowpass',260,1),fbg=gn(.5);fb.connect(fbl).connect(fbg).connect(fg);
+  const fam=osc('sine',7),famg=gn(.25);fam.connect(famg).connect(fg.gain);
+  // --- drónraj: halkabb, élesebb, sikoltóbb ---
+  const dg=gn(0),dhp=bq('highpass',480,.8),dpk=bq('peaking',2400,2,8),dsh=a.createWaveShaper();const dc=new Float32Array(512);for(let i=0;i<512;i++){const x=i/256-1;dc[i]=Math.tanh(x*5)}dsh.curve=dc;
+  const am=gn(.7),blade=osc('square',70),bg=gn(.35);blade.connect(bg).connect(am.gain);am.connect(dsh).connect(dhp).connect(dpk).connect(dg).connect(dst);
+  const dm=[1,1.019,.983,1.034].map((k,i)=>{const o=osc(i%2?'sawtooth':'square',400*k);o.connect(gn(.2)).connect(am);return o});
+  const scr=osc('sawtooth',900),scg=gn(0);scr.connect(scg).connect(am);
+  const dn=noise(),dbp=bq('bandpass',3600,1.4),dng=gn(.35);dn.connect(dbp).connect(dng).connect(am);
+  const all=[f1,f2,f3,lfo,tw,tw2,fb,fam,blade,scr,...dm];all.forEach(o=>o.start());[nz,tn,fn,dn].forEach(n=>{n.start(0,Math.random()*.5);all.push(n)});
+  DR.snd={out,lp,drive,f1,f2,f3,lfo,ng,bp,tw,tw2,twg,tw2g,tbp,tng,fg,fb,dg,dm,dbp,blade,scr,scg,B:0,pg:0,all};out.gain.setTargetAtTime(.34,a.currentTime,.4)}
+function drSoundStop(){if(DR.snd){const S2=DR.snd;try{S2.out.gain.setTargetAtTime(0,AC.currentTime,.08);[S2.twg,S2.tw2g,S2.tng,S2.fg,S2.dg].forEach(g=>g.gain.setTargetAtTime(0,AC.currentTime,.08))}catch(e){}setTimeout(()=>{try{S2.all.forEach(o=>o.stop())}catch(e){}},400);DR.snd=null}}
+/* motor-modell: fordulat, hőmérséklet, ventilátor (hang nélkül is fut) */
+function drEngine(dt){const T=DR.t,sp=Math.abs(T.vx);const fl=DR.fault&&!(DR.ovr>0);
+  const target=DR.run?Math.min(DR.ovr>0?2900:2500,650+sp*6.2+(DR.gas&&!(DR.trk0>0)?650:0)+(DR.brake&&sp<15?300:0)+(DR.ovr>0?500:0)-(fl?350:0)):650;
+  DR.rpm=DR.rpm||650;DR.rpm+=(target-DR.rpm)*Math.min(1,dt*(target>DR.rpm?2.2:1.4));
+  if(!DR.run)return;DR.temp=DR.temp||82;const heat=DR.gas?(.8+DR.rpm/2500*.9+(DR.ovr>0?2.2:0)+(DR.trk0>0?-.6:0)):-.9;DR.temp=Math.max(72,Math.min(118,DR.temp+(heat-(DR.fan?3:0))*dt));
+  if(!DR.fan&&DR.temp>=104){DR.fan=1;toast('🌀 Elérte a max. hőmérsékletet – bekapcsolt a hűtőventilátor')}if(DR.fan&&DR.temp<92)DR.fan=0;
+  if(DR.temp>=114&&!DR.fault)DR.fault={n:'túlmelegedés',t:6}}
+function drSoundTick(dt,now){const S2=DR.snd;if(!S2)return;const T=DR.t,sp=Math.abs(T.vx),t=AC.currentTime,rpm=DR.rpm||650;
+  const gas=DR.run&&DR.gas&&!(DR.trk0>0);const load=gas?Math.min(1,.55+Math.max(0,1-sp/160)*.45+(DR.ovr>0?.2:0)):.12;S2.ld=(S2.ld||0)+(load-(S2.ld||0))*Math.min(1,dt*4);
+  const fire=rpm/60*4;S2.f1.frequency.setTargetAtTime(fire,t,.03);S2.f2.frequency.setTargetAtTime(fire/2,t,.03);S2.f3.frequency.setTargetAtTime(fire,t,.03);S2.lfo.frequency.setTargetAtTime(rpm/60/2,t,.05);
+  S2.drive.gain.setTargetAtTime(.45+S2.ld*1.1,t,.06);S2.ng.gain.setTargetAtTime(.12+S2.ld*.4,t,.06);S2.bp.frequency.setTargetAtTime(fire*3,t,.05);
+  S2.lp.frequency.setTargetAtTime(280+(rpm-650)*.3+S2.ld*380,t,.05);S2.out.gain.setTargetAtTime(DR.run?.3+S2.ld*.14:.18,t,.12);
+  // turbó: késleltetett felpörgés + lefúvató szelep
+  const bT=gas?Math.min(1,(rpm-650)/1900+.15):Math.max(0,(rpm-900)/4000);S2.B+=(bT-S2.B)*Math.min(1,dt*(bT>S2.B?1.1:2.6));
+  if(S2.pg&&!gas&&S2.B>.45){const a=AC,n=a.createBufferSource();n.buffer=NOISE;const h=a.createBiquadFilter();h.type='highpass';h.frequency.value=1800;const g=a.createGain();g.gain.setValueAtTime(.16*S2.B,t);g.gain.exponentialRampToValueAtTime(.001,t+.55);n.connect(h).connect(g).connect(MASTER);n.start(t,Math.random()*.4,.6)}S2.pg=gas;
+  S2.tw.frequency.setTargetAtTime(1500+S2.B*4800,t,.06);S2.tw2.frequency.setTargetAtTime((1500+S2.B*4800)*1.52,t,.06);S2.twg.gain.setTargetAtTime(DR.run?.004+S2.B*S2.B*.05:0,t,.08);S2.tw2g.gain.setTargetAtTime(DR.run?S2.B*S2.B*.014:0,t,.08);
+  S2.tbp.frequency.setTargetAtTime(700+S2.B*2600,t,.08);S2.tng.gain.setTargetAtTime(DR.run?S2.B*.09:0,t,.1);
+  // hűtőventilátor
+  S2.fg.gain.setTargetAtTime(DR.run&&DR.fan?.16:0,t,DR.fan?.6:.9);S2.fb.frequency.setTargetAtTime(DR.fan?52:20,t,.8);
+  // drónraj
   let near=9999,nd=null;for(const d of DR.drones){if(d.down)continue;const q=Math.hypot(d.x-T.x,d.y-T.y);if(q<near){near=q;nd=d}}
-  const live=DR.drones.filter(d=>!d.down).length;const lv=nd&&DR.run?Math.min(1,.12+Math.pow(Math.max(0,1-near/1300),1.4)*(1+.18*(live-1))):0;S2.dg.gain.setTargetAtTime(lv*.55,t,.08);
-  if(nd){const rv=((nd.x-T.x)*(nd.vx-T.vx)+(nd.y-T.y)*nd.vy)/Math.max(1,near);const dop=Math.max(.8,Math.min(1.25,1-rv/1400));const base=(205+Math.hypot(nd.vx,nd.vy)*.32+(nd.atk?110:0)+Math.sin(now/170)*14)*dop;
-    S2.dm.forEach((o,i)=>o.frequency.setTargetAtTime(base*[1,1.017,.986,1.031][i]*(1+Math.sin(now/(60+i*23))*.012),t,.04));S2.blade.frequency.setTargetAtTime(base/6,t,.05);S2.dbp.frequency.setTargetAtTime(1500+base*3,t,.08)}}
+  const live=DR.drones.filter(d=>!d.down).length;const lv=nd&&DR.run?Math.min(1,.15+Math.pow(Math.max(0,1-near/1300),1.3)*(1+.15*(live-1))):0;S2.dg.gain.setTargetAtTime(lv*.2,t,.08);
+  if(nd){const rv=((nd.x-T.x)*(nd.vx-T.vx)+(nd.y-T.y)*nd.vy)/Math.max(1,near);const dop=Math.max(.8,Math.min(1.3,1-rv/1300));const base=(360+Math.hypot(nd.vx,nd.vy)*.45+(nd.atk?230:0)+Math.sin(now/150)*20)*dop;
+    S2.dm.forEach((o,i)=>o.frequency.setTargetAtTime(base*[1,1.019,.983,1.034][i]*(1+Math.sin(now/(55+i*21))*.015),t,.04));S2.blade.frequency.setTargetAtTime(base/5.5,t,.05);S2.dbp.frequency.setTargetAtTime(2600+base*2.4,t,.08);
+    S2.scr.frequency.setTargetAtTime(base*2.02,t,.05);S2.scg.gain.setTargetAtTime(nd.atk?.22:.04,t,.12)}}
 /* fizika */
 function drPhys(dt){const T=DR.t,G=600,K=80,C=10,I=3200;const ca=Math.cos(T.a),sa=Math.sin(T.a);const nx=-sa,ny=ca;let ax=0,ay=G,tq=0,contacts=0;
   for(const w of DR.wheels){const ly=10;const rx=w.lx*ca-ly*sa,ry=w.lx*sa+ly*ca;const Ax=T.x+rx,Ay=T.y+ry;const rest=w.road?12:6;
@@ -1328,7 +1346,7 @@ function drLoop(now){const cv=$('#dCv');if(!cv)return;const c=cv.getContext('2d'
   const hpE=$('#dHp');if(hpE){hpE.style.width=DR.hp+'%';hpE.style.background=DR.hp>50?'#2ecc40':DR.hp>25?'#f4c04e':'#ff3b30'}
   const am=$('#dAmmo');if(am){const rl=DR.reload>0;am.classList.toggle('rl',rl);am.textContent=rl?`⟳ ÚJRATÖLTÉS ${DR.reload.toFixed(1)} s`:DR.ammo<=0&&DR.res<=0?'FN MAG – KIFOGYOTT!':`FN MAG ${DR.ammo}/200 · tartalék ${DR.res}`;am.style.backgroundImage=rl?`linear-gradient(90deg,rgba(232,197,71,.45) ${(1-DR.reload/6)*100}%,transparent 0)`:''}
   const dd=$('#dDist');if(dd)dd.textContent=Math.floor(T.dist/20);const dk=$('#dKills');if(dk)dk.textContent=DR.kills;
-  drSoundTick(dt,now);drStat();
+  drEngine(dt);drSoundTick(dt,now);drStat();drSpd();
   DR.raf=requestAnimationFrame(drLoop)}
 function drGame(dt){const T=DR.t;
   // MG tüzelés
@@ -1410,6 +1428,7 @@ function drDrawExtras(c){for(const m of DR.mines){if(m.hit)continue;const gy=drG
   for(const r of DR.sa){if(r.d>0)continue;c.strokeStyle='rgba(255,120,80,.9)';c.lineWidth=1.6;const dx=r.tx-r.x,dy=r.ty-r.y,dl=Math.hypot(dx,dy)||1;c.beginPath();c.moveTo(r.x,r.y);c.lineTo(r.x+dx/dl*-26,r.y+dy/dl*-26);c.stroke()}}
 
 /* rendszerek: lánctag-leesés + javítás, ködgránátvető, VÉSZ ÁTHIDALÓ, motorhibák */
+function drSpd(){const e=$('#dSpd');if(!e)return;const T=DR.t;const kmh=Math.round(Math.abs(T.vx)/20*3.6);const tp=Math.round(DR.temp||82);const s=`${kmh}|${Math.round((DR.rpm||650)/50)*50}|${tp}|${DR.fan?1:0}`;if(e.dataset.s===s)return;e.dataset.s=s;e.innerHTML=`<span class="kmh">${kmh} km/h</span><span>${Math.round((DR.rpm||650)/50)*50} 1/min</span><span class="${tp>=104?'hot':''}${DR.fan?' fan':''}">${DR.fan?'🌀 ':'🌡 '}${tp} °C</span>`}
 function drStat(){const e=$('#dStat');if(!e)return;let t='',k='';if(DR.trk0>0){t=`🔧 LÁNCJAVÍTÁS ${DR.trk0.toFixed(1)} s · védett`;k='rep'}else if(DR.ovr>0){t=`🔴 ÁTHIDALÓ +50 LE · ${DR.ovr.toFixed(1)} s`;k='ovr'}else if(DR.fault){t=`⚠ MOTORHIBA: ${DR.fault.n}`;k='flt'}else if(DR.smoke>0){t=`🌫 KÖDFAL ${DR.smoke.toFixed(1)} s · védett`;k='rep'}
   e.hidden=!t;e.className='dstat '+k;e.textContent=t;
   const cd=(id,v,max)=>{const b=$(id);if(!b)return;b.classList.toggle('cd',v>0);b.querySelector('i').style.background=v>0?`conic-gradient(rgba(0,0,0,.55) ${v/max*360}deg,transparent 0)`:'';b.querySelector('em').textContent=v>0?Math.ceil(v)+' s':''};
