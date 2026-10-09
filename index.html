@@ -372,6 +372,10 @@ body.role-cmd{--bg:#EEF1F7;--surface2:#E9EEF8;--line:#D3DBEA;--accent:#1F4FA8;--
 :root[data-theme="dark"] body.role-cmd{--bg:#0D1220;--surface:#151C2E;--surface2:#1C2539;--line:#2A3550;--fg:#E8ECF5;--muted:#A0AAC0;--accent:#5B8DEF;--accent-deep:#1A3A80;--hero1:#0E2350;--hero2:#1C4499;--saint:#5B8DEF}
 .cal .ev.svc{background:var(--svc-bg);color:var(--svc)}
 .cal .ev.place.col{background:var(--k);color:#fff;box-shadow:none}
+.cal .ev .sm{display:none}
+@media (max-width:560px){.cal .ev.hasr{font-size:9.5px;height:auto;line-height:1.5;padding:0 2px;text-align:center;letter-spacing:-.02em;font-weight:800;border-radius:4px}
+ .cal .ev.hasr .lg{display:none}.cal .ev.hasr .sm{display:block;overflow:hidden;text-overflow:clip}
+ .cal .ev.place.hasr{color:#fff}.cal .ev.svc.hasr{color:#fff}}
 @media (max-width:560px){.cal .ev.place.col{background:var(--k)}}
 .colpick{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
 .colpick label{cursor:pointer}.colpick input{position:absolute;opacity:0;pointer-events:none}
@@ -1059,11 +1063,11 @@ function renderCalendar(){
   const vf=V.calVid==='all'?null:V.calVid;
   const cells=[];for(let i=0;i<42;i++){const d=addDays(start,i);if(i%7===0&&i>=28&&d.slice(0,7)!==V.calMonth)break;cells.push(d)}
   const reg=id=>S.vehicles[id]?vLabel(S.vehicles[id]):'?';
-  const dayItems=d=>[...eventsOn(d,vf).map(e=>({t:'place'+(e.color?' col':''),k:e.color,txt:`${reg(e.vid)} · ${e.place}`})),
-    ...arr('vehicles').filter(v=>(!vf||v.id===vf)&&v.status==='service'&&v.serviceUntil&&(v.serviceFrom||today())<=d&&v.serviceUntil>=d).map(v=>({t:'svc',txt:`${vLabel(v)} · szerviz`})),
+  const dayItems=d=>[...eventsOn(d,vf).map(e=>({t:'place'+(e.color?' col':''),k:e.color,sh:reg(e.vid),txt:`${reg(e.vid)} · ${e.place}`})),
+    ...arr('vehicles').filter(v=>(!vf||v.id===vf)&&v.status==='service'&&v.serviceUntil&&(v.serviceFrom||today())<=d&&v.serviceUntil>=d).map(v=>({t:'svc',sh:vLabel(v),txt:`${vLabel(v)} · szerviz`})),
     ...arr('fuel').filter(f=>f.date===d&&(!vf||f.vid===vf)).map(f=>({t:'fuel',k:reasonColor(f.reason),txt:`${reg(f.vid)} ${n0(f.liters)} l · ${f.reason||''}`})),
     ...arr('trips').filter(t=>(!vf||t.vid===vf)&&t.from<=d&&(t.returned||t.to||t.from)>=d).map(t=>({t:'ml',txt:`ML ${t.num} · ${reg(t.vid)}`}))];
-  const grid=`<div class="cal">${['H','K','Sze','Cs','P','Szo','V'].map(w=>`<div class="wd">${w}</div>`).join('')}${cells.map(d=>{const it=dayItems(d);return `<button class="day ${d.slice(0,7)!==V.calMonth?'out':''} ${d===today()?'today':''}" data-day="${d}" aria-pressed="${d===V.calDay}" aria-label="${fmtD(d)}, ${it.length} bejegyzés"><span class="n">${Number(d.slice(8))}</span>${it.slice(0,3).map(x=>`<span class="ev ${x.t}" ${x.k?`style="--k:${x.k}"`:''}>${esc(x.txt)}</span>`).join('')}${it.length>3?`<span class="more">+${it.length-3}</span>`:''}</button>`}).join('')}</div>`;
+  const grid=`<div class="cal">${['H','K','Sze','Cs','P','Szo','V'].map(w=>`<div class="wd">${w}</div>`).join('')}${cells.map(d=>{const it=dayItems(d);return `<button class="day ${d.slice(0,7)!==V.calMonth?'out':''} ${d===today()?'today':''}" data-day="${d}" aria-pressed="${d===V.calDay}" aria-label="${fmtD(d)}, ${it.length} bejegyzés"><span class="n">${Number(d.slice(8))}</span>${it.slice(0,3).map(x=>`<span class="ev ${x.t}${x.sh?' hasr':''}" ${x.k?`style="--k:${x.k}"`:''}>${x.sh?`<span class="lg">${esc(x.txt)}</span><span class="sm">${esc(x.sh)}</span>`:esc(x.txt)}</span>`).join('')}${it.length>3?`<span class="more">+${it.length-3}</span>`:''}</button>`}).join('')}</div>`;
   const d=V.calDay;
   const evs=eventsOn(d,vf),fus=arr('fuel').filter(f=>f.date===d&&(!vf||f.vid===vf)),mvs=arr('moves').filter(x=>x.date===d&&(!vf||x.vid===vf));
   const dayPanel=`<div class="panel"><h3>${fmtD(d)} <span class="row"><button class="btn sm" data-act="addEvent" data-date="${d}" ${ro()}>+ Beosztás</button><button class="btn sm" data-act="addFuel" data-date="${d}" ${ro()}>+ Tankolás</button></span></h3>
