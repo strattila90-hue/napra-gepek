@@ -55,6 +55,9 @@ button,input,select,textarea{font:inherit;color:inherit}
 .topbar .tools{margin-left:auto;display:flex;gap:6px;align-items:center}
 .iconbtn{width:38px;height:38px;border-radius:50%;border:1.5px solid rgba(255,243,241,.45);background:transparent;color:inherit;cursor:pointer;display:grid;place-items:center;flex:none}
 .iconbtn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2}
+#snd{width:46px;height:46px;background:rgba(255,255,255,.16);border:2px solid rgba(255,243,241,.7);box-shadow:0 2px 10px rgba(0,0,0,.18)}
+#snd svg.gearic{width:30px;height:30px;stroke:none}
+@media (prefers-reduced-motion:no-preference){#snd:active svg{transform:rotate(60deg);transition:transform .25s}}
 .mode{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.8;white-space:nowrap}
 .page{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding-inline:16px;padding-block:14px calc(var(--navh) + 34px)}
 .banner{margin-bottom:12px;padding:9px 14px;background:var(--warn-bg);color:var(--warn);font-size:14px;border-radius:14px;font-weight:600}
@@ -368,6 +371,13 @@ body.role-cmd{--bg:#EEF1F7;--surface2:#E9EEF8;--line:#D3DBEA;--accent:#1F4FA8;--
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body.role-cmd{--bg:#0D1220;--surface:#151C2E;--surface2:#1C2539;--line:#2A3550;--fg:#E8ECF5;--muted:#A0AAC0;--accent:#5B8DEF;--accent-deep:#1A3A80;--hero1:#0E2350;--hero2:#1C4499;--saint:#5B8DEF}}
 :root[data-theme="dark"] body.role-cmd{--bg:#0D1220;--surface:#151C2E;--surface2:#1C2539;--line:#2A3550;--fg:#E8ECF5;--muted:#A0AAC0;--accent:#5B8DEF;--accent-deep:#1A3A80;--hero1:#0E2350;--hero2:#1C4499;--saint:#5B8DEF}
 .cal .ev.svc{background:var(--svc-bg);color:var(--svc)}
+.cal .ev.place.col{background:var(--k);color:#fff;box-shadow:none}
+@media (max-width:560px){.cal .ev.place.col{background:var(--k)}}
+.colpick{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.colpick label{cursor:pointer}.colpick input{position:absolute;opacity:0;pointer-events:none}
+.colpick span{display:block;width:34px;height:34px;border-radius:50%;box-shadow:inset 0 0 0 2px rgba(255,255,255,.35);transition:transform .15s}
+.colpick input:checked+span{box-shadow:0 0 0 3px var(--surface),0 0 0 5px var(--fg);transform:scale(1.06)}
+.colpick input:focus-visible+span{outline:2px solid var(--accent);outline-offset:3px}
 @media (max-width:560px){.cal .ev.svc{background:var(--svc)}}
 .tkc{border-radius:14px;padding:12px;background:var(--surface2);border-left:5px solid var(--ok)}.tkc.warn{border-left-color:var(--warn)}.tkc.bad{border-left-color:var(--bad)}
 .tkc+.tkc{margin-top:8px}.tkcode{font-family:var(--f-display);font-weight:400;font-size:26px;letter-spacing:.02em}
@@ -467,7 +477,7 @@ const IC={
  tank:'<svg viewBox="0 0 24 24"><path d="M5 21V5a2 2 0 012-2h6a2 2 0 012 2v16M3 21h14M15 8h2l2 2v7a1.5 1.5 0 003 0V9l-3-3"/><rect x="7" y="6" width="6" height="4"/></svg>',
  ml:'<svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg>',
  link:'<svg class="bi" viewBox="0 0 24 24"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1.2 1.2"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1.2-1.2"/></svg>',
- gear:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg>',
+ gear:'<svg class="gearic" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M10.3 1.8h3.4l.5 2.7c.7.2 1.4.5 2 .9l2.3-1.6 2.4 2.4-1.6 2.3c.4.6.7 1.3.9 2l2.7.5v3.4l-2.7.5c-.2.7-.5 1.4-.9 2l1.6 2.3-2.4 2.4-2.3-1.6c-.6.4-1.3.7-2 .9l-.5 2.7h-3.4l-.5-2.7c-.7-.2-1.4-.5-2-.9l-2.3 1.6-2.4-2.4 1.6-2.3c-.4-.6-.7-1.3-.9-2l-2.7-.5v-3.4l2.7-.5c.2-.7.5-1.4.9-2L3.1 6.2l2.4-2.4 2.3 1.6c.6-.4 1.3-.7 2-.9zM12 8.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6z"/></svg>',
  send:'<svg viewBox="0 0 24 24"><path d="M3 11.5L21 3l-6.5 18-3-7.5z"/><path d="M11.5 13.5L21 3"/></svg>',
  edit:'<svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>',
  trash:'<svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg>',
@@ -965,7 +975,7 @@ function subOverview(v){
    <div class="panel"><h3>Fogyasztás</h3><dl class="kv"><dt>Átlag l/100 km</dt><dd>${n1(a.l100)}</dd>${t.hours?`<dt>Átlag l/üzemóra</dt><dd>${n1(a.lh)}</dd>`:''}<dt>Alap</dt><dd>${a.L!=null?`${n0(a.L)} l · ${n0(a.km)} km${t.hours?' · '+n1(a.h)+' üó':''}`:'legalább 2 óraállás és 1 tankolás kell'}</dd>${(()=>{const c=consCheck(v);return c?`<dt>Utolsó 30 nap</dt><dd>${n1(c.rec)} ${c.unit}</dd>`:''})()}</dl>${(()=>{const c=consWarn(v);return c?`<div class="consw">${IC.hibak}<span>${esc(consTxt(c))}</span></div>`:''})()}${ref}</div>
    <div class="panel"><h3>Beosztás <button class="btn sm" data-act="addEvent" data-vid="${v.id}" ${ro()}>+ Beosztás</button></h3>${up.length?`<div class="list">${up.map(eventItem).join('')}</div>`:'<div class="empty">Nincs előre rögzített helyszín vagy feladat.</div>'}</div></div>`;
 }
-function eventItem(e){const v=S.vehicles[e.vid];return `<div class="item"><div class="main"><div class="t">${esc(e.place)}${V.view!=='gep'&&v?` · <span class="muted">${esc(vLabel(v))}</span>`:''}</div><div class="hint">${fmtD(e.from)}${e.to&&e.to!==e.from?' – '+fmtD(e.to):''}${e.task?' · '+esc(e.task):''}</div></div><button class="btn sm line" data-act="editEvent" data-id="${e.id}" ${ro()}>Szerk.</button></div>`}
+function eventItem(e){const v=S.vehicles[e.vid];return `<div class="item" ${e.color?`style="box-shadow:inset 4px 0 0 ${e.color}"`:''}><div class="main"><div class="t">${esc(e.place)}${V.view!=='gep'&&v?` · <span class="muted">${esc(vLabel(v))}</span>`:''}</div><div class="hint">${fmtD(e.from)}${e.to&&e.to!==e.from?' – '+fmtD(e.to):''}${e.task?' · '+esc(e.task):''}</div></div><button class="btn sm line" data-act="editEvent" data-id="${e.id}" ${ro()}>Szerk.</button></div>`}
 function subTK(v){const tk=v.tk||{};
   if(!tk.delivery)return `<div class="panel"><h3>Technikai kiszolgálás (TK)</h3><p style="margin-top:0">A rendszer a <b>leszállítás dátumából</b> automatikusan számolja az F1–F4 és GKA1–5 esedékességét (13 hetes ritmus, ±1 hét), üzemórából a GKA- és TW-határokat, és a bejáratást követő E1–E4 ellenőrzést.</p><button class="btn pri" data-act="tkSetup" ${ro()}>Kezdő adatok megadása</button></div>`;
   const items=tkItems(v);const by=g=>items.filter(i=>i.grp===g);
@@ -1049,7 +1059,7 @@ function renderCalendar(){
   const vf=V.calVid==='all'?null:V.calVid;
   const cells=[];for(let i=0;i<42;i++){const d=addDays(start,i);if(i%7===0&&i>=28&&d.slice(0,7)!==V.calMonth)break;cells.push(d)}
   const reg=id=>S.vehicles[id]?vLabel(S.vehicles[id]):'?';
-  const dayItems=d=>[...eventsOn(d,vf).map(e=>({t:'place',txt:`${reg(e.vid)} · ${e.place}`})),
+  const dayItems=d=>[...eventsOn(d,vf).map(e=>({t:'place'+(e.color?' col':''),k:e.color,txt:`${reg(e.vid)} · ${e.place}`})),
     ...arr('vehicles').filter(v=>(!vf||v.id===vf)&&v.status==='service'&&v.serviceUntil&&(v.serviceFrom||today())<=d&&v.serviceUntil>=d).map(v=>({t:'svc',txt:`${vLabel(v)} · szerviz`})),
     ...arr('fuel').filter(f=>f.date===d&&(!vf||f.vid===vf)).map(f=>({t:'fuel',k:reasonColor(f.reason),txt:`${reg(f.vid)} ${n0(f.liters)} l · ${f.reason||''}`})),
     ...arr('trips').filter(t=>(!vf||t.vid===vf)&&t.from<=d&&(t.returned||t.to||t.from)>=d).map(t=>({t:'ml',txt:`ML ${t.num} · ${reg(t.vid)}`}))];
@@ -1321,12 +1331,21 @@ function moveForm(vid,m){const isNew=!m;if(!arr('vehicles').length){toast('Előb
     if(isNew){const tt=activeTrip(id);const dv=$('#f_driver');if(dv&&!dv.dataset.touched)dv.value=tt?.driver||dName(driverOf(S.vehicles[id]))||'';const ks=$('#f_kmStart');if(ks&&!ks.dataset.touched)ks.value=S.vehicles[id]?.km??''}};
   info();$('#f_mvid').addEventListener('change',info);['f_driver','f_kmStart'].forEach(i=>$('#'+i).addEventListener('input',e=>e.target.dataset.touched='1'));
   if(!isNew)$('#mdel').onclick=()=>act(async()=>{try{await del('moves',m.id);closeModal();toast('Törölve')}catch(e){}})}
+const EVCOL=['#B0121E','#E0662A','#D9A21B','#2E8B57','#0E8E88','#1F4FA8','#6B3FA0','#C2407A','#5B6470'];
 function eventForm(vid,date,e){const isNew=!e;if(!arr('vehicles').length){toast('Előbb vegyél fel egy gépet.');return}e=e||{vid,from:date||today(),to:date||today()};
-  modal(isNew?'Beosztás':'Beosztás szerkesztése',`<div class="form"><label class="full"><span class="lbl">Gép</span><select name="vid">${vOpts(e.vid)}</select></label>${fld('place','Hol kell lennie (helyszín)',e.place,'text','full required')}${fld('from','Ettől',e.from,'date')}${fld('to','Eddig',e.to,'date')}${fld('task','Feladat / megjegyzés',e.task,'text','full')}</div>`,async fd=>{
+  modal(isNew?'Beosztás':'Beosztás szerkesztése',`<div class="form"><label class="full"><span class="lbl">Gép</span><select name="vid">${vOpts(e.vid)}</select></label>${fld('place','Hol kell lennie (helyszín)',e.place,'text','full required')}${fld('from','Ettől',e.from,'date')}${fld('to','Eddig',e.to,'date')}
+   <label class="full slr"><span>Hány napig lesz távol: <b id="evdays">${Math.max(1,diffDays(e.from,e.to||e.from)+1)} nap</b></span><input type="range" id="f_days" min="1" max="30" step="1" value="${Math.min(30,Math.max(1,diffDays(e.from,e.to||e.from)+1))}"><span class="hint" id="evrange" style="font-weight:600"></span></label>
+   <div class="full"><span class="lbl">Szín a naptárban</span><div class="colpick">${EVCOL.map((c,i)=>`<label><input type="radio" name="color" value="${c}" ${(e.color||EVCOL[0])===c?'checked':''}><span style="background:${c}" aria-label="szín ${i+1}"></span></label>`).join('')}</div></div>
+   ${fld('task','Feladat / megjegyzés',e.task,'text','full')}</div>`,async fd=>{
     if(!fd.place?.trim())throw 'Add meg a helyszínt.';if(fd.to&&fd.to<fd.from)throw 'A vége nem lehet a kezdete előtt.';
-    const data={vid:fd.vid,place:fd.place.trim(),from:fd.from||today(),to:fd.to||fd.from||today(),task:fd.task||''};
+    const data={vid:fd.vid,place:fd.place.trim(),from:fd.from||today(),to:fd.to||fd.from||today(),task:fd.task||'',color:fd.color||null};
     if(isNew)await add('events',data);else await upd('events',e.id,data);toast('Beosztás mentve')},'Mentés',isNew?'':delBtn);
-  if(!isNew)$('#mdel').onclick=()=>act(async()=>{try{await del('events',e.id);closeModal();toast('Törölve')}catch(x){}})}
+  if(!isNew)$('#mdel').onclick=()=>act(async()=>{try{await del('events',e.id);closeModal();toast('Törölve')}catch(x){}});
+  const fr=$('#f_from'),to=$('#f_to'),sl=$('#f_days');
+  const lab=()=>{const n=Number(sl.value);$('#evdays').textContent=n+' nap';$('#evrange').textContent=fr.value?`${fmtD(fr.value)} – ${fmtD(addDays(fr.value,n-1))}`:''};
+  sl.addEventListener('input',()=>{if(fr.value)to.value=addDays(fr.value,Number(sl.value)-1);lab()});
+  fr.addEventListener('change',()=>{if(fr.value)to.value=addDays(fr.value,Number(sl.value)-1);lab()});
+  to.addEventListener('change',()=>{if(fr.value&&to.value){const n=diffDays(fr.value,to.value)+1;if(n>=1){sl.value=Math.min(30,n);$('#evdays').textContent=n+' nap';$('#evrange').textContent=`${fmtD(fr.value)} – ${fmtD(to.value)}`}}});lab()}
 function driverForm(d){const isNew=!d;d=d||{};
   modal(isNew?'Új sofőr':'Sofőr szerkesztése',`<div class="form">${fld('rank','Rendfokozat',d.rank,'text','placeholder="pl. őrv."')}${fld('name','Név',d.name,'text','required')}<div class="full"><span class="lbl">Jogosítvány / jogosultság</span><div class="licpick">${LIC.map(([k,l,ic],i)=>`<label class="licopt"><input type="checkbox" name="lic_${i}" value="${k}" ${(d.lic||[]).includes(k)?'checked':''}><span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${ic}</svg>${esc(l)}</span></label>`).join('')}</div></div>${fld('note','Megjegyzés',d.note,'text','full')}</div>`,async fd=>{
     if(!fd.name?.trim())throw 'Add meg a nevet.';const data={name:fd.name.trim(),rank:fd.rank?.trim()||'',note:fd.note||'',lic:LIC.map((_,i)=>fd['lic_'+i]).filter(Boolean)};
