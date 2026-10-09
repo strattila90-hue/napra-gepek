@@ -245,6 +245,39 @@ tr.hl td{background:var(--surface2);font-weight:700}
 .rq.approved{border-left-color:var(--ok)} .rq.rejected{border-left-color:var(--bad);opacity:.85}
 .rqv{font-family:var(--f-display);font-size:24px;line-height:1;font-weight:400}
 .rql{margin:0;padding-left:18px;font-weight:600}
+.cal .ev.flt{background:#F4C04E;color:#3a2600}.cal .ev.fltok{background:var(--ok-bg);color:var(--ok)}
+@media (max-width:560px){.cal .ev.flt{background:#F4C04E;color:#3a2600!important}.cal .ev.fltok{background:var(--ok);color:#fff!important}}
+.fex{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#F4C04E;color:#3a2600;font-weight:900;font-size:13px;margin-right:6px;vertical-align:1px}
+.fok{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--ok);color:#fff;font-weight:900;font-size:12px;margin-right:6px;vertical-align:1px}
+.item.flt{flex-direction:column}.item.flt.closed{opacity:.85}
+.pill.fst.lim{background:var(--warn-bg);color:var(--warn)}.pill.fst.svc{background:var(--svc-bg);color:var(--svc)}
+.flog{margin-top:6px}.flog summary{cursor:pointer;font-size:13px;font-weight:800;color:var(--muted)}
+.flog ol{margin:6px 0 0;padding-left:18px;font-size:13px;display:flex;flex-direction:column;gap:4px}
+.fstpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px}
+.fstpick label{cursor:pointer}.fstpick input{position:absolute;opacity:0;pointer-events:none}
+.fstpick span{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;background:var(--surface2);font-weight:800;font-size:14px;box-shadow:inset 0 0 0 1.5px var(--line)}
+.fstpick i{font-style:normal;font-size:16px;width:20px;text-align:center}
+.fstpick input:checked+span{background:var(--warn-bg);color:var(--warn);box-shadow:inset 0 0 0 2px var(--warn)}
+.fstpick label.done input:checked+span{background:var(--ok-bg);color:var(--ok);box-shadow:inset 0 0 0 2px var(--ok)}
+.fstpick input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+.rqd{border-radius:12px;background:var(--surface2)}
+.rqd summary{cursor:pointer;padding:8px 12px;font-weight:800;list-style:none;display:flex;align-items:center;gap:6px}
+.rqd summary::-webkit-details-marker{display:none}
+.rqd summary::before{content:'▸';transition:transform .2s;display:inline-block}.rqd[open] summary::before{transform:rotate(90deg)}
+.rqdb{padding:0 12px 10px;display:flex;flex-direction:column;gap:10px}
+.rqoh{font-weight:800;font-size:13px;margin-bottom:4px}.rqoh.add{color:var(--ok)}.rqoh.upd{color:var(--warn)}.rqoh.del{color:var(--bad)}
+.rqt{width:100%;border-collapse:collapse;font-size:13.5px}
+.rqt th{text-align:left;font-weight:600;color:var(--muted);padding:3px 8px 3px 0;vertical-align:top;width:42%}
+.rqt td{padding:3px 0;overflow-wrap:anywhere}.rqt tr+tr th,.rqt tr+tr td{border-top:1px dashed var(--line)}
+.rqt tr.ch td b{color:var(--accent)}.rqt s{color:var(--muted)}
+.sw{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:-2px}
+.rqtl{list-style:none;margin:0;padding:0 0 0 4px;display:flex;flex-direction:column;gap:4px;font-size:13px}
+.rqtl li{position:relative;padding-left:20px;color:var(--muted)}
+.rqtl li::before{content:'';position:absolute;left:2px;top:4px;width:10px;height:10px;border-radius:50%;border:2px solid var(--line);background:var(--surface)}
+.rqtl li:not(:last-child)::after{content:'';position:absolute;left:7px;top:16px;bottom:-6px;width:2px;background:var(--line)}
+.rqtl li.on{color:var(--fg)}.rqtl li.on::before{border-color:var(--accent);background:var(--accent)}
+.rqtl li.on.ok::before{border-color:var(--ok);background:var(--ok)}.rqtl li.on.bad::before{border-color:var(--bad);background:var(--bad)}
+.rqnote{width:100%;font:inherit;font-size:14px;padding:8px 12px;border-radius:12px}
 .rqa{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;border-top:1px dashed var(--line);padding-top:10px}
 .okbox{display:flex;align-items:center;gap:10px;font-weight:800;cursor:pointer;background:var(--ok-bg);color:var(--ok);border-radius:14px;padding:8px 14px}
 .okbox input{width:24px;height:24px;accent-color:var(--ok);margin:0;cursor:pointer}
@@ -294,6 +327,31 @@ nav.bottom .mlic .pp{transition:fill .25s}nav.bottom button.mlon .mlic .pp{fill:
 .badge2{display:inline-block;font-size:11.5px;font-weight:800;padding:1px 8px;border-radius:999px;background:var(--ok-bg);color:var(--ok);margin-right:4px}
 .badge2.no{background:var(--surface);color:var(--muted)}
 .archq{margin-bottom:8px}
+.jcan{width:30px;height:36px;flex:none;overflow:visible}
+.jcan .bd{fill:var(--can-bg,rgba(75,83,32,.18))}.jcan .bd2{fill:none;stroke:var(--can,#4B5320);stroke-width:2.2;stroke-linejoin:round}
+.jcan .hdl,.jcan .spt{fill:none;stroke:var(--can,#4B5320);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.jcan .xb{fill:none;stroke:var(--can,#4B5320);stroke-width:1.3;opacity:.35}
+.jcan .liq{fill:#D9A21B;transform-box:fill-box;transform-origin:50% 100%;transition:transform .5s cubic-bezier(.3,.8,.3,1)}
+.jcan .liq.mid{fill:#E0662A}.jcan .liq.low{fill:#D2263A}
+.jcan.unk .bd{fill:none}.jcan.unk{opacity:.55}
+@media (prefers-reduced-motion:no-preference){.jcan .liq.anim{animation:canfill 1.3s cubic-bezier(.25,.8,.3,1) both}@keyframes canfill{from{transform:scaleY(0)}}}
+.vfuel{grid-column:1/-1;display:flex;align-items:center;gap:10px;border:0;background:var(--surface2);border-radius:12px;padding:6px 10px;cursor:pointer;color:inherit;font:inherit;text-align:left;width:max-content;max-width:100%}
+.vfuel span{display:flex;flex-direction:column;line-height:1.15}.vfuel b{font-size:16px}.vfuel small{font-size:12px;color:var(--muted)}
+.vfuel.low b{color:var(--bad)}
+.silrow{display:flex;align-items:flex-end;gap:10px;justify-content:flex-end}
+.silrow .sil{margin:6px 0 0}
+.hfuel{border:0;background:rgba(255,255,255,.14);border-radius:16px;padding:8px 8px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--hero-fg);cursor:pointer;font:inherit;font-weight:800;font-size:13px;flex:none}
+.hfuel .jcan{--can:#F3E9C8;--can-bg:rgba(255,255,255,.12)}
+.jcan.big{width:52px;height:62px}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px}
+.ftile{border:0;background:var(--surface2);border-radius:14px;padding:8px 8px 10px;display:grid;grid-template-columns:1fr auto;grid-template-areas:"sil can" "r v" "l l";gap:2px 6px;align-items:end;cursor:pointer;color:inherit;font:inherit;text-align:left;min-width:0}
+.ftile .fsil{grid-area:sil;color:var(--fg);opacity:.75;min-width:0}.ftile .fsil svg{width:100%;height:auto;display:block}
+.ftile .jcan{grid-area:can}.ftile .fr{grid-area:r;font-weight:800;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ftile .fv{grid-area:v;font-weight:800;font-size:14px;color:var(--accent)}.ftile.low .fv{color:var(--bad)}
+.ftile .fl{grid-area:l;font-size:11.5px;color:var(--muted);font-weight:600}
+.flform{display:flex;align-items:center;gap:18px;justify-content:center}
+.flform .jcan.big{width:96px;height:114px}
+.flside .bigc{font-size:48px}
 .invlink{background:var(--surface2);border-radius:14px;padding:12px 14px;font-size:15px;font-weight:700;overflow-wrap:anywhere;user-select:all;-webkit-user-select:all}
 .btn .bi{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;vertical-align:-3px;margin-right:5px}
 #splash{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--hero1),var(--hero2));color:var(--hero-fg);transition:opacity .45s ease}
@@ -325,7 +383,7 @@ nav.bottom .mlic .pp{transition:fill .25s}nav.bottom button.mlon .mlic .pp{fill:
 .chatin svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
 .setg{border-top:1px dashed var(--line);padding:12px 0 4px}.setg:first-child{border-top:0;padding-top:0}
 .setg .lbl{margin-bottom:6px}
-.swr{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 0;font-weight:700;cursor:pointer}
+.swr,.form label.swr{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:12px;padding:6px 0;font-weight:700;cursor:pointer}
 .swr input{appearance:none;-webkit-appearance:none;width:46px;height:28px;border-radius:99px;background:var(--line);position:relative;cursor:pointer;flex:none;margin:0;transition:background .2s}
 .swr input::after{content:'';position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s}
 .swr input:checked{background:var(--accent)}.swr input:checked::after{transform:translateX(18px)}
@@ -617,7 +675,7 @@ function describeOps(ops){
     let t='';
     if(o.c==='fuel'&&o.op==='add'){cat='Tankolás';t=`Tankolás: ${n0(d.liters)} l · ${d.reason||''}${d.km!=null?' · '+n0(d.km)+' km':''}`}
     else if(o.c==='faults'&&o.op==='add'){cat='Hiba';t=`Hibabejelentés: ${d.title} (${d.sev})`}
-    else if(o.c==='faults'&&o.op==='upd'){cat='Hiba';t=`Hiba állapota: ${cur.title||''} → ${d.status}`}
+    else if(o.c==='faults'&&o.op==='upd'){cat='Hiba';t=`Hiba állapota: ${cur.title||''} → ${d.status==='lezárva'?(FRES[d.resolution]||'Lezárva'):(FST[d.status]||[d.status])[0]}${d.part?' ('+d.part+')':''}`}
     else if(o.c==='trips'&&o.op==='add'){cat='Menetlevél';t=`Menetlevél kiadása: ML ${d.num} · ${d.driver}`}
     else if(o.c==='trips'&&o.op==='upd'&&d.closed){cat='Menetlevél';t=`VisszaMEA, gyűjtőbe: ML ${cur.num||''} · záró ${n0(d.endKm)} km${d.returnLiters?' · '+n0(d.returnLiters)+' l':''}`}
     else if(o.c==='trips'&&o.op==='upd'){cat='Menetlevél';t=`Menetlevél módosítása: ML ${d.num||cur.num||''}`}
@@ -625,6 +683,7 @@ function describeOps(ops){
     else if(o.c==='vehicles'&&o.op==='upd'&&d.status==='service'){cat='Szerviz / állapot';t=`Szervizbe: ${fmtD(d.serviceFrom)}${d.serviceUntil?' – '+fmtD(d.serviceUntil):''}`}
     else if(o.c==='vehicles'&&o.op==='upd'&&d.status&&(Object.keys(d).length===1||'serviceUntil' in d)){cat='Szerviz / állapot';t=`Állapot: ${STATUS[d.status][0]}`}
     else if(o.c==='vehicles'&&o.op==='upd'&&'driverId' in d&&Object.keys(d).length===1){cat='Sofőr';t=d.driverId?`Sofőr beosztása: ${dName(S.drivers[d.driverId])||'új sofőr'}`:'Sofőr levétele'}
+    else if(o.c==='vehicles'&&o.op==='upd'&&d.fuel&&!('km' in d)){cat='Üzemanyag';t=`Üzemanyagszint: ${n0(d.fuel.l)} l`}
     else if(o.c==='vehicles'&&o.op==='upd'&&d.maint){cat='Karbantartás';t='Karbantartási ciklusok módosítása'}
     else if(o.c==='stock'){cat='Készlet';t=`Gumipogácsa-készlet: ${n0(d.count)} db`+(d.linksPerSide?` · ${d.linksPerSide} lánctag/oldal`:'')}
     else if(o.c==='vehicles'&&o.op==='upd'){cat=cat==='Egyéb'?'Óraállás / adatok':cat;const parts=[];if(d.mgSn!=null&&d.mgSn!==(cur.mgSn??null))parts.push('FN MAG '+d.mgSn);if(d.mainWeaponSn!=null&&d.mainWeaponSn!==(cur.mainWeaponSn??null))parts.push('fő fegyverzet '+d.mainWeaponSn);if(d.trackLinks!=null&&d.trackLinks!==(cur.trackLinks??null))parts.push(d.trackLinks+' lánctag/oldal');if(d.reg!=null)parts.push('rendszám '+d.reg);if(d.km!=null)parts.push(n0(d.km)+' km');if(d.h!=null)parts.push(n0(d.h)+' üó');if(d.apuH!=null)parts.push('APU '+d.apuH);if(d.status)parts.push(STATUS[d.status][0]);t='Gép adatai: '+(parts.join(' · ')||'módosítás')}
@@ -658,10 +717,10 @@ async function execOps(req){
     else if(o.op==='del'){delete HIST[o.c]?.[o.id];await write(()=>DB.doc(o.c+'/'+o.id).delete())}}
 }
 async function approve(id){const r=S.requests[id];if(!r||r.status!=='pending')return;
-  try{if(DB)await execOps(r);await write(()=>DB.doc('requests/'+id).update({status:'approved',reviewer:myName(),reviewerId:UID,reviewedAt:Date.now()}));sndAdd();toast('Jóváhagyva: '+(r.lines[0]||r.cat))}catch(e){toast('A jóváhagyás nem sikerült, próbáld újra.')}}
+  try{if(DB)await execOps(r);const note=($('#rqn_'+id)?.value||'').trim();await write(()=>DB.doc('requests/'+id).update({status:'approved',reviewer:myName(),reviewerId:UID,reviewedAt:Date.now(),note,seenBy:r.seenBy||myName(),seenAt:r.seenAt||Date.now()}));sndAdd();toast('Jóváhagyva: '+(r.lines[0]||r.cat))}catch(e){toast('A jóváhagyás nem sikerült, próbáld újra.')}}
 function rejectForm(id){const r=S.requests[id];
   modal('Elutasítás',`<p class="hint" style="margin-top:0">${esc(r.byName)} · ${esc(r.lines.join(' · '))}</p><div class="form">${fld('reason','Indoklás (a beküldő látja)','','text','full')}</div>`,async fd=>{
-    await write(()=>DB.doc('requests/'+id).update({status:'rejected',reason:fd.reason||'',reviewer:myName(),reviewerId:UID,reviewedAt:Date.now()}));sndRemove();toast('Elutasítva')},'Elutasítás',{direct:true})}
+    await write(()=>DB.doc('requests/'+id).update({status:'rejected',reason:fd.reason||'',reviewer:myName(),reviewerId:UID,reviewedAt:Date.now(),seenBy:r.seenBy||myName(),seenAt:r.seenAt||Date.now()}));sndRemove();toast('Elutasítva')},'Elutasítás',{direct:true})}
 function regForm(){if($('#scrim'))return;const p=myProfile()||{};
   modal('Profilom',`<p class="hint" style="margin-top:0">Felhasználónév: <b>${esc(p.username||'')}</b> · szerep: <b>${roleName(ROLE)}</b> · azonosító <span class="mono">${esc((UID||'').slice(0,10))}</span></p><div class="form">${fld('rank','Rendfokozat',p.rank,'text','placeholder="pl. őrv."')}${fld('name','Név',p.name,'text','required')}${fld('post','Beosztás',p.post,'text','full')}${fld('pw','Új jelszó (ha cserélnéd, min. 8 karakter)','','password','full autocomplete="new-password"')}</div>`,async fd=>{
     if(!fd.name?.trim())throw 'Add meg a nevedet.';
@@ -677,7 +736,7 @@ const slugUser=u=>String(u||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerC
 const LIVE={},HIST={};COLS.forEach(c=>{LIVE[c]={};HIST[c]={}});
 function recompute(c){const o={...HIST[c]};Object.values(LIVE[c]).forEach(p=>Object.assign(o,p));S[c]=o}
 let rT=null;function scheduleRender(){if(DRAG&&DRAG.moved)return;cancelAnimationFrame(rT);rT=requestAnimationFrame(()=>{if(!$('#scrim')||V.view!=='flotta')render();else render()})}
-function sub(c,key,q){onSnapshot(q,snap=>{const o={};snap.docs.forEach(d=>{o[d.id]={...d.data(),id:d.id}});LIVE[c][key]=o;recompute(c);LOADED.add(c);if(c==='messages')onMessages();scheduleRender()},err=>{console.warn(c,err);LOADED.add(c);scheduleRender()})}
+function sub(c,key,q){onSnapshot(q,snap=>{const o={};snap.docs.forEach(d=>{o[d.id]={...d.data(),id:d.id}});LIVE[c][key]=o;recompute(c);LOADED.add(c);if(c==='messages')onMessages();if(c==='requests')onRequests();scheduleRender()},err=>{console.warn(c,err);LOADED.add(c);scheduleRender()})}
 function startData(){if(DATA_STARTED)return;DATA_STARTED=true;
   const since=addDays(today(),-45),col=c=>collection(FS,c);
   ['vehicles','drivers','users','stock'].forEach(c=>sub(c,'all',col(c)));
@@ -732,6 +791,38 @@ function consCheck(v){const t=TYPES[v.type]||{};const f=v.type==='pzh'&&t.hours?
   return {unit:f==='h'?'l/üó':'l/100 km',base,rec,dev,bad:Math.abs(dev)>0.3}}
 const consWarn=v=>{const c=consCheck(v);return c&&c.bad?c:null};
 const consTxt=c=>`Kiugró fogyasztás: ${n1(c.rec)} ${c.unit} (szokásos ${n1(c.base)}, ${c.dev>0?'+':''}${Math.round(c.dev*100)}%) – ellenőrizd az adatot vagy a gépet.`;
+/* ===== üzemanyagszint ===== */
+const fuelCap=v=>num(v.tankCap)||TYPES[v.type]?.tank||null;
+function fuelLevel(v){const f=v.fuel;if(!f||f.l==null)return null;const cap=fuelCap(v),t=TYPES[v.type]||{};let l=f.l,est=false;
+  l+=arr('fuel').filter(x=>x.vid===v.id&&(x.ts||0)>(f.ts||0)).reduce((a,x)=>a+(x.liters||0),0);
+  const a=avgCons(v);if(t.hours&&a.lh&&v.h!=null&&f.h!=null&&v.h>f.h){l-=(v.h-f.h)*a.lh;est=true}else if(a.l100&&v.km!=null&&f.km!=null&&v.km>f.km){l-=(v.km-f.km)*a.l100/100;est=true}
+  l=Math.max(0,cap?Math.min(cap,l):l);return {l,cap,pct:cap?l/cap:null,est,date:f.date}}
+let CANID=0;const FUEL_SEEN=new Map();
+function canSVG(fl,key,big){const id='cv'+(++CANID);const p=fl&&fl.pct!=null?Math.max(0,Math.min(1,fl.pct)):0;const known=fl&&fl.pct!=null;
+  const k=key+(big?'b':'');const anim=known&&FUEL_SEEN.get(k)!==Math.round(p*100);if(known)FUEL_SEEN.set(k,Math.round(p*100));
+  const body='M9 9h20l7 7v28.5a2.5 2.5 0 0 1-2.5 2.5h-25A2.5 2.5 0 0 1 6 44.5V12a3 3 0 0 1 3-3z';
+  return `<svg class="jcan ${big?'big':''} ${known?'':'unk'}" viewBox="0 0 42 50" role="img" aria-label="${known?`Üzemanyag ${Math.round(p*100)}%`:'Üzemanyagszint nincs megadva'}"><defs><clipPath id="${id}"><path d="${body}"/></clipPath></defs>
+   <path class="hdl" d="M12 9V4.5h10V9M15 4.5v4.5M19 4.5v4.5"/><path class="spt" d="M29 9l3.5-5.5h4.5"/>
+   <path class="bd" d="${body}"/><g clip-path="url(#${id})"><rect class="liq ${p<.2?'low':p<.4?'mid':''} ${anim?'anim':''}" x="5" y="8" width="32" height="40" style="transform:scaleY(${p.toFixed(3)})"/></g>
+   <path class="xb" d="M11 17l20 22M31 17L11 39"/><path class="bd2" d="${body}"/></svg>`}
+const fuelTxt=fl=>!fl?'nincs megadva':`${n0(fl.l)}${fl.cap?' / '+n0(fl.cap):''} l${fl.pct!=null?' · '+Math.round(fl.pct*100)+'%':''}${fl.est?' (becsült)':''}`;
+function fuelPanel(){const vs=orderedVehicles().filter(v=>v.reg);if(!vs.length)return '';
+  return `<div class="panel" style="margin-top:14px"><h3>Üzemanyagszint <span class="hint" style="font-weight:600">koppints a gépre a szint megadásához</span></h3><div class="fgrid">${vs.map(v=>{const fl=fuelLevel(v);return `<button class="ftile ${fl&&fl.pct!=null&&fl.pct<.2?'low':''}" data-act="fuelLvl" data-id="${v.id}"><span class="fsil">${SIL[v.type]}</span>${canSVG(fl,v.id)}<span class="fr">${esc(vLabel(v))}</span><span class="fv">${fl?(fl.pct!=null?Math.round(fl.pct*100)+'%':n0(fl.l)+' l'):'–'}</span><span class="fl">${fl?n0(fl.l)+(fl.cap?' / '+n0(fl.cap):'')+' l':'nincs adat'}</span></button>`}).join('')}</div><p class="hint" style="margin:8px 0 0">A szint a megadott értékből indul: a tankolások hozzáadódnak, a megtett km / üzemóra az átlagfogyasztás alapján levonódik (ilyenkor „becsült”).</p></div>`}
+function fuelLevelForm(v){const cap=fuelCap(v);const fl=fuelLevel(v);const cur=fl?Math.round(fl.l):Math.round((cap||200)/2);const step=cap&&cap>=500?10:5;
+  modal('Üzemanyagszint · '+vLabel(v),`<div class="flform"><div class="flcan" id="flcan">${canSVG(cap?{l:cur,cap,pct:cur/cap}:null,'form'+v.id,true)}</div>
+   <div class="flside"><div class="bigc" id="flv">${n0(cur)}<small> l</small></div><div class="hint" id="flp">${cap?Math.round(cur/cap*100)+'% · tartály '+n0(cap)+' l':'add meg a tartály méretét'}</div></div></div>
+   ${cap?`<input type="range" id="f_lvlr" min="0" max="${cap}" step="${step}" value="${cur}" style="width:100%;accent-color:var(--accent);margin-top:10px"><div class="row" style="gap:6px;flex-wrap:wrap;margin-top:8px">${[['Üres',0],['¼',.25],['½',.5],['¾',.75],['Tele',1]].map(([l,q])=>`<button type="button" class="btn sm line" data-q="${q}">${l}</button>`).join('')}</div>`:''}
+   <div class="form" style="margin-top:12px">${fld('lvl','Jelenleg a tartályban (l)',cur,'number','required')}${fld('cap','Tartály mérete (l)',cap||'','number',cap&&!v.tankCap&&TYPES[v.type]?.tank?'placeholder="gyári"':'')}</div>
+   ${fl?`<p class="hint" style="margin:6px 0 0">Jelenlegi: ${fuelTxt(fl)} · utoljára megadva ${fmtD(fl.date)}</p>`:''}`,async fd=>{
+    const l=num(fd.lvl),c=num(fd.cap);if(l==null||l<0)throw 'Add meg a literben mért szintet.';const C=c||cap;if(C&&l>C*1.02)throw `Ez több, mint a tartály (${n0(C)} l).`;
+    const p={fuel:{l,date:today(),ts:Date.now(),km:v.km??null,h:v.h??null}};if(c&&c!==cap)p.tankCap=c;
+    await upd('vehicles',v.id,p);toast(`${vLabel(v)}: ${n0(l)} l${C?' · '+Math.round(l/C*100)+'%':''}`)},'Mentés');
+  const f=$('#mform'),sl=$('#f_lvlr'),inp=f.querySelector('[name=lvl]');
+  const upd2=l=>{const C=num(f.querySelector('[name=cap]').value)||cap;$('#flv').innerHTML=n0(l)+'<small> l</small>';$('#flp').textContent=C?Math.round(l/C*100)+'% · tartály '+n0(C)+' l':'add meg a tartály méretét';
+    if(C){const r=f.querySelector('#flcan rect.liq');if(r){r.classList.remove('anim');r.style.transform=`scaleY(${Math.max(0,Math.min(1,l/C))})`;r.classList.toggle('low',l/C<.2);r.classList.toggle('mid',l/C>=.2&&l/C<.4)}}};
+  if(sl)sl.addEventListener('input',()=>{inp.value=sl.value;upd2(Number(sl.value))});
+  inp.addEventListener('input',()=>{const l=num(inp.value)||0;if(sl)sl.value=l;upd2(l)});
+  f.querySelectorAll('[data-q]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const C=num(f.querySelector('[name=cap]').value)||cap;const l=Math.round(C*Number(b.dataset.q));inp.value=l;if(sl)sl.value=l;upd2(l)}))}
 const tripLive=t=>!t.closed&&!(t.to&&t.to<today());
 const tripExpired=t=>!t.closed&&t.to&&t.to<today();
 function activeTrip(vid){return arr('trips').filter(t=>t.vid===vid&&tripLive(t)).sort((a,b)=>(b.ts||0)-(a.ts||0))[0]}
@@ -856,7 +947,7 @@ function render(){
   if(MODE==='fb'&&(!UID||USERDOC===undefined||!USERDOC||!['member','commander','tech','admin'].includes(ROLE))){$('#mode').innerHTML='';$('#nav').innerHTML='';$('#main').innerHTML=renderGate();splashTick();return}
   syncUI();$('#mode').innerHTML=MODE==='fb'?`<button class="who" data-act="profile">${esc(myName())}<span>${roleName(ROLE)}</span></button>`:MODE==='local'?'demó mód':'betöltés…';
   const nf=arr('faults').filter(f=>f.status!=='lezárva').length,nt=arr('trips').filter(tripLive).length;
-  const np=arr('requests').filter(r=>r.status==='pending'&&(seesAll()||r.by===UID)).length
+  const np=arr('requests').filter(r=>r.status==='pending'&&(seesAll()||r.by===UID)).length+(isTech()?0:myDecidedUnseen())
   const nu=isAdmin()&&MODE==='fb'?arr('users').filter(u=>u.role==='pending').length:0;
   const items=[['flotta','Gépek',0],['naptar','Naptár',0],['menet','Menetlevél',nt],['sofor','Sofőrök',0],['hibak','Hibák',nf],['kerelmek','Kérelmek',np]];{const un=unreadMsgs().length;items.push(['tagok','Tagok',nu+un])}document.body.classList.toggle('nav7',items.length>6);
   $('#nav').innerHTML=items.map(([k,l,c])=>`<button data-view="${k}" ${k==='menet'&&nt?'class="mlon" ':''}${(V.view===k||(k==='flotta'&&V.view==='gep'))?'aria-current="page"':''}>${k==='menet'?IC.mlnav:IC[k]}<span>${l}</span>${c?`<span class="cnt">${c}</span>`:''}</button>`).join('');
@@ -866,6 +957,7 @@ function render(){
   const html=V.view==='gep'?renderVehicle(S.vehicles[V.vid]):V.view==='naptar'?renderCalendar():V.view==='menet'?renderMoves():V.view==='sofor'?renderDrivers():V.view==='hibak'?renderFaults():V.view==='tagok'?renderMembers():V.view==='kerelmek'?renderRequests():renderFleet();
   const hadFocus=document.activeElement?.id==='chatIn';
   $('#main').innerHTML=banner+html;
+  if(V.view==='kerelmek')markRqSeen();
   if(V.view==='tagok'){markChatSeen();const cl=$('#chatlog');if(cl)cl.scrollTop=cl.scrollHeight;if(hadFocus){const ta=$('#chatIn');if(ta){ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length)}}}
   splashTick();
   hydratePhotos();
@@ -909,6 +1001,7 @@ function renderParade(){
     <div class="ranks">${ranks}</div>
     <div class="legend"><span><span class="dot" style="background:var(--hero-fg)"></span>Hadra fogható ${c.ok}</span><span><span class="dot" style="background:var(--brass)"></span>Korlátozottan ${c.limited}</span><span><span class="dot" style="background:rgba(255,243,241,.32)"></span>Szervizben ${c.service}</span></div></div>
    ${todayPanel(trips,nf,wl)}
+   ${fuelPanel()}
    ${stockPanel()}
    <div class="cols" style="margin-top:14px">
    <div class="panel"><h3>Kezelés <span class="pill">v${APP_VER}</span></h3><p class="hint" style="margin:0">Lapozz oldalra a típusokhoz. A <b>+</b> és <b>−</b> gombbal adsz hozzá vagy veszel el gépet, a pajzs / háromszög / villáskulcs gombbal állítod a hadrafoghatóságot.</p></div></div>`;
@@ -935,7 +1028,7 @@ function renderTypePage(t){
     return `<div class="vcard ${s}" data-open="${v.id}" role="button" tabindex="0" aria-label="${esc(vLabel(v))} megnyitása">
      <div class="reg ${v.reg?'':'blank'}">${v.reg?esc(v.reg):'Új '+esc(vName(v))+'<div class="hint" style="font-weight:600">Koppints a kitöltéshez</div>'}</div>${stBtn(v)}
      ${v.reg?`<div class="line mono"><span><b>${n0(v.km)}</b> km</span>${T.hours?`<span><b>${n0(v.h)}</b> üó</span>`:''}${T.apu?`<span>APU <b>${v.apuH==null?'–':nf2.format(v.apuH)}</b></span>`:''}${v.variant?`<span>${esc(v.variant)}</span>`:''}</div>
-     <div class="line"><span>${d?'Sofőr: <b>'+esc(dName(d))+'</b>':'Nincs sofőr'}</span>${pl?`<span>Ma: <b>${esc(pl.place)}</b></span>`:''}</div>${pillsHTML(v)}`:''}${isTech()&&!READONLY?`<div class="vedit"><button class="btn sm line" data-act="vEdit" data-id="${v.id}">${IC.edit}${v.reg?'Rendszám / adatok':'Kitöltés'}</button><button class="btn sm danger" data-act="vDel" data-id="${v.id}">${IC.trash}Törlés</button></div>`:''}</div>`}).join('');
+     <div class="line"><span>${d?'Sofőr: <b>'+esc(dName(d))+'</b>':'Nincs sofőr'}</span>${pl?`<span>Ma: <b>${esc(pl.place)}</b></span>`:''}</div>${(()=>{const fl=fuelLevel(v);return `<button class="vfuel ${fl&&fl.pct!=null&&fl.pct<.2?'low':''}" data-act="fuelLvl" data-id="${v.id}" aria-label="Üzemanyagszint">${canSVG(fl,v.id)}<span><b>${fl?(fl.pct!=null?Math.round(fl.pct*100)+'%':n0(fl.l)+' l'):'Üzemanyag'}</b><small>${fl?n0(fl.l)+(fl.cap?' / '+n0(fl.cap):'')+' l'+(fl.est?' · becsült':''):'szint megadása'}</small></span></button>`})()}${pillsHTML(v)}`:''}${isTech()&&!READONLY?`<div class="vedit"><button class="btn sm line" data-act="vEdit" data-id="${v.id}">${IC.edit}${v.reg?'Rendszám / adatok':'Kitöltés'}</button><button class="btn sm danger" data-act="vDel" data-id="${v.id}">${IC.trash}Törlés</button></div>`:''}</div>`}).join('');
   return `<div class="typehead"><div class="lbl" style="color:var(--hero-fg);opacity:.8">${esc(T.full)}</div><h2>${esc(T.name)}</h2>
     <div class="sil">${SIL[t]}</div>
     <div class="counter"><button data-act="minus" data-type="${t}" ${ro()} ${list.length?'':'disabled'} aria-label="Egy ${esc(T.name)} eltávolítása">−</button><span class="big">${list.length}</span><button class="plus" data-act="plus" data-type="${t}" ${ro()} aria-label="Új ${esc(T.name)} hozzáadása">+</button><span class="lab">darab</span></div>
@@ -954,7 +1047,7 @@ function renderVehicle(v){
   const d=driverOf(v),pl=placeToday(v.id),trip=activeTrip(v.id);
   const top=`<div class="vtop"><button class="back" data-act="back">‹ ${esc(T.name)}</button><button class="arrow" data-go="${i-1}" ${i<=0?'disabled':''} aria-label="Előző">‹</button><button class="arrow" data-go="${i+1}" ${i>=list.length-1?'disabled':''} aria-label="Következő">›</button><span class="pos">${i+1} / ${list.length}</span>${isTech()&&!READONLY?`<button class="arrow" data-act="vEdit" data-id="${v.id}" aria-label="Rendszám és adatok szerkesztése" title="Szerkesztés">${IC.edit}</button><button class="arrow del" data-act="vDel" data-id="${v.id}" aria-label="Gép törlése" title="Törlés">${IC.trash}</button>`:''}</div>`;
   const hero=`<section class="hero" id="hero"><div class="stbig">${stBtn(v,true)}</div><div class="tt">${esc(vName(v))}${v.note?' · '+esc(v.note):''}</div><div class="reg">${v.reg?esc(v.reg):'Új gép'}</div>
-    <div class="sil">${SIL[v.type]}</div>
+    <div class="silrow">${v.reg?(()=>{const fl=fuelLevel(v);return `<button class="hfuel" data-act="fuelLvl" data-id="${v.id}" aria-label="Üzemanyagszint">${canSVG(fl,v.id,true)}<span>${fl?(fl.pct!=null?Math.round(fl.pct*100)+'%':n0(fl.l)+' l'):'szint?'}</span></button>`})():''}<div class="sil">${SIL[v.type]}</div></div>
     <div class="facts"><span>Sofőr: ${d?esc(dName(d)):'nincs'}</span><span>Ma: ${pl?esc(pl.place):'nincs beosztás'}</span>${trip?`<span>ML ${esc(trip.num)}</span>`:''}</div></section>`;
   if(!v.reg)return top+hero+`<div class="panel" style="margin-top:14px"><h3>Sablon — még nincs kitöltve</h3><p class="hint" style="margin-top:0">Add meg a rendszámot és a kezdő óraállásokat, utána indulhat a nyilvántartás.</p><button class="btn pri" data-act="editVehicle" ${ro()}>Adatok kitöltése</button></div>`;
   const quick=`<div class="quick"><button data-act="reading" ${ro()}>${IC.ora}Óraállás</button><button data-act="addFuel" data-vid="${v.id}" ${ro()}>${IC.tank}Tankolás</button><button data-act="${trip?'addMove':'newTrip'}" data-vid="${v.id}" ${ro()}>${trip?IC.menet+'Mozgás':IC.ml+'Menetlevél'}</button><button data-act="addFault" data-vid="${v.id}" ${ro()}>${IC.hibak}Hiba</button></div>`;
@@ -1052,9 +1145,31 @@ function subData(v){const t=TYPES[v.type]||{};const rs=readingsOf(v.id).slice().
   return `<div class="cols"><div class="panel"><h3>Eszköz adatai</h3><dl class="kv"><dt>Rendszám / azonosító</dt><dd>${esc(v.reg||'–')}</dd><dt>Típus</dt><dd>${esc(vName(v))}</dd><dt>Állapot</dt><dd>${STATUS[st(v)][0]}</dd>${t.musz?`<dt>Műszaki lejárat</dt><dd>${fmtD(v.musz)}</dd>`:''}<dt>Megjegyzés</dt><dd>${esc(v.note||'–')}</dd><dt>Beosztott sofőr</dt><dd>${esc(dName(driverOf(v))||'–')}</dd>${weaponKV(v)}</dl>
   <div class="actions" style="justify-content:flex-start"><button class="btn pri" data-act="editVehicle" ${ro()}>Szerkesztés</button>${isTech()?`<button class="btn danger" data-act="delVehicle" ${ro()}>Törlés</button>`:''}</div></div>
   <div class="panel"><h3>Óraállás-előzmények <button class="btn sm line" data-act="expVeh">Export (CSV)</button></h3>${rs.length?`<div class="tblwrap"><table><thead><tr><th>Dátum</th><th class="r">km</th>${t.hours?'<th class="r">üó</th>':''}${t.apu?'<th class="r">APU</th>':''}</tr></thead><tbody>${rs.map(r=>`<tr><td class="mono">${fmtD(r.date)}</td><td class="r mono">${n0(r.km)}</td>${t.hours?`<td class="r mono">${n0(r.h)}</td>`:''}${t.apu?`<td class="r mono">${r.apu==null?'–':nf2.format(r.apu)}</td>`:''}</tr>`).join('')}</tbody></table></div>`:'<div class="empty">Nincs rögzített óraállás.</div>'}</div></div>`}
-function faultItem(f){const v=S.vehicles[f.vid];const cls=f.status==='lezárva'?'':f.sev==='üzemképtelen'?'bad':f.sev==='közepes'?'warn':'ok';
-  return `<div class="item"><div class="main"><div class="t">${esc(f.title)}${V.view!=='gep'&&v?` · <span class="muted">${esc(vLabel(v))}</span>`:''}</div><div class="hint">${fmtD(f.date)}${f.by?' · '+esc(f.by):''}${stampOf(f)}</div>${f.desc?`<div style="margin-top:4px">${esc(f.desc)}</div>`:''}${thumbs(f.photos)}</div>
-   <div class="row"><span class="pill ${cls}">${esc(f.sev)} · ${esc(f.status)}</span>${f.status!=='lezárva'?`<button class="btn sm line" data-act="faultNext" data-id="${f.id}" ${ro()}>${f.status==='nyitott'?'Javítás alatt':'Lezárás'}</button>`:''}</div></div>`}
+const FST={nyitott:['Javításra vár','warn'],mozoghat:['Hibával mozoghat','lim'],'javítás alatt':['Javítás alatt','svc'],lezárva:['Lezárva','ok']};
+const FRES={megjavitva:'Megjavítva',cserelve:'Alkatrész cserélve',egyeb:'Lezárva (egyéb)'};
+const fStLabel=f=>f.status==='lezárva'?(FRES[f.resolution]||'Lezárva'):(FST[f.status]||[f.status])[0];
+const fLog=f=>(f.log&&f.log.length)?f.log:[{st:'nyitott',date:f.date,by:f.by||f.submittedBy||'',note:'Bejelentve',ts:f.ts}];
+function faultItem(f){const v=S.vehicles[f.vid];const closed=f.status==='lezárva';const sevc=f.sev==='üzemképtelen'?'bad':f.sev==='közepes'?'warn':'ok';const stc=closed?'ok':(FST[f.status]||[0,'warn'])[1];
+  const log=fLog(f);
+  return `<div class="item flt ${closed?'closed':''}"><div class="main"><div class="t">${closed?'<span class="fok">✔</span>':'<span class="fex">!</span>'}${esc(f.title)}${V.view!=='gep'&&v?` · <span class="muted">${esc(vLabel(v))}</span>`:''}</div><div class="hint">${fmtD(f.date)}${f.by?' · '+esc(f.by):''}${closed&&f.closedDate?' · lezárva '+fmtD(f.closedDate):''}${stampOf(f)}</div>${f.desc?`<div style="margin-top:4px">${esc(f.desc)}</div>`:''}${f.part?`<div class="hint" style="margin-top:2px">Cserélt alkatrész: <b>${esc(f.part)}</b></div>`:''}${thumbs(f.photos)}
+   <div class="row" style="gap:6px;margin-top:6px;flex-wrap:wrap"><span class="pill ${sevc}">${esc(f.sev)}</span><span class="pill fst ${stc}">${esc(fStLabel(f))}</span><button class="btn sm ${closed?'line':'pri'}" data-act="faultSt" data-id="${f.id}" ${ro()}>${closed?'Újranyitás / állapot':'Állapot módosítása'}</button></div>
+   <details class="flog"><summary>Hibanapló (${log.length})</summary><ol>${log.map(l=>`<li><b>${fmtD(l.date)}</b> · ${esc(l.st==='lezárva'?(FRES[l.res]||'Lezárva'):(FST[l.st]||[l.st])[0])}${l.by?' · '+esc(l.by):''}${l.note?`<div class="hint">${esc(l.note)}</div>`:''}</li>`).join('')}</ol></details></div></div>`}
+function faultStatusForm(f){const v=S.vehicles[f.vid];const opts=[['nyitott','Javításra vár','⏳'],['mozoghat','Hibával mozoghat','⚠'],['javítás alatt','Javítás alatt','🔧'],['megjavitva','Megjavítva','✔'],['cserelve','Alkatrész cserélve','⟳']];
+  const curK=f.status==='lezárva'?(f.resolution||'megjavitva'):f.status;
+  modal('Hiba állapota · '+(v?vLabel(v):''),`<p class="hint" style="margin-top:0"><b>${esc(f.title)}</b> · bejelentve ${fmtD(f.date)}</p>
+   <div class="fstpick">${opts.map(([k,l,ic])=>`<label class="${k==='megjavitva'||k==='cserelve'?'done':''}"><input type="radio" name="st" value="${k}" ${curK===k?'checked':''}><span><i>${ic}</i>${l}</span></label>`).join('')}</div>
+   <div class="form" style="margin-top:10px">${fld('date','Dátum',today(),'date')}<label id="partw" class="full" hidden><span class="lbl">Cserélt alkatrész</span><input name="part" value="${esc(f.part||'')}" placeholder="pl. üzemanyagszivattyú"></label>${fld('note','Megjegyzés a naplóba','','text','full')}
+   <label class="full swr" style="font-weight:700"><span id="vstl">Gép állapotának igazítása</span><input type="checkbox" name="vst"></label></div>`,async fd=>{
+    const k=fd.st;if(!k)throw 'Válassz állapotot.';const closed=k==='megjavitva'||k==='cserelve';
+    const entry={st:closed?'lezárva':k,res:closed?k:null,date:fd.date||today(),by:myName(),note:(fd.note||'')+(k==='cserelve'&&fd.part?` (alkatrész: ${fd.part})`:''),ts:Date.now()};
+    const p={status:closed?'lezárva':k,resolution:closed?k:null,closedDate:closed?entry.date:null,log:[...fLog(f),entry]};if(k==='cserelve')p.part=fd.part||'';
+    await upd('faults',f.id,p);
+    if(fd.vst&&v){const other=openFaults(v.id).filter(x=>x.id!==f.id);const ns=closed?(other.some(x=>x.status==='javítás alatt')?'service':other.some(x=>x.status==='mozoghat')?'limited':'ok'):k==='mozoghat'?'limited':'service';
+      await upd('vehicles',v.id,ns==='ok'?{status:'ok',serviceUntil:null,serviceFrom:null}:{status:ns})}
+    toast(`${v?vLabel(v)+': ':''}${closed?FRES[k]:FST[k][0]}`)},'Mentés');
+  const fm=$('#mform');const sync=()=>{const k=fm.querySelector('[name=st]:checked')?.value;$('#partw').hidden=k!=='cserelve';
+    $('#vstl').textContent=k==='megjavitva'||k==='cserelve'?'Gép vissza hadra foghatóra':k==='mozoghat'?'Gép: korlátozottan hadra fogható':k==='javítás alatt'?'Gép szervizbe (villáskulcs)':'Gép állapotának igazítása';
+    fm.querySelector('[name=vst]').closest('label').hidden=k==='nyitott'};fm.addEventListener('change',sync);sync()}
 
 /* ---------- naptár ---------- */
 function renderCalendar(){
@@ -1066,14 +1181,17 @@ function renderCalendar(){
   const dayItems=d=>[...eventsOn(d,vf).map(e=>({t:'place'+(e.color?' col':''),k:e.color,sh:reg(e.vid),txt:`${reg(e.vid)} · ${e.place}`})),
     ...arr('vehicles').filter(v=>(!vf||v.id===vf)&&v.status==='service'&&v.serviceUntil&&(v.serviceFrom||today())<=d&&v.serviceUntil>=d).map(v=>({t:'svc',sh:vLabel(v),txt:`${vLabel(v)} · szerviz`})),
     ...arr('fuel').filter(f=>f.date===d&&(!vf||f.vid===vf)).map(f=>({t:'fuel',k:reasonColor(f.reason),txt:`${reg(f.vid)} ${n0(f.liters)} l · ${f.reason||''}`})),
-    ...arr('trips').filter(t=>(!vf||t.vid===vf)&&t.from<=d&&(t.returned||t.to||t.from)>=d).map(t=>({t:'ml',txt:`ML ${t.num} · ${reg(t.vid)}`}))];
+    ...arr('trips').filter(t=>(!vf||t.vid===vf)&&t.from<=d&&(t.returned||t.to||t.from)>=d).map(t=>({t:'ml',txt:`ML ${t.num} · ${reg(t.vid)}`})),
+    ...arr('faults').filter(f=>(!vf||f.vid===vf)&&(f.date===d||(f.status==='lezárva'&&f.closedDate===d))).map(f=>{const cl=f.status==='lezárva'&&f.closedDate===d;return {t:cl?'fltok':'flt',sh:(cl?'✔':'!')+reg(f.vid),txt:`${cl?'✔':'!'} ${reg(f.vid)} · ${f.title}`}})];
   const grid=`<div class="cal">${['H','K','Sze','Cs','P','Szo','V'].map(w=>`<div class="wd">${w}</div>`).join('')}${cells.map(d=>{const it=dayItems(d);return `<button class="day ${d.slice(0,7)!==V.calMonth?'out':''} ${d===today()?'today':''}" data-day="${d}" aria-pressed="${d===V.calDay}" aria-label="${fmtD(d)}, ${it.length} bejegyzés"><span class="n">${Number(d.slice(8))}</span>${it.slice(0,3).map(x=>`<span class="ev ${x.t}${x.sh?' hasr':''}" ${x.k?`style="--k:${x.k}"`:''}>${x.sh?`<span class="lg">${esc(x.txt)}</span><span class="sm">${esc(x.sh)}</span>`:esc(x.txt)}</span>`).join('')}${it.length>3?`<span class="more">+${it.length-3}</span>`:''}</button>`}).join('')}</div>`;
   const d=V.calDay;
+  const dfl=arr('faults').filter(f=>(!vf||f.vid===vf)&&(f.date===d||f.closedDate===d||(f.log||[]).some(l=>l.date===d)));
   const evs=eventsOn(d,vf),fus=arr('fuel').filter(f=>f.date===d&&(!vf||f.vid===vf)),mvs=arr('moves').filter(x=>x.date===d&&(!vf||x.vid===vf));
   const dayPanel=`<div class="panel"><h3>${fmtD(d)} <span class="row"><button class="btn sm" data-act="addEvent" data-date="${d}" ${ro()}>+ Beosztás</button><button class="btn sm" data-act="addFuel" data-date="${d}" ${ro()}>+ Tankolás</button></span></h3>
     <div class="lbl" style="margin-bottom:6px">Hol melyik gép</div>${evs.length?`<div class="list">${evs.map(eventItem).join('')}</div>`:'<div class="hint">Erre a napra nincs beosztás.</div>'}
     <div class="lbl" style="margin:14px 0 6px">Tankolások</div>${fus.length?`<div class="list">${fus.map(f=>`<div class="item"><div class="main"><div class="t"><span class="dot" style="background:${reasonColor(f.reason)}"></span>${esc(reg(f.vid))} · ${n0(f.liters)} l</div><div class="hint">${esc(f.reason||'—')}${f.note?' · '+esc(f.note):''}</div></div><button class="btn sm line" data-act="editFuel" data-id="${f.id}" ${ro()}>Szerk.</button></div>`).join('')}</div>`:'<div class="hint">Nincs tankolás.</div>'}
-    <div class="lbl" style="margin:14px 0 6px">Mozgások</div>${mvs.length?`<div class="list">${mvs.map(moveItem).join('')}</div>`:'<div class="hint">Nincs mozgás rögzítve.</div>'}</div>`;
+    <div class="lbl" style="margin:14px 0 6px">Mozgások</div>${mvs.length?`<div class="list">${mvs.map(moveItem).join('')}</div>`:'<div class="hint">Nincs mozgás rögzítve.</div>'}
+    ${dfl.length?`<div class="lbl" style="margin:14px 0 6px">Hibák ezen a napon</div><div class="list">${dfl.map(faultItem).join('')}</div>`:''}</div>`;
   const ws=weekStart(d),wf=arr('fuel').filter(f=>f.date>=ws&&f.date<addDays(ws,7)&&(!vf||f.vid===vf));const byR={};wf.forEach(f=>{const r=f.reason||'Egyéb';byR[r]=(byR[r]||0)+(f.liters||0)});const wt=wf.reduce((t,f)=>t+(f.liters||0),0);
   const weekPanel=`<div class="panel"><h3>${isoWeek(d)}. hét tankolása · ${n0(wt)} l</h3>${wt?`<div class="list">${Object.entries(byR).sort((a,b)=>b[1]-a[1]).map(([r,l])=>`<div><div class="row" style="justify-content:space-between"><span><span class="dot" style="background:${reasonColor(r)}"></span>${esc(r)}</span><span class="mono">${n0(l)} l</span></div><div style="height:8px;background:var(--surface2);border-radius:4px;margin-top:4px"><div style="height:100%;width:${l/wt*100}%;background:${reasonColor(r)};border-radius:4px"></div></div></div>`).join('')}</div>`:'<div class="hint">Ezen a héten nincs tankolás.</div>'}</div>`;
   return `<div class="row" style="justify-content:space-between;margin-bottom:12px"><div class="row"><button class="btn line" data-mon="-1" aria-label="Előző hónap">‹</button><h2 class="h2" style="min-width:170px;text-align:center">${y}. ${HU_M[m-1]}</h2><button class="btn line" data-mon="1" aria-label="Következő hónap">›</button><button class="btn sm" data-mon="0">Ma</button></div>
@@ -1189,13 +1307,68 @@ function renderFaults(){const r={'üzemképtelen':0,'közepes':1,'alacsony':2};c
 
 const fmtTs=t=>{if(!t)return '–';const d=new Date(t);return `${pad(d.getMonth()+1)}.${pad(d.getDate())}. ${pad(d.getHours())}:${pad(d.getMinutes())}`};
 function reqPhotos(r){const out=[];(r.ops||[]).forEach(o=>{const ph=o.data&&o.data.photos;if(Array.isArray(ph))ph.forEach(x=>{if(typeof x==='string'&&x.startsWith('data:'))out.push(x)})});return out}
+/* ===== kérelem részletei ===== */
+const RQF={resolution:'Lezárás módja',closedDate:'Lezárás dátuma',part:'Cserélt alkatrész',log:'Hibanapló',vid:'Gép',date:'Dátum',liters:'Mennyiség (l)',reason:'Ok',kind:'Fajta',km:'km-óra',h:'Össz. üzemóra',motorH:'Motor üó',valtoH:'Váltó üó',apuH:'APU üó',gkaH:'GKA üó',apu:'APU üó',note:'Megjegyzés',num:'ML szám',driver:'Név',from:'Ettől',to:'Eddig',startKm:'Induló km',startH:'Induló üó',endKm:'Záró km',endH:'Záró üó',returned:'VisszaMEA dátum',returnLiters:'Visszatankolva (l)',closed:'Lezárva',title:'Hiba',sev:'Súlyosság',desc:'Leírás',status:'Állapot',place:'Helyszín',task:'Feladat',color:'Szín',reg:'Rendszám',variant:'Változat',musz:'Műszaki lejárat',serviceFrom:'Szerviz ettől',serviceUntil:'Szerviz eddig',driverId:'Sofőr',fuel:'Üzemanyagszint',tankCap:'Tartály (l)',photos:'Fotók',tripId:'Menetlevél',mgSn:'FN MAG sorozatszám',mainWeapon:'Fő fegyverzet',mainWeaponSn:'Fő fegyverzet sorozatszám',trackLinks:'Lánctag / oldal',start:'Indulás',end:'Érkezés',kmStart:'Induló km',kmEnd:'Érkező km',purpose:'Cél',maint:'Karbantartási ciklusok',tk:'KNDS kiszolgálás',lic:'Jogosítványok',rank:'Rendfokozat',name:'Név',count:'Darab',linksPerSide:'Lánctag / oldal',type:'Típus',measured:'VisszaMEA-zva',refueled:'Visszatankolva',group:'Csoportos kiadás'};
+const RQSKIP=new Set(['ts','approvedBy','approvedAt','submittedBy','closedAt','id','by']);
+const OPNAME={add:'Új',upd:'Módosítás',del:'Törlés'};
+function rqVal(k,x){if(x==null||x==='')return '–';
+  if(k==='vid'){const v=S.vehicles[x];return v?esc(vLabel(v)):'?'}
+  if(k==='driverId'){return x?esc(dName(S.drivers[x])||'?'):'nincs'}
+  if(k==='tripId'){const t=S.trips[x];return t?'ML '+esc(t.num):'?'}
+  if(k==='status')return esc((STATUS[x]||FST[x]||[x])[0]);
+  if(k==='color')return `<span class="sw" style="background:${esc(x)}"></span>`;
+  if(k==='fuel')return `${n0(x.l)} l`;
+  if(k==='photos')return Array.isArray(x)?x.length+' db':'–';
+  if(k==='log')return Array.isArray(x)&&x.length?`${x.length} bejegyzés · utolsó: ${esc((x[x.length-1].note)||'')}`:'–';
+  if(k==='resolution')return esc(FRES[x]||x);
+  if(k==='maint')return Array.isArray(x)?x.length+' ciklus':'–';
+  if(k==='tk'){const l=(x.log||[]);return l.length?`${esc(l[l.length-1].code)} elvégezve (${fmtD(l[l.length-1].date)})`:'alapadatok'}
+  if(k==='type')return esc(TYPES[x]?.name||x);
+  if(k==='kind')return ({tank:'tankolás',visszavetel:'visszatankolás (VisszaMEA)'})[x]||esc(x);
+  if(typeof x==='boolean')return x?'igen':'nem';
+  if(typeof x==='number')return n1(x);
+  if(typeof x==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(x))return fmtD(x);
+  if(Array.isArray(x))return esc(x.join(', '));
+  if(typeof x==='object')return esc(JSON.stringify(x).slice(0,80));
+  return esc(String(x))}
+function rqDetails(r){const ops=r.ops||[];
+  return ops.map(o=>{const cur=S[o.c]?.[o.id]||{};const d=o.data||{};
+    const head=`${OPNAME[o.op]||o.op}: ${esc(COLNAME[o.c]||o.c)}${o.op!=='add'&&o.c==='vehicles'&&cur.reg?' · '+esc(cur.reg):''}${o.op==='del'&&cur.num?' · ML '+esc(cur.num):''}`;
+    if(o.op==='del')return `<div class="rqop"><div class="rqoh del">${head}</div>${Object.keys(cur).length?`<div class="hint">${Object.entries(cur).filter(([k])=>RQF[k]&&!RQSKIP.has(k)).slice(0,6).map(([k,x])=>`${RQF[k]}: ${rqVal(k,x)}`).join(' · ')}</div>`:''}</div>`;
+    const rows=Object.entries(d).filter(([k])=>!RQSKIP.has(k)).map(([k,x])=>{const old=o.op==='upd'?cur[k]:undefined;const ch=o.op==='upd'&&JSON.stringify(old??null)!==JSON.stringify(x??null);
+      return `<tr class="${ch?'ch':''}"><th>${esc(RQF[k]||k)}</th><td>${o.op==='upd'&&ch?`<s>${rqVal(k,old)}</s> → `:''}<b>${rqVal(k,x)}</b></td></tr>`}).join('');
+    return `<div class="rqop"><div class="rqoh ${o.op}">${head}</div><table class="rqt">${rows}</table></div>`}).join('')}
+function rqTimeline(r){const step=(on,cls,txt)=>`<li class="${on?'on '+cls:''}">${txt}</li>`;
+  return `<ol class="rqtl">${step(true,'',`Beküldve · <b>${esc(r.byName)}</b> · ${fmtTs(r.ts)}`)}
+   ${step(!!(r.seenAt||r.reviewedAt),'',r.seenAt||r.reviewedAt?`Technikus olvasta · <b>${esc(r.seenBy||r.reviewer||'')}</b> · ${fmtTs(r.seenAt||r.reviewedAt)}`:'Technikus még nem olvasta')}
+   ${r.status==='pending'?step(false,'','Döntésre vár'):r.status==='approved'?step(true,'ok',`Jóváhagyva · <b>${esc(r.reviewer||'')}</b> · ${fmtTs(r.reviewedAt)}${r.note?` · „${esc(r.note)}”`:''}`):step(true,'bad',`Elutasítva · <b>${esc(r.reviewer||'')}</b> · ${fmtTs(r.reviewedAt)}${r.reason?` · indok: „${esc(r.reason)}”`:''}`)}</ol>`}
+const RQ_OPEN=new Set(),RQ_NOTE={};document.addEventListener('input',e=>{if(e.target.id&&e.target.id.startsWith('rqn_'))RQ_NOTE[e.target.id.slice(4)]=e.target.value});
+document.addEventListener('toggle',async e=>{const dt=e.target;if(!dt.matches||!dt.matches('details[data-rqd]'))return;const id=dt.dataset.rqd;if(dt.open)RQ_OPEN.add(id);else RQ_OPEN.delete(id);
+  const r=S.requests[id];if(dt.open&&r&&r.status==='pending'&&!r.seenAt&&isTech()&&DB&&r.by!==UID){try{await write(()=>DB.doc('requests/'+id).update({seenBy:myName(),seenAt:Date.now()}))}catch(x){}}},true);
+/* beküldő értesítése a döntésről */
+let RQ_INIT=false;const RQ_KNOWN=new Map();let RQ_SEEN=0;try{RQ_SEEN=Number(localStorage.getItem('napra-rq-seen')||0)}catch(e){}
+const myDecidedUnseen=()=>arr('requests').filter(r=>r.by===UID&&r.status!=='pending'&&(r.reviewedAt||0)>RQ_SEEN).length;
+function markRqSeen(){const mx=Math.max(RQ_SEEN,...arr('requests').filter(r=>r.by===UID).map(r=>r.reviewedAt||0));if(mx>RQ_SEEN){RQ_SEEN=mx;try{localStorage.setItem('napra-rq-seen',String(mx))}catch(e){}}}
+function onRequests(){const rs=arr('requests');
+  if(!RQ_INIT){if(!LOADED.has('requests'))return;RQ_INIT=true;rs.forEach(r=>RQ_KNOWN.set(r.id,r.status+'|'+(r.seenAt||0)));return}
+  const notes=[];rs.forEach(r=>{const k=r.status+'|'+(r.seenAt||0),prev=RQ_KNOWN.get(r.id);RQ_KNOWN.set(r.id,k);if(prev==null||prev===k||r.by!==UID)return;
+    const [ps]=prev.split('|');const what=(r.lines||[])[0]||r.cat;
+    if(ps==='pending'&&r.status==='approved')notes.push({t:'Jóváhagyva ✔',b:`${r.reviewer||'Technikus'} jóváhagyta: ${what}${r.note?' – „'+r.note+'”':''}`,ok:true});
+    else if(ps==='pending'&&r.status==='rejected')notes.push({t:'Elutasítva ✖',b:`${r.reviewer||'Technikus'} elutasította: ${what}${r.reason?' – indok: „'+r.reason+'”':''}`});
+    else if(r.status==='pending'&&r.seenAt)notes.push({t:'Olvasva',b:`${r.seenBy||'A technikus'} megnyitotta a kérelmed: ${what}`,seen:true})});
+  if(!notes.length)return;const n=notes[notes.length-1];
+  if(V.view==='kerelmek'&&!document.hidden)markRqSeen();
+  if(n.ok)sndAdd();else if(!n.seen)sndRemove();else sndMsg();toast(n.t+' – '+n.b);
+  if(SET.notif&&document.hidden&&'Notification' in window&&Notification.permission==='granted'){const opt={body:n.b,icon:'icon-192.png',tag:'napra-rq',renotify:true,silent:!SET.notifSnd};
+    (navigator.serviceWorker?.ready||Promise.reject()).then(r=>r.showNotification('Kérelem: '+n.t,opt)).catch(()=>{try{new Notification('Kérelem: '+n.t,opt)}catch(e){}})}}
 function reqCard(r,tech){const v=S.vehicles[r.vid];const ph=reqPhotos(r);
   const stp=r.status==='pending'?'<span class="pill pend">Jóváhagyásra vár</span>':r.status==='approved'?`<span class="pill ok">Jóváhagyva · ${esc(r.reviewer||'')}</span>`:`<span class="pill bad">Elutasítva · ${esc(r.reviewer||'')}</span>`;
   return `<div class="rq ${r.status}"><div class="row" style="justify-content:space-between"><span class="pill">${esc(r.cat)}</span>${stp}</div>
    <div class="rqv">${v?esc(vLabel(v))+' <span class="muted" style="font-weight:600">· '+esc(vName(v))+'</span>':'—'}</div>
    <ul class="rql">${(r.lines||[]).map(l=>`<li>${esc(l)}</li>`).join('')}</ul>${ph.length?thumbs(ph):''}
-   <div class="hint">Beküldte: <b>${esc(r.byName)}</b> · ${fmtTs(r.ts)}${r.reviewedAt?` · döntés: ${fmtTs(r.reviewedAt)}`:''}${r.reason?` · indok: ${esc(r.reason)}`:''}</div>
-   ${tech&&r.status==='pending'?`<div class="rqa"><label class="okbox"><input type="checkbox" data-act="approve" data-id="${r.id}"><span>Jóváhagyva technikus által</span></label><button class="btn sm danger" data-act="reject" data-id="${r.id}">Elutasítás</button></div>`:''}</div>`}
+   <details class="rqd" data-rqd="${r.id}" ${RQ_OPEN.has(r.id)?'open':''}><summary>Minden részlet <span class="hint">(${(r.ops||[]).length} módosítás)</span></summary><div class="rqdb">${rqDetails(r)}</div></details>
+   ${rqTimeline(r)}
+   ${tech&&r.status==='pending'?`<input class="rqnote" id="rqn_${r.id}" value="${esc(RQ_NOTE[r.id]||'')}" placeholder="Megjegyzés a beküldőnek (nem kötelező)" maxlength="200"><div class="rqa"><label class="okbox"><input type="checkbox" data-act="approve" data-id="${r.id}"><span>Jóváhagyva technikus által</span></label><button class="btn sm danger" data-act="reject" data-id="${r.id}">Elutasítás</button></div>`:''}</div>`}
 function renderMembers(){let users='';
   if(isAdmin()&&MODE==='fb'){const order={pending:0,admin:1,commander:2,tech:3,member:4};const ps=arr('users').sort((a,b)=>(order[a.role]??9)-(order[b.role]??9)||String(a.name).localeCompare(String(b.name),'hu'));
     users=`<div class="panel" style="margin-top:16px"><h3>Felhasználók és szerepek</h3><p class="hint" style="margin-top:0"><b>Beíró</b>: kérelmet küldhet. <b>Parancsnok</b>: mindent lát, minden kérelmet követ, kérelmet küldhet. <b>Technikus</b>: jóváhagy és közvetlenül ír. <b>Admin</b>: ezen felül szerepeket oszt. Az <b>Aktiválásra vár</b> fiók semmit nem lát.</p>${ps.length?`<div class="list">${ps.map(p=>`<div class="item"><div class="main"><div class="t">${esc((p.rank?p.rank+' ':'')+p.name)} ${p.role==='pending'?'<span class="pill pend">új regisztráció</span>':''}</div><div class="hint">${esc(p.post||'')}${p.post?' · ':''}@${esc(p.username||'')} · ${fmtTs(p.ts)}</div></div>${p.id===UID?`<span class="pill ok">${roleName(p.role)} (te)</span>`:`<span class="seg">${['pending','member','commander','tech','admin'].map(r=>`<button data-act="setRole" data-id="${p.id}" data-role="${r}" aria-pressed="${p.role===r}">${{pending:'Tiltva',member:'Beíró',commander:'Parancsnok',tech:'Technikus',admin:'Admin'}[r]}</button>`).join('')}</span>`}</div>`).join('')}</div>`:'<div class="empty">Még senki nem regisztrált.</div>'}</div>`}
@@ -1282,9 +1455,9 @@ const delBtn='<button type="button" class="btn sm danger" id="mdel">Törlés</bu
 function confirmBox(title,text,label,fn){modal(title,`<p>${text}</p>`,fn,label);const b=$('#mform [type=submit]');b.classList.remove('pri');b.classList.add('danger')}
 
 function vehicleForm(v){const t=TYPES[v.type];
-  modal(v.reg?'Gép szerkesztése':'Új '+t.name+' kitöltése',`<div class="form">${fld('reg','Rendszám / azonosító',v.reg,'text','required')}${t.variants?`<label><span class="lbl">Változat</span><select name="variant">${t.variants.map(x=>`<option ${v.variant===x?'selected':''}>${x}</option>`).join('')}</select></label>`:''}${fld('km','km-óra állás',v.km,'number')}${t.hours?fld('h','Összes üzemóra',v.h,'number'):''}${t.mv?fld('motorH','Motor üzemóra',v.motorH,'number')+fld('valtoH','Váltó üzemóra',v.valtoH,'number'):''}${t.apu?fld('apuH','APU üzemóra',v.apuH,'number'):''}${t.musz?fld('musz','Műszaki vizsga lejárata',v.musz,'date'):''}<label><span class="lbl">Hadrafoghatóság</span><select name="status">${Object.entries(STATUS).map(([k,[l]])=>`<option value="${k}" ${st(v)===k?'selected':''}>${l}</option>`).join('')}</select></label>${v.type==='pzh'?fld('mgSn','FN MAG géppuska sorozatszáma',v.mgSn,'text')+fld('trackLinks','Lánctag / oldal (gyári 95)',v.trackLinks??94,'number'):''}${v.type==='gidran'?fld('mainWeapon','Fő fegyverzet (típus)',v.mainWeapon,'text','placeholder="pl. 12,7 mm-es géppuska"')+fld('mainWeaponSn','Fő fegyverzet sorozatszáma',v.mainWeaponSn,'text'):''}${fld('note','Megjegyzés (üteg, szakasz)',v.note,'text','full')}</div>`,async fd=>{
+  modal(v.reg?'Gép szerkesztése':'Új '+t.name+' kitöltése',`<div class="form">${fld('reg','Rendszám / azonosító',v.reg,'text','required')}${t.variants?`<label><span class="lbl">Változat</span><select name="variant">${t.variants.map(x=>`<option ${v.variant===x?'selected':''}>${x}</option>`).join('')}</select></label>`:''}${fld('km','km-óra állás',v.km,'number')}${t.hours?fld('h','Összes üzemóra',v.h,'number'):''}${t.mv?fld('motorH','Motor üzemóra',v.motorH,'number')+fld('valtoH','Váltó üzemóra',v.valtoH,'number'):''}${t.apu?fld('apuH','APU üzemóra',v.apuH,'number'):''}${t.musz?fld('musz','Műszaki vizsga lejárata',v.musz,'date'):''}<label><span class="lbl">Hadrafoghatóság</span><select name="status">${Object.entries(STATUS).map(([k,[l]])=>`<option value="${k}" ${st(v)===k?'selected':''}>${l}</option>`).join('')}</select></label>${v.type==='pzh'?fld('mgSn','FN MAG géppuska sorozatszáma',v.mgSn,'text')+fld('trackLinks','Lánctag / oldal (gyári 95)',v.trackLinks??94,'number'):''}${v.type==='gidran'?fld('mainWeapon','Fő fegyverzet (típus)',v.mainWeapon,'text','placeholder="pl. 12,7 mm-es géppuska"')+fld('mainWeaponSn','Fő fegyverzet sorozatszáma',v.mainWeaponSn,'text'):''}${fld('tankCap',`Tartály mérete (l)${t.tank?' – gyári '+t.tank:''}`,v.tankCap??'','number',t.tank?`placeholder="${t.tank}"`:'')}${fld('note','Megjegyzés (üteg, szakasz)',v.note,'text','full')}</div>`,async fd=>{
     if(!fd.reg?.trim())throw 'Add meg a rendszámot vagy azonosítót.';{const r=fd.reg.trim().toUpperCase().replace(/\s+/g,'');const dup=arr('vehicles').find(x=>x.id!==v.id&&x.reg&&x.reg.toUpperCase().replace(/\s+/g,'')===r);if(dup)throw `Ez a rendszám már szerepel: ${dup.reg} (${vName(dup)}).`}
-    const data={reg:fd.reg.trim(),note:fd.note||'',km:num(fd.km),h:num(fd.h),motorH:num(fd.motorH),valtoH:num(fd.valtoH),apuH:num(fd.apuH),musz:fd.musz||null,variant:fd.variant||null,status:fd.status||'ok'};
+    const data={reg:fd.reg.trim(),note:fd.note||'',km:num(fd.km),h:num(fd.h),motorH:num(fd.motorH),valtoH:num(fd.valtoH),apuH:num(fd.apuH),musz:fd.musz||null,variant:fd.variant||null,status:fd.status||'ok',tankCap:num(fd.tankCap)};
     if(v.type==='pzh'){data.mgSn=fd.mgSn?.trim()||null;data.trackLinks=num(fd.trackLinks)}if(v.type==='gidran'){data.mainWeapon=fd.mainWeapon?.trim()||null;data.mainWeaponSn=fd.mainWeaponSn?.trim()||null}
     await upd('vehicles',v.id,data);if(data.km!==v.km||data.h!==v.h)await add('readings',{vid:v.id,date:today(),km:data.km,h:data.h,apu:data.apuH},true);toast('Mentve')})}
 function serviceForm(v){modal('Szervizbe állítás',`<p class="hint" style="margin-top:0">${esc(vLabel(v))} · ${esc(vName(v))}</p><div class="form">${fld('from','Szervizben ettől',today(),'date')}${fld('until','Várható vége (opcionális)','','date')}</div><p class="hint">Ha megadod a végét, az nap után a gép automatikusan újra hadra foghatóként jelenik meg, és a naptárban is látszik a szervizidő.</p>`,async fd=>{
@@ -1296,15 +1469,15 @@ function minus(type){const list=byType(type);const v=list[list.length-1];if(!v)r
   if(!hasData){del('vehicles',v.id).then(()=>toast('Sablon eltávolítva')).catch(()=>{});return}
   confirmBox('Gép eltávolítása',`A legutóbb felvett <b>${esc(vLabel(v))}</b> kerül ki a nyilvántartásból. A hozzá tartozó tankolások és menetlevelek megmaradnak.`,'Eltávolítás',async()=>{await del('vehicles',v.id);toast('Eltávolítva')})}
 function readingForm(v){const t=TYPES[v.type];
-  modal('Óraállás',`<div class="form">${fld('date','Dátum',today(),'date')}${fld('km','km-óra állás',v.km,'number')}${t.hours?fld('h','Összes üzemóra',v.h,'number'):''}${t.mv?fld('motorH','Motor üzemóra',v.motorH,'number')+fld('valtoH','Váltó üzemóra',v.valtoH,'number'):''}${t.apu?fld('apuH','APU üzemóra',v.apuH,'number'):''}${v.type==='pzh'?fld('gkaH','GKA üzemóra',v.gkaH,'number'):''}</div>`,async fd=>{
+  modal('Óraállás',`<div class="form">${fld('date','Dátum',today(),'date')}${fld('km','km-óra állás',v.km,'number')}${t.hours?fld('h','Összes üzemóra',v.h,'number'):''}${t.mv?fld('motorH','Motor üzemóra',v.motorH,'number')+fld('valtoH','Váltó üzemóra',v.valtoH,'number'):''}${t.apu?fld('apuH','APU üzemóra',v.apuH,'number'):''}${v.type==='pzh'?fld('gkaH','GKA üzemóra',v.gkaH,'number'):''}${fld('lvl','Üzemanyagszint most (l) – ha tudod','','number','full')}</div>`,async fd=>{
     const km=num(fd.km),h=num(fd.h);if(km!=null&&v.km!=null&&km<v.km)throw `A km-óra állás nem lehet kisebb az előzőnél (${n0(v.km)}).`;
-    const p={km};if(t.hours)p.h=h;if(t.mv){p.motorH=num(fd.motorH);p.valtoH=num(fd.valtoH)}if(t.apu)p.apuH=num(fd.apuH);if(v.type==='pzh'&&num(fd.gkaH)!=null)p.gkaH=num(fd.gkaH);
+    const p={km};if(t.hours)p.h=h;if(t.mv){p.motorH=num(fd.motorH);p.valtoH=num(fd.valtoH)}if(t.apu)p.apuH=num(fd.apuH);if(v.type==='pzh'&&num(fd.gkaH)!=null)p.gkaH=num(fd.gkaH);if(num(fd.lvl)!=null)p.fuel={l:num(fd.lvl),date:fd.date||today(),ts:Date.now()+1,km:km??v.km??null,h:t.hours?(h??v.h??null):null};
     await add('readings',{vid:v.id,date:fd.date||today(),km,h:t.hours?h:null,apu:t.apu?p.apuH:null},true);await upd('vehicles',v.id,p);toast('Óraállás rögzítve')})}
 function fuelForm(vid,date,f){if(!arr('vehicles').length){toast('Előbb vegyél fel egy gépet.');return}const isNew=!f;f=f||{date:date||today(),reason:'Gyakorlat'};
-  modal(isNew?'Tankolás':'Tankolás szerkesztése',`<div class="form"><label class="full"><span class="lbl">Gép</span><select name="vid">${vOpts(f.vid||vid)}</select></label>${fld('date','Dátum',f.date,'date')}${fld('liters','Mennyiség (l)',f.liters,'number','required')}<label class="full"><span class="lbl">Tankolás oka</span><select name="reason">${REASONS.map(([r])=>`<option ${f.reason===r?'selected':''}>${r}</option>`).join('')}</select></label>${fld('km','km-óra tankoláskor (opcionális)',f.km,'number')}${fld('note','Megjegyzés',f.note,'text')}</div>`,async fd=>{
+  modal(isNew?'Tankolás':'Tankolás szerkesztése',`<div class="form"><label class="full"><span class="lbl">Gép</span><select name="vid">${vOpts(f.vid||vid)}</select></label>${fld('date','Dátum',f.date,'date')}${fld('liters','Mennyiség (l)',f.liters,'number','required')}<label class="full"><span class="lbl">Tankolás oka</span><select name="reason">${REASONS.map(([r])=>`<option ${f.reason===r?'selected':''}>${r}</option>`).join('')}</select></label>${fld('km','km-óra tankoláskor (opcionális)',f.km,'number')}${fld('note','Megjegyzés',f.note,'text')}${isNew?'<label class="full swr" style="font-weight:700"><span>Tele lett a tartály</span><input type="checkbox" name="full"></label>':''}</div>`,async fd=>{
     const L=num(fd.liters);if(!L||L<=0)throw 'Add meg a tankolt litert.';const v=S.vehicles[fd.vid],t=TYPES[v.type];if(t.tank&&L>t.tank*1.05)throw `Ez több, mint a tartály (${t.tank} l).`;
     const km=num(fd.km),data={vid:fd.vid,date:fd.date||today(),liters:L,km,reason:fd.reason,note:fd.note||''};
-    if(isNew){data.kind='tank';await add('fuel',data)}else await upd('fuel',f.id,data);
+    if(isNew){data.kind='tank';await add('fuel',data);const C=fuelCap(v);if(fd.full&&C)await upd('vehicles',v.id,{fuel:{l:C,date:data.date,ts:Date.now()+5,km:km??v.km??null,h:v.h??null}})}else await upd('fuel',f.id,data);
     if(km!=null&&(v.km==null||km>v.km)){await add('readings',{vid:v.id,date:data.date,km},true);await upd('vehicles',v.id,{km})}
     toast(`${n0(L)} l · ${fd.reason}`);const vv=fd.vid;setTimeout(()=>{const c=S.vehicles[vv]&&consWarn(S.vehicles[vv]);if(c)toast(vLabel(S.vehicles[vv])+': kiugró fogyasztás – ellenőrizd az adatot vagy a gépet.')},2800)},'Mentés',isNew?'':delBtn);
   if(!isNew)$('#mdel').onclick=()=>act(async()=>{try{await del('fuel',f.id);closeModal();toast('Tankolás törölve')}catch(e){}})}
@@ -1361,9 +1534,9 @@ function maintForm(v,m){const isNew=!m;const t=TYPES[v.type];m=m||{lastDate:toda
     if(!it.days&&!it.hours&&!it.km)throw 'Legalább egy ciklushossz kell.';await upd('vehicles',v.id,{maint:[...(v.maint||[]).filter(x=>x.id!==it.id),it]});toast('Ciklus mentve')},'Mentés',isNew?'':delBtn);
   if(!isNew)$('#mdel').onclick=()=>act(async()=>{try{await upd('vehicles',v.id,{maint:(v.maint||[]).filter(x=>x.id!==m.id)});closeModal();toast('Ciklus törölve')}catch(e){}})}
 function faultForm(vid){if(!arr('vehicles').length){toast('Előbb vegyél fel egy gépet.');return}
-  modal('Hibabejelentés',`<div class="form"><label class="full"><span class="lbl">Gép</span><select name="vid">${vOpts(vid)}</select></label>${fld('title','Hiba röviden','','text','full required')}<label class="full"><span class="lbl">Leírás</span><textarea name="desc"></textarea></label><label><span class="lbl">Súlyosság</span><select name="sev"><option>alacsony</option><option>közepes</option><option>üzemképtelen</option></select></label>${fld('by','Bejelentő','','text')}${fld('date','Dátum',today(),'date')}<label class="full" style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" name="toService" style="width:auto"> Gép szervizbe állítása (villáskulcs)</label></div>${true?'<label style="display:block;margin-top:10px"><span class="lbl">Fotó</span><input type="file" id="f_photo" accept="image/*" capture="environment" multiple></label>':''}`,async fd=>{
+  modal('Hibabejelentés',`<div class="form"><label class="full"><span class="lbl">Gép</span><select name="vid">${vOpts(vid)}</select></label>${fld('title','Hiba röviden','','text','full required')}<label class="full"><span class="lbl">Leírás</span><textarea name="desc"></textarea></label><label><span class="lbl">Súlyosság</span><select name="sev"><option>alacsony</option><option>közepes</option><option>üzemképtelen</option></select></label>${fld('by','Bejelentő','','text')}${fld('date','Dátum',today(),'date')}<label class="full" style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" name="mozoghat" style="width:auto"> Hibával mozoghat (a gép használható)</label><label class="full" style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" name="toService" style="width:auto"> Gép szervizbe állítása (villáskulcs)</label></div>${true?'<label style="display:block;margin-top:10px"><span class="lbl">Fotó</span><input type="file" id="f_photo" accept="image/*" capture="environment" multiple></label>':''}`,async fd=>{
     if(!fd.title?.trim())throw 'Írd le röviden a hibát.';const fs=$('#f_photo')?.files;const ph=fs&&fs.length?await uploadPhotos(fs):[];
-    await add('faults',{vid:fd.vid,title:fd.title.trim(),desc:fd.desc||'',sev:fd.sev,by:fd.by||'',date:fd.date||today(),status:'nyitott',photos:ph});
+    await add('faults',{vid:fd.vid,title:fd.title.trim(),desc:fd.desc||'',sev:fd.sev,by:fd.by||'',date:fd.date||today(),status:fd.mozoghat?'mozoghat':'nyitott',photos:ph,log:[{st:fd.mozoghat?'mozoghat':'nyitott',date:fd.date||today(),by:fd.by||myName(),note:'Bejelentve',ts:Date.now()}]});
     if(fd.toService)await upd('vehicles',fd.vid,{status:'service'});toast('Hiba bejelentve')},'Bejelentés')}
 
 async function shrink(file){try{const img=await createImageBitmap(file);const k=Math.min(1,1800/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);return await new Promise(r=>c.toBlob(b=>r(b||file),'image/jpeg',.82))}catch(e){return file}}
@@ -1415,6 +1588,7 @@ document.addEventListener('click',async e=>{
     case 'minus':minus(d.type);break;
     case 'editVehicle':vehicleForm(v);break;
     case 'delMsg':{const m=S.messages[d.id];if(!m)break;modal('Üzenet törlése',`<p>„${esc(String(m.text).slice(0,80))}” törlődik mindenkinél.</p>`,async()=>{await write(()=>DB.doc('messages/'+m.id).delete());toast('Üzenet törölve')},'Törlés',{direct:true});break}
+    case 'fuelLvl':{const x=S.vehicles[d.id];if(!x)break;if(READONLY){openVehicle(x.id);break}fuelLevelForm(x);break}
     case 'vEdit':vehicleForm(S.vehicles[d.id]);break;
     case 'vDel':{const x=S.vehicles[d.id];const nT=arr('trips').filter(t=>t.vid===x.id).length,nF=arr('fuel').filter(f=>f.vid===x.id).length;
       confirmBox('Gép törlése',`Biztosan törlöd: <b>${esc(vLabel(x))}</b> (${esc(vName(x))})?${nT||nF?` A hozzá tartozó ${nF} tankolás és ${nT} menetlevél a naplóban megmarad.`:''} Ha csak a rendszám rossz, inkább a <b>Szerkesztés</b> gombbal javítsd.`,'Törlés',async()=>{const t=x.type;await del('vehicles',x.id);if(V.view==='gep'){V.view='flotta';V.page=PAGES.indexOf(t)}toast('Gép törölve');render()});break}
@@ -1433,6 +1607,7 @@ document.addEventListener('click',async e=>{
     case 'copyMaint':{const o=byType(v.type).filter(x=>x.id!==v.id);if(!o.length){toast('Nincs másik ilyen típusú gép.');break}
       confirmBox('Ciklusok másolása',`${(v.maint||[]).length} ciklus átmásolása ${o.length} másik ${esc(TYPES[v.type].name)} gépre, mai dátummal és a gépek saját állásával. A meglévő ciklusaikat lecseréli.`,'Másolás',async()=>{for(const x of o)await upd('vehicles',x.id,{maint:(v.maint||[]).map(m=>({...m,id:uid(),lastDate:today(),lastH:x.h??null,lastKm:x.km??null}))});toast(`${o.length} gépre másolva`)});break}
     case 'addFault':faultForm(d.vid||v?.id);break;
+    case 'faultSt':faultStatusForm(S.faults[d.id]);break;
     case 'faultNext':{const f=S.faults[d.id];await upd('faults',f.id,{status:f.status==='nyitott'?'javítás alatt':'lezárva'});break}
     case 'addDriver':driverForm();break;case 'editDriver':driverForm(S.drivers[d.id]);break;
     case 'unassign':await upd('vehicles',d.id,{driverId:null});toast('Levéve a gépről');break;
