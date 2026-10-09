@@ -341,6 +341,12 @@ nav.bottom .mlic .pp{transition:fill .25s}nav.bottom button.mlon .mlic .pp{fill:
 .badge2{display:inline-block;font-size:11.5px;font-weight:800;padding:1px 8px;border-radius:999px;background:var(--ok-bg);color:var(--ok);margin-right:4px}
 .badge2.no{background:var(--surface);color:var(--muted)}
 .archq{margin-bottom:8px}
+.iconban{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(135deg,#5A0A12,#B0121E);color:#fff;border-radius:18px;padding:12px 14px;margin-bottom:12px;box-shadow:0 6px 18px rgba(90,0,10,.3);font-size:13.5px;line-height:1.35}
+.iconban img{width:52px;height:52px;border-radius:50%;flex:none;box-shadow:0 0 0 2px rgba(255,255,255,.4)}
+.iconban b{font-size:15px}.iconban .btn.line{background:rgba(255,255,255,.15);color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.5)}.iconban .btn.pri{background:#fff;color:#8F1520}
+.steps{margin:6px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:14.5px}
+.iconstat{font-size:13px;background:var(--surface2);border-radius:10px;padding:7px 10px;margin:0 0 10px}
+.icok{color:var(--ok);font-weight:700}.icold{color:var(--bad);font-weight:700}.icun{opacity:.7}
 .ppick{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}.ppick .btn{cursor:pointer;flex:1 1 140px;justify-content:center;text-align:center}
 .ppv{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:8px}.ppt{position:relative;width:62px;height:62px}.ppt img{width:100%;height:100%;object-fit:cover;border-radius:10px}
 .ppt button{position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;border:0;background:var(--bad);color:#fff;font-weight:900;line-height:1;cursor:pointer}
@@ -589,7 +595,7 @@ const BEAR=`<g>
  <g style="fill:var(--hero-fg)"><path d="M40 63l3 7 3-7zM54 63l3 7 3-7z"/><ellipse cx="50" cy="57" rx="6" ry="4"/></g>
 </g>`;
 const LOGO_FULL=document.getElementById('splashLogo')?.src||'';
-const APP_VER='1.9.2',APP_DATE='2026.10.09.';document.getElementById('spv').textContent='v'+APP_VER;
+const APP_VER='1.9.3',APP_DATE='2026.10.09.';document.getElementById('spv').textContent='v'+APP_VER;
 
 /* ===== típusok és sziluettek (oldalnézet, jobbra néz) ===== */
 const SIL={
@@ -900,6 +906,32 @@ document.addEventListener('pointerdown',e=>{const sil=e.target.closest&&e.target
   if(BOOM.n===6){hero.classList.add('smoke');startSmoke(hero,sil)}
   if(BOOM.n===11){hero.classList.add('burn');toast('🔥 Túlmelegedett! Ne nyomkodd tovább…')}
   if(BOOM.n>=16)explode(hero,sil)});
+/* ===== régi ikon felismerése → csere-figyelmeztetés, amíg le nem cserélik ===== */
+const STANDALONE=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+const LAUNCH=new URLSearchParams(location.search);
+const NEWICON=LAUNCH.get('src')==='medve';
+const IS_IOS=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const IS_ANDROID=/Android/.test(navigator.userAgent);
+const OLDICON=STANDALONE&&!NEWICON;
+if(!STANDALONE&&!NEWICON&&/^https?:/.test(location.protocol)){try{const u=new URL(location.href);u.searchParams.set('src','medve');history.replaceState(null,'',u.toString())}catch(e){}}
+let DEFER_INSTALL=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();DEFER_INSTALL=e;if($('#instNow'))$('#instNow').hidden=false});
+const newIconUrl=()=>appUrl().replace(/\?.*$/,'')+'?src=medve&install=1';
+function iconBanner(){if(!OLDICON)return '';try{if(sessionStorage.getItem('medve-iconlater'))return ''}catch(e){}
+  return `<div class="iconban"><img src="${$('.badge-logo')?.src||''}" alt=""><div><b>Új ikon és név: M.E.D.V.E.</b><div>A régi „N(app)ra Gépek” ikonról nyitottad meg. Cseréld le – 30 másodperc, az adataid megmaradnak.</div>
+   <div class="row" style="gap:6px;margin-top:8px;flex-wrap:wrap"><button class="btn sm pri" data-act="iconHow">Mutasd, hogyan</button><button class="btn sm line" data-act="iconLater">Később</button></div></div></div>`}
+function iconHowModal(){const url=newIconUrl();
+  const and=`<ol class="steps"><li>Nyomd meg lent a <b>Megnyitás Chrome-ban</b> gombot.</li><li>Chrome-ban: <b>⋮ menü → Alkalmazás telepítése</b> (vagy a felugró <b>Telepítés</b> gomb).</li><li>Az új, medvés <b>M.E.D.V.E.</b> ikonnal lépj be.</li><li>A <b>régi</b> ikont hosszan nyomva: <b>Eltávolítás</b>.</li></ol><a class="btn pri" href="${url}" target="_blank" rel="noopener" style="display:block;text-align:center;margin-top:8px">Megnyitás Chrome-ban</a>`;
+  const ios=`<ol class="steps"><li>Másold ki a linket (gomb lent), és nyisd meg <b>Safariban</b>.</li><li>Safari alján: <b>Megosztás</b> (□↑) → <b>Főképernyőhöz adás</b> → Hozzáadás.</li><li>Az új, medvés <b>M.E.D.V.E.</b> ikonnal lépj be.</li><li>A <b>régi</b> ikont hosszan nyomva: <b>App eltávolítása</b> → Törlés a főképernyőről.</li></ol><div class="invlink" style="margin-top:8px"><span class="mono">${esc(url)}</span></div><button type="button" class="btn pri" data-copyurl="${esc(url)}" style="width:100%;margin-top:8px">Link másolása</button>`;
+  modal('Ikoncsere – lépésről lépésre',`<p class="hint" style="margin-top:0">Amíg a régi ikonról nyitod meg az appot, ez az emlékeztető minden indításkor megjelenik.</p>${IS_IOS?ios:IS_ANDROID?and:'<b>Android:</b>'+and+'<b style="display:block;margin-top:12px">iPhone:</b>'+ios}`,null)}
+function installHelper(){if(STANDALONE||LAUNCH.get('install')!=='1')return;setTimeout(()=>{if(!UID&&MODE==='fb'&&!AUTHSEEN){}
+  modal('M.E.D.V.E. telepítése',`<p style="margin-top:0">Tedd ki az új ikont a kezdőképernyőre:</p>${IS_IOS?'<ol class="steps"><li>Safari alján: <b>Megosztás</b> (□↑)</li><li><b>Főképernyőhöz adás</b> → Hozzáadás</li><li>Utána a régi ikont töröld.</li></ol>':'<button type="button" class="btn pri" id="instNow" style="width:100%" '+(DEFER_INSTALL?'':'hidden')+'>📲 Telepítés most</button><ol class="steps"><li>Ha nincs gomb: <b>⋮ menü → Alkalmazás telepítése</b> / Hozzáadás a kezdőképernyőhöz.</li><li>Utána a régi ikont hosszan nyomva: <b>Eltávolítás</b>.</li></ol>'}`,null)},1600)}
+document.addEventListener('click',async e=>{const t=e.target.closest&&e.target.closest('#instNow,[data-copyurl]');if(!t)return;e.preventDefault();e.stopPropagation();
+  if(t.id==='instNow'&&DEFER_INSTALL){DEFER_INSTALL.prompt();try{const r=await DEFER_INSTALL.userChoice;if(r.outcome==='accepted'){closeModal();toast('Telepítve! Nyisd meg az új M.E.D.V.E. ikonról, a régit töröld.')}}catch(x){}DEFER_INSTALL=null}
+  if(t.dataset.copyurl){try{await navigator.clipboard.writeText(t.dataset.copyurl);toast('Link másolva – nyisd meg Safariban')}catch(x){toast('Jelöld ki és másold ki a linket kézzel.')}}},true);
+let ICON_REPORTED=false;
+function reportIcon(){if(ICON_REPORTED||MODE!=='fb'||!UID||!USERDOC||!STANDALONE)return;const ok=!OLDICON;const plat=IS_IOS?'iPhone':IS_ANDROID?'Android':'egyéb';
+  if(USERDOC.iconOk===ok&&USERDOC.iconPlat===plat){ICON_REPORTED=true;return}ICON_REPORTED=true;
+  try{DB.doc('users/'+UID).update({iconOk:ok,iconAt:Date.now(),iconPlat:plat}).catch(()=>{})}catch(e){}}
 /* ===== fotóválasztó: kamera VAGY galéria ===== */
 let PICKED=[];
 function photoPicker(){PICKED=[];return `<div class="ppick"><label class="btn line"><input type="file" accept="image/*" capture="environment" data-pp hidden>📷 Fotó készítése</label><label class="btn line"><input type="file" accept="image/*" multiple data-pp hidden>🖼 Galériából</label></div><div class="ppv" id="ppv"></div>`}
@@ -988,7 +1020,7 @@ async function loadMonth(ym){if(MODE!=='fb'||monthLoaded.has(ym))return;monthLoa
     for(const [c,f] of qs){const snap=await getDocs(query(collection(FS,c),where(f,'>=',s0),where(f,'<',e0)));snap.docs.forEach(d=>{HIST[c][d.id]={...d.data(),id:d.id}});recompute(c)}scheduleRender()}catch(e){monthLoaded.delete(ym)}}
 async function hydratePhotos(){if(MODE!=='fb')return;for(const img of document.querySelectorAll('img[data-ph]')){const id=img.dataset.ph;if(PHOTOS[id]){img.src=PHOTOS[id];img.removeAttribute('data-ph');continue}
   try{const d=await getDoc(doc(FS,'photos',id));if(d.exists()){PHOTOS[id]=d.data().data;document.querySelectorAll(`img[data-ph="${id}"]`).forEach(x=>{x.src=PHOTOS[id];x.removeAttribute('data-ph')})}}catch(e){}}}
-function boot(){
+function boot(){installHelper();
   if(!firebaseConfig||!firebaseConfig.apiKey||/IDE_|YOUR_/.test(firebaseConfig.apiKey)){localBoot();return}
   const app=initializeApp(firebaseConfig);AUTH=getAuth(app);
   FS=initializeFirestore(app,{localCache:persistentLocalCache({tabManager:persistentMultipleTabManager()}),ignoreUndefinedProperties:true});
@@ -1268,7 +1300,7 @@ function render(){
   const items=[['flotta','Gépek',0],['naptar','Naptár',0],['menet','Menetlevél',nt],['sofor','Driverek',0],['hibak','Hibák',nf],['kerelmek','Kérelmek',np]];{const un=unreadMsgs().length;items.push(['tagok','Tagok',nu+un])}document.body.classList.toggle('nav7',items.length>6);
   $('#nav').innerHTML=items.map(([k,l,c])=>`<button data-view="${k}" ${k==='menet'&&nt?'class="mlon" ':''}${(V.view===k||(k==='flotta'&&V.view==='gep'))?'aria-current="page"':''}>${k==='menet'?IC.mlnav:IC[k]}<span>${l}</span>${c?`<span class="cnt">${c}</span>`:''}</button>`).join('');
   if(LOADED.size<COLS.length){$('#main').innerHTML='<div class="empty">Adatok betöltése…</div>';splashTick();return}
-  const banner=MODE==='local'?'<div class="banner">Demó mód: a firebase-config.js még nincs kitöltve, az adatok csak ezen az eszközön maradnak meg.</div>':'';
+  const banner=(MODE==='local'?'<div class="banner">Demó mód: a firebase-config.js még nincs kitöltve, az adatok csak ezen az eszközön maradnak meg.</div>':'')+iconBanner();reportIcon();
   if(V.view==='gep'&&!S.vehicles[V.vid])V.view='flotta';
   const html=V.view==='gep'?renderVehicle(S.vehicles[V.vid]):V.view==='naptar'?renderCalendar():V.view==='menet'?renderMoves():V.view==='sofor'?renderDrivers():V.view==='hibak'?renderFaults():V.view==='tagok'?renderMembers():V.view==='kerelmek'?renderRequests():renderFleet();
   const hadFocus=document.activeElement?.id==='chatIn';
@@ -1693,7 +1725,7 @@ function reqCard(r,tech){const v=S.vehicles[r.vid];const ph=reqPhotos(r);
    ${tech&&r.status==='pending'?`<input class="rqnote" id="rqn_${r.id}" value="${esc(RQ_NOTE[r.id]||'')}" placeholder="Megjegyzés a beküldőnek (nem kötelező)" maxlength="200"><div class="rqa"><label class="okbox"><input type="checkbox" data-act="approve" data-id="${r.id}"><span>Jóváhagyva technikus által</span></label><button class="btn sm danger" data-act="reject" data-id="${r.id}">Elutasítás</button></div>`:''}</div>`}
 function renderMembers(){let users='';
   if(isAdmin()&&MODE==='fb'){const order={pending:0,admin:1,commander:2,tech:3,member:4};const ps=arr('users').sort((a,b)=>(a.role==='pending')===(b.role==='pending')?byRank(a,b):(a.role==='pending'?-1:1));
-    users=`<div class="panel" style="margin-top:16px"><h3>Felhasználók és szerepek <span class="hint" style="font-weight:600">rendfokozat szerint</span></h3><p class="hint" style="margin-top:0"><b>Beíró</b>: kérelmet küldhet. <b>Parancsnok</b>: mindent lát, minden kérelmet követ, kérelmet küldhet. <b>Technikus</b>: jóváhagy és közvetlenül ír. <b>Admin</b>: ezen felül szerepeket oszt. Az <b>Aktiválásra vár</b> fiók semmit nem lát.</p>${ps.length?`<div class="list">${ps.map(p=>`<div class="item"><div class="main"><div class="t">${esc((p.rank?p.rank+' ':'')+p.name)} ${p.role==='pending'?'<span class="pill pend">új regisztráció</span>':''}</div><div class="hint">${esc(p.post||'')}${p.post?' · ':''}@${esc(p.username||'')} · ${fmtTs(p.ts)}</div></div>${p.id===UID?`<span class="pill ok">${roleName(p.role)} (te)</span>`:`<span class="seg">${['pending','member','commander','tech','admin'].map(r=>`<button data-act="setRole" data-id="${p.id}" data-role="${r}" aria-pressed="${p.role===r}">${{pending:'Tiltva',member:'Beíró',commander:'Parancsnok',tech:'Technikus',admin:'Admin'}[r]}</button>`).join('')}</span>`}<div class="uact"><button class="btn sm line" data-act="userEdit" data-id="${p.id}">${IC.edit}Név / adatok</button>${p.id!==UID?`<button class="btn sm danger" data-act="userDel" data-id="${p.id}">${IC.trash}${p.role==='pending'?'Jelentkezés törlése':'Eltávolítás'}</button>`:''}</div></div>`).join('')}</div>`:'<div class="empty">Még senki nem regisztrált.</div>'}</div>`}
+    users=`<div class="panel" style="margin-top:16px"><h3>Felhasználók és szerepek <span class="hint" style="font-weight:600">rendfokozat szerint</span></h3>${(()=>{const act=ps.filter(u=>u.role!=='pending');const ok=act.filter(u=>u.iconOk===true).length,old=act.filter(u=>u.iconOk===false).length;return `<div class="iconstat"><b>Ikoncsere:</b> ${ok} / ${act.length} fő az új M.E.D.V.E. ikont használja${old?` · <span class="icold">${old} még a régit</span>`:''}${act.length-ok-old?` · ${act.length-ok-old} főről nincs adat (még nem nyitotta meg telepített appként)`:''}</div>`})()}<p class="hint" style="margin-top:0"><b>Beíró</b>: kérelmet küldhet. <b>Parancsnok</b>: mindent lát, minden kérelmet követ, kérelmet küldhet. <b>Technikus</b>: jóváhagy és közvetlenül ír. <b>Admin</b>: ezen felül szerepeket oszt. Az <b>Aktiválásra vár</b> fiók semmit nem lát.</p>${ps.length?`<div class="list">${ps.map(p=>`<div class="item"><div class="main"><div class="t">${esc((p.rank?p.rank+' ':'')+p.name)} ${p.role==='pending'?'<span class="pill pend">új regisztráció</span>':''}</div><div class="hint">${esc(p.post||'')}${p.post?' · ':''}@${esc(p.username||'')} · ${fmtTs(p.ts)} · ${p.iconOk===true?`<span class="icok">📱 új ikon ✔${p.iconPlat?' ('+esc(p.iconPlat)+')':''}</span>`:p.iconOk===false?`<span class="icold">📱 régi ikon${p.iconPlat?' ('+esc(p.iconPlat)+')':''}</span>`:'<span class="icun">📱 nincs adat</span>'}</div></div>${p.id===UID?`<span class="pill ok">${roleName(p.role)} (te)</span>`:`<span class="seg">${['pending','member','commander','tech','admin'].map(r=>`<button data-act="setRole" data-id="${p.id}" data-role="${r}" aria-pressed="${p.role===r}">${{pending:'Tiltva',member:'Beíró',commander:'Parancsnok',tech:'Technikus',admin:'Admin'}[r]}</button>`).join('')}</span>`}<div class="uact"><button class="btn sm line" data-act="userEdit" data-id="${p.id}">${IC.edit}Név / adatok</button>${p.id!==UID?`<button class="btn sm danger" data-act="userDel" data-id="${p.id}">${IC.trash}${p.role==='pending'?'Jelentkezés törlése':'Eltávolítás'}</button>`:''}</div></div>`).join('')}</div>`:'<div class="empty">Még senki nem regisztrált.</div>'}</div>`}
   const np=arr('users').filter(u=>u.role==='pending').length;
   if(!isAdmin()||MODE!=='fb'){const order={admin:0,commander:1,tech:2,member:3};const ps=arr('users').filter(u=>u.role in order).sort(byRank);
     return `<div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 class="h2">Tagok</h2><span class="row" style="gap:6px"><button class="btn line" data-act="help">${IC.help}Súgó</button><button class="btn line" data-act="qr">${IC.link}Meghívó link</button></span></div>${chatPanel()}
@@ -1924,6 +1956,7 @@ document.addEventListener('click',async e=>{
     case 'printFleet':printFleet();break;case 'printVeh':printVehicle(S.vehicles[d.id]);break;case 'printArch':if(MODE==='fb'&&!ARCH_LOADED)await loadArchive();printArchive();break;
     case 'printFaults':printFaults();break;case 'printTrip':closeModal();printTrip(S.trips[d.id]);break;case 'printAudit':printAudit();break;case 'loadAudit':await loadAuditAll();break;
     case 'help':helpModal();break;case 'backup':await backupAll(!!$('#bkph')?.checked);break;case 'restore':restoreForm();break;case 'cleanRq':await cleanupRequests();break;
+    case 'iconHow':iconHowModal();break;case 'iconLater':try{sessionStorage.setItem('medve-iconlater','1')}catch(x){}render();toast('Rendben – a következő indításkor újra szólok.');break;
     case 'repShop':{const x=S.vehicles[d.id];if(x)repShopForm(x,d.k);break}
     case 'repNew':repItemForm(S.vehicles[d.id]);break;case 'repEdit':repItemForm(S.vehicles[d.id],d.r);break;case 'repDel':repDelForm(S.vehicles[d.id],d.r);break;
     case 'repDone':repDoneForm(S.vehicles[d.id],d.r);break;case 'repHistDel':repHistDelForm(S.vehicles[d.id],d.r);break;case 'repOvrDel':repOvrDelForm(S.vehicles[d.id],d.k);break;
