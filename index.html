@@ -341,6 +341,36 @@ nav.bottom .mlic .pp{transition:fill .25s}nav.bottom button.mlon .mlic .pp{fill:
 .badge2{display:inline-block;font-size:11.5px;font-weight:800;padding:1px 8px;border-radius:999px;background:var(--ok-bg);color:var(--ok);margin-right:4px}
 .badge2.no{background:var(--surface);color:var(--muted)}
 .archq{margin-bottom:8px}
+.btn>svg:not(.bi){width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-2px;margin-right:4px;flex:none}
+.hero .sil{cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.hero .sil.tap svg{animation:tapb .18s ease-out}@keyframes tapb{50%{transform:scale(.96) translateY(2px)}}
+.hero.smoke .sil svg{animation:rumble .25s linear infinite}@keyframes rumble{25%{transform:translate(1px,-1px)}50%{transform:translate(-1px,1px)}75%{transform:translate(1px,1px)}}
+.hero.burn .sil{filter:drop-shadow(0 0 10px rgba(255,120,30,.8)) sepia(.5) saturate(2.2) hue-rotate(-20deg)}
+.hero .puff{position:absolute;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:radial-gradient(circle,rgba(70,70,70,.85),rgba(40,40,40,0) 70%);pointer-events:none;animation:puff 1.8s ease-out forwards;z-index:3}
+.hero .puff.big{width:44px;height:44px;margin:-22px 0 0 -22px;background:radial-gradient(circle,rgba(30,30,30,.9),rgba(20,20,20,0) 70%)}
+.hero .puff.fire{background:radial-gradient(circle,rgba(255,220,90,.95),rgba(255,90,20,.6) 45%,rgba(200,30,0,0) 72%);animation-duration:.9s}
+@keyframes puff{from{transform:translate(0,0) scale(calc(var(--s) * .4));opacity:.95}to{transform:translate(var(--dx),-110px) scale(calc(var(--s) * 2.4));opacity:0}}
+.boomflash{position:fixed;inset:0;z-index:98;pointer-events:none;background:radial-gradient(circle at 50% 40%,#fff 0%,#ffd76a 25%,#ff6a1a 50%,rgba(255,40,0,0) 75%);animation:flash .85s ease-out forwards}
+@keyframes flash{from{opacity:1}to{opacity:0}}
+.hero .fireball{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;z-index:4;pointer-events:none;background:radial-gradient(circle,#fff 0%,#ffe066 25%,#ff7b1c 55%,rgba(220,30,0,0) 72%);animation:fb 1.1s ease-out forwards}
+@keyframes fb{0%{transform:scale(.3);opacity:1}40%{transform:scale(6);opacity:1}100%{transform:scale(8);opacity:0}}
+.hero .debris{position:absolute;width:9px;height:6px;margin:-3px 0 0 -4px;background:#2a2a2a;border-radius:2px;z-index:5;pointer-events:none;animation:deb 1.3s cubic-bezier(.2,.7,.4,1) forwards}
+@keyframes deb{to{transform:translate(var(--x),calc(var(--y) + 160px)) rotate(var(--r));opacity:0}}
+.hero.shake{animation:shk .5s linear 2}@keyframes shk{10%,90%{transform:translate(-2px,1px)}20%,80%{transform:translate(4px,-2px)}30%,50%,70%{transform:translate(-6px,3px)}40%,60%{transform:translate(6px,-3px)}}
+.hero .sil.wreck{filter:brightness(.18) contrast(1.4);transform:rotate(-4deg) translateY(6px) scale(.97);transition:filter .3s,transform .3s}
+.hero .sil.fixed{animation:fixd .8s cubic-bezier(.2,.9,.3,1.3)}@keyframes fixd{0%{transform:scale(.6);opacity:0;filter:brightness(2)}100%{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.hero .puff,.hero .debris,.hero .fireball{display:none}.hero.shake{animation:none}}
+.repbig{width:100%;margin:10px 0 0;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 14px;border-radius:16px;background:linear-gradient(135deg,var(--accent-deep),var(--accent));color:#fff;font-weight:800;font-size:15px;box-shadow:0 4px 14px rgba(0,0,0,.18);flex-wrap:wrap}
+.repbig small{font-weight:600;opacity:.85;font-size:12px;flex-basis:100%;text-align:center;margin-top:-4px}
+.repbig svg.bi{width:20px;height:20px}
+.item.repi{flex-direction:column;align-items:stretch}.item.repi .main{flex:none}.item.repi .t .pill{margin-left:4px;font-size:11.5px}
+.replist{display:flex;flex-direction:column;gap:8px}
+.reprow{background:var(--surface2);border-radius:12px;padding:8px 10px}.reprow.focus{box-shadow:inset 0 0 0 2px var(--accent)}
+.reprow .rh{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.reprow .rf{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px 8px;align-items:end}
+.reprow .rf label{display:flex;flex-direction:column;gap:3px}.reprow .rf .full{grid-column:1/-1}
+.reprow .rf input{padding:7px 10px;font-size:14px}.reprow .ck{flex-direction:row!important;align-items:center;gap:6px;font-size:13px;font-weight:700}
+.reprow .ck input{width:20px;height:20px}
 .uact{flex-basis:100%;display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}.uact .btn{display:inline-flex;align-items:center;gap:5px}.uact svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 #printRoot{display:none}
 @media print{
@@ -556,7 +586,7 @@ const BEAR=`<g>
  <g style="fill:var(--hero-fg)"><path d="M40 63l3 7 3-7zM54 63l3 7 3-7z"/><ellipse cx="50" cy="57" rx="6" ry="4"/></g>
 </g>`;
 const LOGO_FULL=document.getElementById('splashLogo')?.src||'';
-const APP_VER='1.8.0',APP_DATE='2026.10.09.';document.getElementById('spv').textContent='v'+APP_VER;
+const APP_VER='1.9.1',APP_DATE='2026.10.09.';document.getElementById('spv').textContent='v'+APP_VER;
 
 /* ===== típusok és sziluettek (oldalnézet, jobbra néz) ===== */
 const SIL={
@@ -600,6 +630,7 @@ const IC={
  gearbox:'<svg viewBox="0 0 24 24"><circle cx="5" cy="5" r="1.6"/><circle cx="12" cy="5" r="1.6"/><circle cx="19" cy="5" r="1.6"/><circle cx="5" cy="19" r="1.6"/><circle cx="12" cy="19" r="1.6"/><path d="M5 6.6v10.8M12 6.6v10.8M19 6.6V12H5"/></svg>',
  clock:'<svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg>',
  ghb:'<svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M13 9l-3 5h4l-3 5M6 7V5h4v2M7 19v2M17 19v2"/></svg>',
+ wrench2:'<svg class="bi" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0 5 5L21 13l-8 8-3-3 8-8M9.3 17.7l-5 5"/><path d="M3 21l6-6M7 3l4 4-3 3-4-4"/></svg>',
  print:'<svg class="bi" viewBox="0 0 24 24"><path d="M7 9V3h10v6M7 17H4v-7h16v7h-3"/><rect x="7" y="14" width="10" height="7"/></svg>',
  help:'<svg class="bi" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.6v.6M12 17h.01"/></svg>',
  save:'<svg class="bi" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 19h16"/></svg>',
@@ -745,6 +776,9 @@ function describeOps(ops){
     else if(o.c==='trips'&&o.op==='add'){cat='Menetlevél';t=`Menetlevél kiadása: ML ${d.num} · ${d.driver}`}
     else if(o.c==='trips'&&o.op==='upd'&&d.closed){cat='Menetlevél';t=`VisszaMEA, gyűjtőbe: ML ${cur.num||''} · záró ${n0(d.endKm)} km${d.returnLiters?' · '+n0(d.returnLiters)+' l':''}`}
     else if(o.c==='trips'&&o.op==='upd'){cat='Menetlevél';t=`Menetlevél módosítása: ML ${d.num||cur.num||''}`}
+    else if(o.c==='vehicles'&&o.op==='upd'&&'repLog' in d){cat='Javító állomány';const prev=(cur.repLog||[]).length,nl=d.repLog||[];t=nl.length>prev?`Szakjavítói tétel elvégezve: ${nl[nl.length-1].name} (${fmtD(nl[nl.length-1].doneDate)})`:'Elvégzett szakjavítói tétel törölve'}
+    else if(o.c==='vehicles'&&o.op==='upd'&&'rep' in d&&!d.tk&&cur.rep&&(d.rep||[]).length<cur.rep.length){cat='Javító állomány';const gone=cur.rep.filter(r=>!(d.rep||[]).some(x=>x.id===r.id)).map(r=>r.name);t=`Szakjavítói tétel törölve: ${gone.join(', ')}`}
+    else if(o.c==='vehicles'&&o.op==='upd'&&'rep' in d){cat='Javító állomány';const no=Object.keys(d.tk?.ovr||{}).length;t=`Szakjavítói adatok: ${(d.rep||[]).length} tétel${no?' · '+no+' KNDS-esedékesség felülírva':''}${d.repSrc?' (forrás: '+d.repSrc+')':''}`}
     else if(o.c==='vehicles'&&o.op==='upd'&&d.tk){cat='Technikai kiszolgálás';const prev=(cur.tk?.log||[]).length,nl=(d.tk.log||[]);t=nl.length>prev?`${nl[nl.length-1].code==='E'?'E1–E4':nl[nl.length-1].code} elvégezve · ${fmtD(nl[nl.length-1].date)}`:'TK alapadatok módosítása'}
     else if(o.c==='vehicles'&&o.op==='upd'&&d.status==='service'){cat='Szerviz / állapot';t=`Szervizbe: ${fmtD(d.serviceFrom)}${d.serviceUntil?' – '+fmtD(d.serviceUntil):''}`}
     else if(o.c==='vehicles'&&o.op==='upd'&&d.status&&(Object.keys(d).length===1||'serviceUntil' in d)){cat='Szerviz / állapot';t=`Állapot: ${STATUS[d.status][0]}`}
@@ -782,7 +816,7 @@ function printReport(title,body,landscape){let r=$('#printRoot');if(!r){r=docume
   setTimeout(()=>{try{window.print()}catch(e){toast('A nyomtatás itt nem érhető el.')}},60)}
 const pTbl=(head,rows)=>`<table class="prtab"><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c??''}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
 const pv=x=>x==null||x===''?'–':typeof x==='number'?n0(x):esc(x);
-function dueTxt(v){const o=[];const mu=TYPES[v.type]?.musz&&muszState(v);if(mu&&mu.cls!=='ok')o.push(mu.txt);if(v.type==='pzh')tkItems(v).filter(i=>i.st!=='ok').forEach(i=>o.push(`${i.code==='E'?'E1–E4':i.code}: ${tkLeftTxt(i)}`));(v.maint||[]).forEach(m=>{const s=maintStatus(v,m);if(s.worst==='bad'||s.worst==='warn')o.push(`${m.name}: ${s.out.map(leftTxt).join(' / ')}`)});return o.join('; ')}
+function dueTxt(v){const o=[];const mu=TYPES[v.type]?.musz&&muszState(v);if(mu&&mu.cls!=='ok')o.push(mu.txt);if(v.type==='pzh')tkItems(v).filter(i=>i.st!=='ok').forEach(i=>o.push(`${i.code==='E'?'E1–E4':i.code}: ${tkLeftTxt(i)}`));(v.maint||[]).forEach(m=>{const s=maintStatus(v,m);if(s.worst==='bad'||s.worst==='warn')o.push(`${m.name}: ${s.out.map(leftTxt).join(' / ')}`)});(v.rep||[]).forEach(x=>{const s=repStatus(v,x);if(s.w!=='ok')o.push(`${x.name}: ${s.txt}`)});return o.join('; ')}
 function printFleet(){const vs=orderedVehicles().filter(v=>v.reg);const c={ok:0,limited:0,service:0};vs.forEach(v=>c[st(v)]++);
   const rows=vs.map(v=>{const t=TYPES[v.type]||{};const fl=fuelLevel(v);const tr=activeTrip(v.id);const d=driverOf(v);const nf=openFaults(v.id);
     return [`<b>${esc(vLabel(v))}</b>`,esc(vName(v)),STATUS[st(v)][0]+(st(v)==='service'&&v.serviceUntil?' ('+fmtS(v.serviceUntil)+'-ig)':''),pv(v.km),t.hours?pv(v.h):'–',t.mv?pv(v.motorH):'–',t.mv?pv(v.valtoH):'–',v.type==='pzh'?pv(v.ghbH):'–',fl?`${n0(fl.l)} l${fl.pct!=null?' ('+Math.round(fl.pct*100)+'%)':''}`:'–',d?esc(dName(d)):'–',tr?`ML ${esc(tr.num)} · ${fmtS(tr.to)}-ig`:'–',nf.length?nf.map(f=>esc(f.title)+' ['+esc(fStLabel(f))+']').join('<br>'):'–',esc(dueTxt(v))||'–']});
@@ -798,6 +832,7 @@ function printVehicle(v){const t=TYPES[v.type]||{};const fl=fuelLevel(v);const t
   printReport('Gép adatlap – '+vLabel(v),`<div class="prcols"><div>${kvh}</div><div class="prsil">${SIL[v.type]}</div></div>
    ${tk.length?`<h4>KNDS technikai kiszolgálás</h4>${pTbl(['Tétel','Esedékes','Hátralévő','Állapot'],tk.map(i=>[esc(i.code==='E'?'E1–E4 bejáratás':i.code),i.date?fmtD(i.date):'–',esc(tkLeftTxt(i))||'–',i.st==='bad'?'ELMARADT':i.st==='warn'?'közeleg':'rendben']))}`:''}
    ${mt.length?`<h4>Karbantartási ciklusok</h4>${pTbl(['Ciklus','Utoljára','Hátralévő','Állapot'],mt.map(({m,s})=>[esc(m.name),fmtD(m.lastDate),esc(s.out.map(leftTxt).join(' / '))||'–',s.worst==='bad'?'LEJÁRT':s.worst==='warn'?'közeleg':'rendben']))}`:''}
+   ${(v.rep||[]).length?`<h4>Szakjavítói adatok</h4>${pTbl(['Tétel','Esedékes','Hátralévő','Forrás'],(v.rep||[]).map(x=>{const s=repStatus(v,x);return [esc(x.name),x.date?fmtD(x.date):'–',esc(s.txt)||'–',esc(x.src||'')]}))}`:''}
    <h4>Hibák</h4>${fs.length?pTbl(['Dátum','Hiba','Súlyosság','Állapot','Lezárva'],fs.map(f=>[fmtD(f.date),esc(f.title)+(f.part?' ('+esc(f.part)+')':''),esc(f.sev),esc(fStLabel(f)),f.closedDate?fmtD(f.closedDate):'–'])):'<p>Nincs bejelentett hiba.</p>'}
    <div class="prcols"><div><h4>Óraállások (utolsó 15)</h4>${pTbl(['Dátum','km',...(t.hours?['üó']:[])],rs.map(r=>[fmtD(r.date),pv(r.km),...(t.hours?[pv(r.h)]:[])]))}</div>
    <div><h4>Tankolások (utolsó 15)</h4>${pTbl(['Dátum','Liter','Ok'],fu.map(f=>[fmtD(f.date),pv(f.liters),esc(f.reason||'')]))}</div></div>
@@ -839,6 +874,29 @@ function dataPanel(){if(!isTech())return '';let last=0;try{last=Number(localStor
    <label class="swr" style="max-width:360px"><span>Fotókkal együtt (nagyobb fájl)</span><input type="checkbox" id="bkph"></label>
    <div class="row" style="gap:8px;flex-wrap:wrap;margin-top:8px"><button class="btn pri" data-act="backup">${IC.save}Teljes mentés letöltése</button><button class="btn line" data-act="restore">Visszatöltés mentésből</button>${isAdmin()?'<button class="btn line" data-act="cleanRq">Régi kérelmek takarítása</button>':''}</div></div>`}
 
+/* ===== mini játék: sok koppintás a járművön → füst → tűz → robbanás ===== */
+const BOOM={vid:null,n:0,last:0,busy:false,timer:null};
+function sndBoom(){if(!SOUND||!ac())return;const a=AC,t=a.currentTime+.02;const n=a.createBufferSource();n.buffer=NOISE;n.loop=true;const lp=a.createBiquadFilter();lp.type='lowpass';lp.frequency.setValueAtTime(2200,t);lp.frequency.exponentialRampToValueAtTime(120,t+1.4);const g=a.createGain();g.gain.setValueAtTime(.9,t);g.gain.exponentialRampToValueAtTime(.001,t+1.6);n.connect(lp).connect(g).connect(MASTER);n.start(t);n.stop(t+1.7);boom(t,1,38);boom(t+.08,.7,55)}
+function sndTick(){if(!SOUND||!ac())return;const t=AC.currentTime+.01;snare(t,.08)}
+function puff(hero,sil,big){const hr=hero.getBoundingClientRect(),sr=sil.getBoundingClientRect();const p=document.createElement('span');p.className='puff'+(big?' big':'')+(hero.classList.contains('burn')&&Math.random()<.45?' fire':'');
+  p.style.left=(sr.left-hr.left+sr.width*(.25+Math.random()*.55))+'px';p.style.top=(sr.top-hr.top+sr.height*(.15+Math.random()*.35))+'px';p.style.setProperty('--dx',(Math.random()*60-30)+'px');p.style.setProperty('--s',(.7+Math.random()*.9).toFixed(2));
+  hero.appendChild(p);setTimeout(()=>p.remove(),1900)}
+function startSmoke(hero,sil){clearInterval(BOOM.timer);BOOM.timer=setInterval(()=>{if(!document.body.contains(hero)){clearInterval(BOOM.timer);return}puff(hero,sil,hero.classList.contains('burn'));if(hero.classList.contains('burn'))puff(hero,sil,false)},170)}
+function explode(hero,sil){BOOM.busy=true;clearInterval(BOOM.timer);sndBoom();try{navigator.vibrate&&navigator.vibrate([90,40,220])}catch(e){}
+  const fl=document.createElement('div');fl.className='boomflash';document.body.appendChild(fl);setTimeout(()=>fl.remove(),900);
+  const hr=hero.getBoundingClientRect(),sr=sil.getBoundingClientRect();const cx=sr.left-hr.left+sr.width/2,cy=sr.top-hr.top+sr.height/2;
+  const fb=document.createElement('span');fb.className='fireball';fb.style.left=cx+'px';fb.style.top=cy+'px';hero.appendChild(fb);setTimeout(()=>fb.remove(),1200);
+  for(let i=0;i<16;i++){const d=document.createElement('span');d.className='debris';const a=Math.random()*Math.PI*2,r=90+Math.random()*140;d.style.left=cx+'px';d.style.top=cy+'px';d.style.setProperty('--x',Math.cos(a)*r+'px');d.style.setProperty('--y',(Math.sin(a)*r-60)+'px');d.style.setProperty('--r',(Math.random()*720-360)+'deg');hero.appendChild(d);setTimeout(()=>d.remove(),1400)}
+  hero.classList.remove('smoke','burn');hero.classList.add('shake');sil.classList.add('wreck');for(let i=0;i<10;i++)setTimeout(()=>{if(document.body.contains(hero))puff(hero,sil,true)},300+i*160);
+  let cnt=1;try{cnt=Number(localStorage.getItem('medve-boom')||0)+1;localStorage.setItem('medve-boom',String(cnt))}catch(e){}
+  setTimeout(()=>toast(`💥 Leharcolva! (${cnt}. alkalom) Hívom a javító állományt…`),700);
+  setTimeout(()=>{hero.classList.remove('shake');sil.classList.remove('wreck');sil.classList.add('fixed');sndAdd();toast('🔧 Megjavítva – vissza a szolgálatba!');setTimeout(()=>sil.classList.remove('fixed'),900);BOOM.busy=false;BOOM.n=0},4200)}
+document.addEventListener('pointerdown',e=>{const sil=e.target.closest&&e.target.closest('#hero .sil');if(!sil||BOOM.busy)return;const hero=$('#hero');if(!hero)return;const now=Date.now();
+  if(BOOM.vid!==V.vid||now-BOOM.last>1500){BOOM.vid=V.vid;BOOM.n=0;hero.classList.remove('smoke','burn');clearInterval(BOOM.timer)}BOOM.last=now;BOOM.n++;
+  sil.classList.remove('tap');void sil.offsetWidth;sil.classList.add('tap');if(BOOM.n<6)sndTick();
+  if(BOOM.n===6){hero.classList.add('smoke');startSmoke(hero,sil)}
+  if(BOOM.n===11){hero.classList.add('burn');toast('🔥 Túlmelegedett! Ne nyomkodd tovább…')}
+  if(BOOM.n>=16)explode(hero,sil)});
 /* ===== tagok kezelése (admin) ===== */
 const uName=u=>u?((u.rank?u.rank+' ':'')+u.name):'?';
 function userEditForm(id){const u=S.users[id];if(!u||!isAdmin())return;
@@ -1058,7 +1116,66 @@ function tkItems(v){const tk=v.tk||{},log=tk.log||[],out=[];if(v.type!=='pzh')re
   // E1–E4 bejáratás
   if(tk.delivery&&!log.some(l=>l.code==='E')){const dd=addDays(tk.delivery,182),dl=diffDays(today(),dd);const kl=v.km!=null?500-(v.km-(tk.deliveryKm||0)):null;
     out.push({grp:'E',code:'E',date:dd,left:dl,hoursLeft:kl,unit:'km',st:dl<0||(kl!=null&&kl<0)?'bad':dl<=30||(kl!=null&&kl<=50)?'warn':'ok'})}
-  return out}
+  return out.map(i=>tkApplyOvr(v,i))}
+const tkKey=i=>i.grp==='GH'?'GH-'+i.code:i.grp==='TW'?i.code:i.grp;
+const tkCounter=(v,i)=>i.grp==='GH'?v.gkaH:i.grp==='TW'?v.motorH:i.grp==='E'?v.km:null;
+function tkApplyOvr(v,i){const o=(v.tk?.ovr||{})[tkKey(i)];if(!o)return i;const r={...i,ovr:o};
+  if(o.date){r.date=o.date;r.left=diffDays(today(),o.date)}
+  if(o.left!=null){const cur=tkCounter(v,i);r.hoursLeft=o.left-((cur??o.at??0)-(o.at??cur??0))}
+  const ds=r.left==null?'ok':r.tol?(r.left<-7?'bad':r.left<=14?'warn':'ok'):(r.left<0?'bad':r.left<=30?'warn':'ok');
+  const lim=r.limit?r.limit*.1:i.unit==='km'?50:i.code==='TW2'?90:30;const hs=r.hoursLeft==null?'ok':r.hoursLeft<0?'bad':r.hoursLeft<=lim?'warn':'ok';
+  const R={bad:0,warn:1,ok:2};r.st=R[ds]<R[hs]?ds:hs;if(o.date&&r.left>=-7)r.overdue=false;return r}
+/* ---- szakjavítói tételek (PzH + Gidran) ---- */
+function repStatus(v,x){const out=[];let w='ok';if(x.date){const l=diffDays(today(),x.date);out.push(l<0?`${-l} napja esedékes`:`${l} nap`);if(l<0)w='bad';else if(l<=14)w='warn'}
+  if(x.kmLeft!=null){const l=x.kmLeft-((v.km??x.kmAt??0)-(x.kmAt??v.km??0));out.push(l<0?`túllépve ${n0(-l)} km`:`${n0(l)} km`);if(l<0)w='bad';else if(l<=50&&w!=='bad')w='warn'}
+  if(x.hLeft!=null){const l=x.hLeft-((v.h??x.hAt??0)-(x.hAt??v.h??0));out.push(l<0?`túllépve ${n0(-l)} üó`:`${n0(l)} üó`);if(l<0)w='bad';else if(l<=10&&w!=='bad')w='warn'}
+  return {w,txt:out.join(' / ')}}
+const hasRep=v=>v.type==='pzh'||v.type==='gidran';
+function repPanel(v){const l=v.rep||[];if(!hasRep(v)&&!l.length)return '';const ov=v.type==='pzh'?(v.tk?.ovr||{}):{};const ok=Object.keys(ov);const hist=(v.repLog||[]).slice().sort((a,b)=>(b.doneDate||'')<(a.doneDate||'')?-1:1).slice(0,10);
+  const items=tkItems(v);const ovName=k=>{const it=items.find(i=>tkKey(i)===k);return k==='F'?(it?it.code:'F')+' (általános TK)':k==='G'?(it?it.code:'GKA')+' (generátor-hűtő)':k.startsWith('GH-')?k.slice(3)+' üó-határ':k==='E'?'E1–E4 bejáratás':k};
+  return `<div class="panel"><h3>Javító állomány · szakjavítói adatok <button class="btn sm pri" data-act="repNew" data-id="${v.id}" ${ro()}>+ Új tétel</button></h3>
+   ${l.length?`<div class="list">${l.map(x=>{const s=repStatus(v,x);return `<div class="item repi"><div class="main"><div class="t">${esc(x.name)} <span class="pill ${s.w}">${esc(s.txt)||'–'}</span></div><div class="hint">${x.date?'esedékes '+fmtD(x.date):''}${x.src?' · forrás: '+esc(x.src):''}${x.note?' · '+esc(x.note):''}${x.by?' · rögzítette: '+esc(x.by):''}</div></div>
+     <div class="uact"><button class="btn sm pri" data-act="repDone" data-id="${v.id}" data-r="${x.id}" ${ro()}>✔ Elvégezve</button><button class="btn sm line" data-act="repEdit" data-id="${v.id}" data-r="${x.id}" ${ro()}>${IC.edit}Szerkesztés</button><button class="btn sm danger" data-act="repDel" data-id="${v.id}" data-r="${x.id}" ${ro()}>${IC.trash}Törlés</button></div></div>`}).join('')}</div>`:'<p class="hint" style="margin:0">Még nincs szakjavítói tétel. Ha telefonon pontos esedékességet kapsz (dátum, hátralévő km / üzemóra), vedd fel az <b>+ Új tétel</b> gombbal.</p>'}
+   ${ok.length?`<div class="lbl" style="margin:14px 0 6px">KNDS-esedékességek szakjavító szerint</div><div class="list">${ok.map(k=>{const o=ov[k];return `<div class="item repi"><div class="main"><div class="t">${esc(ovName(k))}</div><div class="hint">${o.date?'esedékes '+fmtD(o.date):''}${o.left!=null?(o.date?' · ':'')+'hátralévő '+n0(o.left)+' (rögzítéskor)':''}${o.src?' · '+esc(o.src):''} · ${fmtTs(o.ts)}</div></div>
+     <div class="uact"><button class="btn sm line" data-act="repShop" data-id="${v.id}" data-k="${k}" ${ro()}>${IC.edit}Szerkesztés</button><button class="btn sm danger" data-act="repOvrDel" data-id="${v.id}" data-k="${k}" ${ro()}>Vissza automatikusra</button></div></div>`}).join('')}</div>`:''}
+   ${hist.length?`<details class="flog" style="margin-top:12px"><summary>Elvégzett szakjavítói tételek (${(v.repLog||[]).length})</summary><div class="list" style="margin-top:6px">${hist.map(h=>`<div class="item"><div class="main"><div class="t">✔ ${esc(h.name)} · ${fmtD(h.doneDate)}</div><div class="hint">${h.doneBy?esc(h.doneBy):''}${h.doneNote?' · '+esc(h.doneNote):''}${h.src?' · '+esc(h.src):''}</div></div><button class="btn sm danger" data-act="repHistDel" data-id="${v.id}" data-r="${h.id}" ${ro()} aria-label="Bejegyzés törlése">${IC.trash}</button></div>`).join('')}</div></details>`:''}
+   ${v.type==='pzh'?`<button class="btn sm line" data-act="repShop" data-id="${v.id}" ${ro()} style="margin-top:10px">${IC.wrench2}Minden adat egyben (KNDS + tételek)</button>`:''}</div>`}
+function repItemForm(v,rid){const l=v.rep||[];const x=rid?l.find(r=>r.id===rid):{};if(rid&&!x)return;const t=TYPES[v.type]||{};
+  modal(rid?'Szakjavítói tétel szerkesztése':'Új szakjavítói tétel',`<div class="form">${fld('name','Megnevezés',x.name,'text','full required placeholder="pl. löveg csőmérés, futómű-ellenőrzés"')}${fld('date','Esedékes (dátum)',x.date||'','date')}${fld('km','Hátralévő km',x.kmLeft!=null?Math.round(repLeft(v,x,'km')):'','number')}${t.hours?fld('h','Hátralévő üzemóra',x.hLeft!=null?Math.round(repLeft(v,x,'h')):'','number'):''}${fld('src','Forrás (szakjavító neve / telefon)',x.src||v.repSrc||'','text','full')}${fld('note','Megjegyzés',x.note,'text','full')}</div><p class="hint">Elég egyet megadni (dátum, km vagy üzemóra). A hátralévő km / üó a további óraállásokkal automatikusan fogy.</p>`,async fd=>{
+    if(!fd.name?.trim())throw 'Adj nevet a tételnek.';const k=num(fd.km),h=num(fd.h);if(!fd.date&&k==null&&h==null)throw 'Adj meg legalább egy esedékességet (dátum, km vagy üó).';
+    const kOld=x.kmLeft!=null?Math.round(repLeft(v,x,'km')):null,hOld=x.hLeft!=null?Math.round(repLeft(v,x,'h')):null;
+    const it={id:x.id||uid(),name:fd.name.trim(),date:fd.date||null,kmLeft:k,kmAt:k==null?null:(k===kOld?x.kmAt:(v.km??0)),hLeft:h,hAt:h==null?null:(h===hOld?x.hAt:(v.h??0)),src:(fd.src||'').trim(),note:fd.note||'',by:myName(),ts:Date.now()};
+    await upd('vehicles',v.id,{rep:rid?l.map(r=>r.id===rid?it:r):[...l,it],repSrc:it.src||v.repSrc||''});toast(rid?'Tétel mentve':'Tétel felvéve')},'Mentés',rid?`<button type="button" class="btn sm danger" data-act="repDel" data-id="${v.id}" data-r="${rid}">Törlés</button>`:'')}
+function repDelForm(v,rid){const x=(v.rep||[]).find(r=>r.id===rid);if(!x)return;
+  confirmBox('Tétel törlése',`<b>${esc(x.name)}</b> törlődik a szakjavítói tételek közül. (Ha elvégezték, inkább az <b>Elvégezve</b> gombot használd, akkor a naplóban megmarad.)`,'Törlés',async()=>{await upd('vehicles',v.id,{rep:(v.rep||[]).filter(r=>r.id!==rid)});toast('Tétel törölve')})}
+function repDoneForm(v,rid){const x=(v.rep||[]).find(r=>r.id===rid);if(!x)return;
+  modal('Elvégezve: '+x.name,`<div class="form">${fld('date','Elvégzés dátuma',today(),'date')}${fld('note','Megjegyzés (ki végezte, eredmény)','','text','full')}</div>`,async fd=>{
+    const h={...x,doneDate:fd.date||today(),doneBy:myName(),doneNote:fd.note||'',doneKm:v.km??null,doneH:v.h??null};
+    await upd('vehicles',v.id,{rep:(v.rep||[]).filter(r=>r.id!==rid),repLog:[...(v.repLog||[]),h]});toast('✔ '+x.name+' elvégezve')},'Rögzítés')}
+function repHistDelForm(v,rid){const h=(v.repLog||[]).find(r=>r.id===rid);if(!h)return;
+  confirmBox('Napló-bejegyzés törlése',`<b>${esc(h.name)}</b> (${fmtD(h.doneDate)}) törlődik az elvégzett tételek közül.`,'Törlés',async()=>{await upd('vehicles',v.id,{repLog:(v.repLog||[]).filter(r=>r.id!==rid)});toast('Bejegyzés törölve')})}
+function repOvrDelForm(v,k){const tk=v.tk||{};const ov={...(tk.ovr||{})};if(!ov[k])return;
+  confirmBox('Vissza automatikusra',`A szakjavítótól kapott adat törlődik, és ennél a tételnél újra a rendszer számol a leszállítás / üzemórák alapján.`,'Visszaállítás',async()=>{delete ov[k];await upd('vehicles',v.id,{tk:{...tk,ovr:ov},rep:v.rep||[]});toast('Visszaállítva automatikusra')})}
+function repShopForm(v,focus){const tk=v.tk||{};const ovr={...(tk.ovr||{})};const items=v.type==='pzh'&&tk.delivery?tkItems(v):[];const reps=(v.rep||[]).map(x=>({...x}));
+  const tkRows=items.map(i=>{const k=tkKey(i),o=ovr[k];const hasDate=i.date!=null&&i.grp!=='GH';const hasLeft=i.hoursLeft!=null;
+    return `<div class="reprow ${focus===k?'focus':''}" data-k="${k}"><div class="rh"><b>${i.code==='E'?'E1–E4':i.code}</b><span class="hint">${i.grp==='GH'?'GKA üó-határ':i.grp==='TW'?(i.code==='TW1'?'300 motor üó / 24 hó':'900 motor üó'):i.grp==='E'?'bejáratás':'13 hetes ritmus'}</span>${o?'<span class="pill warn" style="font-size:11px">szakjavító szerint</span>':''}</div>
+     <div class="rf">${hasDate?`<label><span class="lbl">Esedékes</span><input type="date" name="d_${k}" value="${i.date||''}"></label>`:''}${hasLeft?`<label><span class="lbl">Hátralévő ${esc(i.unit)}</span><input type="number" inputmode="decimal" name="l_${k}" value="${i.hoursLeft!=null?Math.round(i.hoursLeft):''}"></label>`:''}${o?`<label class="ck"><input type="checkbox" name="x_${k}"> vissza automatikusra</label>`:''}</div></div>`}).join('');
+  const repRow=(x,ix)=>`<div class="reprow" data-r="${ix}"><div class="rf"><label class="full"><span class="lbl">Megnevezés</span><input name="rn_${ix}" value="${esc(x.name||'')}" placeholder="pl. lőszerjavítás, futómű-ellenőrzés, FTO"></label><label><span class="lbl">Esedékes</span><input type="date" name="rd_${ix}" value="${x.date||''}"></label><label><span class="lbl">Hátralévő km</span><input type="number" inputmode="decimal" name="rk_${ix}" value="${x.kmLeft!=null?Math.round(repLeft(v,x,'km')):''}"></label>${TYPES[v.type].hours?`<label><span class="lbl">Hátralévő üó</span><input type="number" inputmode="decimal" name="rh_${ix}" value="${x.hLeft!=null?Math.round(repLeft(v,x,'h')):''}"></label>`:''}<label class="full"><span class="lbl">Megjegyzés</span><input name="rm_${ix}" value="${esc(x.note||'')}"></label>${x.id?`<label class="ck"><input type="checkbox" name="rx_${ix}"> tétel törlése</label>`:''}</div></div>`;
+  modal('Javító állomány · '+vLabel(v),`<p class="hint" style="margin-top:0">A szakjavítótól kapott <b>pontos</b> adatok. Amit itt beírsz, felülírja az automatikus számítást. ${isTech()?'':'Jóváhagyásra megy a technikushoz.'}</p>
+   <div class="form"><label class="full"><span class="lbl">Adat forrása (szakjavító neve / telefon)</span><input name="src" value="${esc(tk.ovrSrc||v.repSrc||'')}" placeholder="pl. Kiss őrgy. – javítóbázis, telefonon"></label></div>
+   ${items.length?`<div class="lbl" style="margin:12px 0 6px">KNDS kiszolgálás – esedékességek</div><div class="replist">${tkRows}</div>`:''}
+   <div class="lbl" style="margin:14px 0 6px">Egyéb szakjavítói tételek</div><div class="replist">${reps.map(repRow).join('')}${repRow({},reps.length)}</div>`,async fd=>{
+    const src=(fd.src||'').trim();const now=Date.now();const nov={...ovr};let nT=0;
+    for(const i of items){const k=tkKey(i);if(fd['x_'+k]){delete nov[k];nT++;continue}const o=ovr[k]||{};const d=fd['d_'+k],l=num(fd['l_'+k]);
+      const dChg=d&&d!==(i.date||''),lChg=l!=null&&i.hoursLeft!=null&&Math.round(i.hoursLeft)!==l;
+      if(dChg||lChg){const cur=tkCounter(v,i);nov[k]={...o,...(dChg?{date:d}:{}),...(lChg?{left:l,at:cur??0}:{}),src,by:myName(),ts:now};nT++}}
+    const nr=[];for(let ix=0;ix<=reps.length;ix++){const x=reps[ix]||{};if(fd['rx_'+ix])continue;const name=(fd['rn_'+ix]||'').trim();if(!name){if(x.id)nr.push(x);continue}
+      const k=num(fd['rk_'+ix]),h=num(fd['rh_'+ix]);const kOld=x.kmLeft!=null?Math.round(repLeft(v,x,'km')):null,hOld=x.hLeft!=null?Math.round(repLeft(v,x,'h')):null;
+      nr.push({id:x.id||uid(),name,date:fd['rd_'+ix]||null,kmLeft:k,kmAt:k==null?null:(k===kOld?x.kmAt:(v.km??0)),hLeft:h,hAt:h==null?null:(h===hOld?x.hAt:(v.h??0)),note:fd['rm_'+ix]||'',src,by:myName(),ts:now})}
+    const p={rep:nr,repSrc:src};if(items.length)p.tk={...tk,ovr:nov,ovrSrc:src};
+    await upd('vehicles',v.id,p);toast('Szakjavítói adatok mentve')},'Mentés');
+  setTimeout(()=>{const f=document.querySelector('.reprow.focus');if(f)f.scrollIntoView({block:'center'})},80)}
+function repLeft(v,x,u){return u==='km'?x.kmLeft-((v.km??x.kmAt??0)-(x.kmAt??v.km??0)):x.hLeft-((v.h??x.hAt??0)-(x.hAt??v.h??0))}
 function tkWorst(v){const r={bad:0,warn:1,ok:2};return tkItems(v).filter(i=>i.st!=='ok').sort((a,b)=>r[a.st]-r[b.st])[0]}
 const tkLeftTxt=i=>{const p=[];if(i.left!=null)p.push(i.left<0?`${-i.left} napja esedékes`:`${i.left} nap`);if(i.hoursLeft!=null)p.push(i.hoursLeft<0?`túllépve ${n0(-i.hoursLeft)} ${i.unit}`:`${n0(i.hoursLeft)} ${i.unit}`);return p.join(' / ')};
 function pillsHTML(v){const p=[];{const cw=consWarn(v);if(cw)p.push(`<span class="pill warn" title="${esc(consTxt(cw))}">Kiugró fogyasztás ${cw.dev>0?'+':''}${Math.round(cw.dev*100)}%</span>`)}const t=activeTrip(v.id);
@@ -1203,6 +1320,7 @@ function todayPanel(trips,nf,wl){const vs=orderedVehicles().filter(v=>v.reg);
   vs.forEach(v=>{const mu=TYPES[v.type]?.musz&&muszState(v);if(mu&&mu.cls!=='ok')dl.push({v,cls:mu.cls,txt:mu.txt});
     if(v.type==='pzh')tkItems(v).filter(i=>i.st!=='ok').forEach(i=>dl.push({v,cls:i.st,txt:`${i.code==='E'?'Bejáratás E1–E4':i.code}: ${tkLeftTxt(i)}`}));
     (v.maint||[]).forEach(m=>{const s=maintStatus(v,m);if(s.worst==='bad'||s.worst==='warn')dl.push({v,cls:s.worst,txt:`${m.name}: ${s.out.map(leftTxt).join(' / ')}`})});
+    (v.rep||[]).forEach(x=>{const s=repStatus(v,x);if(s.w!=='ok')dl.push({v,cls:s.w,txt:`🔧 ${x.name}: ${s.txt}`})});
     const cw=consWarn(v);if(cw)dl.push({v,cls:'warn',txt:`Kiugró fogyasztás ${cw.dev>0?'+':''}${Math.round(cw.dev*100)}%`})});
   dl.sort((a,b)=>R[a.cls]-R[b.cls]);
   return `<div class="panel today" style="margin-top:14px"><h3>Mai helyzet · ${fmtD(today())} <button class="btn sm line" data-act="printFleet">${IC.print}A4 jelentés</button></h3>
@@ -1243,7 +1361,8 @@ function renderVehicle(v){
   const subs=[['att','Áttekintés'],...(v.type==='pzh'?[['tk','Kiszolgálás']]:[]),['naplo','Napló'],['stat','Statisztika'],['karb','Karbantartás'],['hiba','Hibák'],['adat','Adatok']];
   const stt=`<div class="subtabs" role="tablist">${subs.map(([k,l])=>`<button role="tab" data-sub="${k}" aria-selected="${V.sub===k}">${l}</button>`).join('')}</div>`;
   const body=V.sub==='tk'&&v.type==='pzh'?subTK(v):V.sub==='naplo'?subLog(v):V.sub==='stat'?subStats(v):V.sub==='karb'?subMaint(v):V.sub==='hiba'?subFaults(v):V.sub==='adat'?subData(v):subOverview(v);
-  return top+hero+quick+stt+body;
+  const repBtn=hasRep(v)?`<button class="btn repbig" data-act="repShop" data-id="${v.id}" ${ro()}>${IC.wrench2}Javító állomány<small>szakjavítói adatok szerkesztése</small></button>`:'';
+  return top+hero+quick+repBtn+stt+body;
 }
 function metricsHTML(v){const t=TYPES[v.type]||{};if(v.type==='pzh')return `<div class="metrics pzm">${PZC.map(([f,l,u,ic])=>`<button class="metric pzmet" data-act="pzCnt" data-id="${v.id}" data-f="${f}"><div class="lbl">${IC[ic]}${l}</div><div class="v">${v[f]==null?'–':n0(v[f])}<small>${u}</small></div></button>`).join('')}${[['FN MAG',v.mgSn],['Lánctag/oldal',v.trackLinks??94]].map(([l,x])=>`<div class="metric"><div class="lbl">${l}</div><div class="v" style="font-size:15px;overflow-wrap:anywhere">${esc(x??'–')}</div></div>`).join('')}</div>`;const ms=[['km-óra',v.km,'km']];const wx=v.type==='pzh'?[['FN MAG',v.mgSn],['Lánctag/oldal',v.trackLinks??94]]:v.type==='gidran'?[['Fő fegyverzet',v.mainWeaponSn?(v.mainWeapon?v.mainWeapon+' · ':'')+v.mainWeaponSn:v.mainWeapon]]:[];if(t.hours)ms.push(['Össz. üzemóra',v.h,'h']);if(t.mv){ms.push(['Motor',v.motorH,'h']);ms.push(['Váltó',v.valtoH,'h'])}if(t.apu)ms.push(['APU',v.apuH,'h',1]);
   return `<div class="metrics">${ms.map(([l,x,u,dd])=>`<div class="metric"><div class="lbl">${l}</div><div class="v">${x==null?'–':dd?nf2.format(x):n0(x)}<small>${u}</small></div></div>`).join('')}${wx.map(([l,x])=>`<div class="metric" style="grid-column:span 2"><div class="lbl">${l}</div><div class="v" style="font-size:15px;overflow-wrap:anywhere">${esc(x??'–')}</div></div>`).join('')}</div>`}
@@ -1257,7 +1376,7 @@ function subOverview(v){
   const up=arr('events').filter(e=>e.vid===v.id&&(e.to||e.from)>=today()).sort((a,b)=>a.from<b.from?-1:1).slice(0,5);
   let ref='';if(v.type==='pzh')ref=`<div class="ref">Gyári: ${t.tank} l gázolaj · ${t.range} km hatótáv papíron (≈ ${n1(t.tank/t.range*100)} l/100 km) · alapjáraton ${t.idle} l/h.</div>`;if(v.type==='gidran')ref=`<div class="ref">Tartály: ${t.tank} l gázolaj. Gyári fogyasztási adat nincs, az átlag a tankolásokból számolódik.</div>`;
   return `${metricsHTML(v)}${pillsHTML(v)?`<div style="margin:10px 0">${pillsHTML(v)}</div>`:'<div style="height:12px"></div>'}
-   <div class="cols"><div class="panel"><h3>Menetlevél</h3>${tripHTML}</div>
+   <div class="cols"><div class="panel"><h3>Menetlevél</h3>${tripHTML}</div>${repPanel(v)}
    <div class="panel"><h3>Fogyasztás</h3><dl class="kv"><dt>Átlag l/100 km</dt><dd>${n1(a.l100)}</dd>${t.hours?`<dt>Átlag l/üzemóra</dt><dd>${n1(a.lh)}</dd>`:''}<dt>Alap</dt><dd>${a.L!=null?`${n0(a.L)} l · ${n0(a.km)} km${t.hours?' · '+n1(a.h)+' üó':''}`:'legalább 2 óraállás és 1 tankolás kell'}</dd>${(()=>{const c=consCheck(v);return c?`<dt>Utolsó 30 nap</dt><dd>${n1(c.rec)} ${c.unit}</dd>`:''})()}</dl>${(()=>{const c=consWarn(v);return c?`<div class="consw">${IC.hibak}<span>${esc(consTxt(c))}</span></div>`:''})()}${ref}</div>
    <div class="panel"><h3>Beosztás <button class="btn sm" data-act="addEvent" data-vid="${v.id}" ${ro()}>+ Beosztás</button></h3>${up.length?`<div class="list">${up.map(eventItem).join('')}</div>`:'<div class="empty">Nincs előre rögzített helyszín vagy feladat.</div>'}</div></div>`;
 }
@@ -1265,15 +1384,16 @@ function eventItem(e){const v=S.vehicles[e.vid];return `<div class="item" ${e.co
 function subTK(v){const tk=v.tk||{};
   if(!tk.delivery)return `<div class="panel"><h3>Technikai kiszolgálás (TK)</h3><p style="margin-top:0">A rendszer a <b>leszállítás dátumából</b> automatikusan számolja az F1–F4 és GKA1–5 esedékességét (13 hetes ritmus, ±1 hét), üzemórából a GKA- és TW-határokat, és a bejáratást követő E1–E4 ellenőrzést.</p><button class="btn pri" data-act="tkSetup" ${ro()}>Kezdő adatok megadása</button></div>`;
   const items=tkItems(v);const by=g=>items.filter(i=>i.grp===g);
-  const card=(i,title)=>`<div class="tkc ${i.st}"><div class="row" style="justify-content:space-between"><b class="tkcode">${i.code==='E'?'E1–E4':i.code}</b><span class="pill ${i.st}">${i.overdue?'ELMARADT · ':''}${tkLeftTxt(i)}</span></div><div class="hint">${title||TK_DESC[i.code]||''}</div>${i.date?`<div class="mono" style="font-size:13px;margin-top:2px">Esedékes: ${fmtD(i.date)}${i.tol?' (±1 hét)':''}</div>`:''}<div class="actions" style="margin-top:8px;justify-content:flex-start"><button class="btn sm pri" data-act="tkDone" data-code="${i.code}" ${ro()}>${i.code==='E'?'E1–E4':i.code} elvégezve</button></div></div>`;
+  const card=(i,title)=>`<div class="tkc ${i.st}"><div class="row" style="justify-content:space-between"><b class="tkcode">${i.code==='E'?'E1–E4':i.code}</b><span class="pill ${i.st}">${i.overdue?'ELMARADT · ':''}${tkLeftTxt(i)}</span></div><div class="hint">${title||TK_DESC[i.code]||''}</div>${i.date?`<div class="mono" style="font-size:13px;margin-top:2px">Esedékes: ${fmtD(i.date)}${i.tol?' (±1 hét)':''}</div>`:''}${i.ovr?`<div class="hint" style="margin-top:2px">🔧 Szakjavító szerint${i.ovr.src?' ('+esc(i.ovr.src)+')':''} · ${fmtTs(i.ovr.ts)}</div>`:''}<div class="actions" style="margin-top:8px;justify-content:flex-start"><button class="btn sm pri" data-act="tkDone" data-code="${i.code}" ${ro()}>${i.code==='E'?'E1–E4':i.code} elvégezve</button><button class="btn sm line" data-act="repShop" data-id="${v.id}" data-k="${tkKey(i)}" ${ro()}>${IC.edit}Időpont / adat javítása</button></div></div>`;
   const up=(i)=>i&&i.upcoming?`<div class="tkup">${i.upcoming.map(u=>`<span><b>${u.code}</b> ${fmtS(u.date)}</span>`).join('')}</div>`:'';
   const F=by('F')[0],G=by('G')[0];const log=(tk.log||[]).slice().sort((a,b)=>a.date<b.date?1:-1).slice(0,20);
   return `<div class="panel"><h3>Technikai kiszolgálás · PzH 2000 <button class="btn sm line" data-act="tkSetup" ${ro()}>Alapadatok</button></h3>
    <dl class="kv"><dt>Leszállítás</dt><dd>${fmtD(tk.delivery)}</dd><dt>Motor üó / GKA üó</dt><dd>${n0(v.motorH)} / ${v.gkaH==null?'–':n0(v.gkaH)}</dd><dt>km</dt><dd>${n0(v.km)}</dd></dl>
    <p class="hint" style="margin:8px 0 0">Megelőző jellegű rendszer: az esedékesség nyilvántartása a technikus / karbantartó rajparancsnok felelőssége. Magasabb szint elvégzése az alacsonyabbakat is teljesíti.</p></div>
+   <button class="btn repbig" data-act="repShop" data-id="${v.id}" ${ro()} style="margin-top:12px">${IC.wrench2}Javító állomány – pontos adatok a szakjavítótól</button>
    <div class="cols" style="margin-top:14px">
     <div class="panel"><h3>Általános TK (alváz + torony)</h3>${F?card(F,'13 hetes ritmus: F1 alegység · F2 26 hét · F3 52 hét · F4 104 hét'):''}${up(F)}</div>
-    <div class="panel"><h3>Generátor-hűtő (GKA)</h3>${G?card(G,'F-fel egybekötve, 13 hetes ritmus · GKA5 4 évente'):''}${up(G)}<div class="lbl" style="margin:12px 0 6px">Üzemóra-határok</div>${v.gkaH==null?'<p class="hint" style="margin:0">Add meg a GKA üzemórát (Óraállás), és számolja a 250 / 500 / 1000 / 4000 üó határokat.</p>':`<div class="list">${by('GH').map(i=>`<div class="row" style="justify-content:space-between"><span><b>${i.code}</b> <span class="hint">${n0(i.limit)} üó-nként</span></span><span class="pill ${i.st}">${tkLeftTxt(i)}</span></div>`).join('')}</div>`}</div>
+    <div class="panel"><h3>Generátor-hűtő (GKA)</h3>${G?card(G,'F-fel egybekötve, 13 hetes ritmus · GKA5 4 évente'):''}${up(G)}<div class="lbl" style="margin:12px 0 6px">Üzemóra-határok</div>${v.gkaH==null?'<p class="hint" style="margin:0">Add meg a GKA üzemórát (Óraállás), és számolja a 250 / 500 / 1000 / 4000 üó határokat.</p>':`<div class="list">${by('GH').map(i=>`<div class="row" style="justify-content:space-between"><span><b>${i.code}</b> <span class="hint">${n0(i.limit)} üó-nként${i.ovr?' · 🔧':''}</span></span><span class="row" style="gap:6px"><span class="pill ${i.st}">${tkLeftTxt(i)}</span><button class="btn sm line" data-act="repShop" data-id="${v.id}" data-k="GH-${i.code}" ${ro()} aria-label="${i.code} javítása">${IC.edit}</button></span></div>`).join('')}</div>`}</div>
     <div class="panel"><h3>Hajtómű (TW)</h3>${by('TW').map(i=>card(i,i.code==='TW1'?'300 motor üó vagy 24 hónap':'900 motor üó')).join('')}</div>
     ${by('E').length?`<div class="panel"><h3>Bejáratás</h3>${card(by('E')[0],'500 futott km vagy 26 hét (amelyik hamarabb)')}</div>`:''}
     <div class="panel"><h3>Elvégzett kiszolgálások</h3>${log.length?`<div class="list">${log.map(l=>`<div class="item"><div class="main"><div class="t">${l.code==='E'?'E1–E4':l.code} · ${fmtD(l.date)}</div><div class="hint">${l.motorH!=null?'motor '+n0(l.motorH)+' üó · ':''}${l.gkaH!=null?'GKA '+n0(l.gkaH)+' üó · ':''}${l.km!=null?n0(l.km)+' km':''}${l.by?' · '+esc(l.by):''}${l.note?' · '+esc(l.note):''}</div></div></div>`).join('')}</div>`:'<div class="empty">Még nincs rögzített kiszolgálás.</div>'}</div>
@@ -1285,7 +1405,8 @@ function tkSetupForm(v){const tk=v.tk||{};
 function tkDoneForm(v,code){const tk=v.tk||{};const codes=['F1','F2','F3','F4','GKA1','GKA2','GKA3','GKA4','GKA5','TW1','TW2','E'];
   modal('Kiszolgálás elvégezve',`<div class="form"><label><span class="lbl">Kiszolgálás</span><select name="code">${codes.map(c=>`<option value="${c}" ${c===code?'selected':''}>${c==='E'?'E1–E4 (bejáratás)':c}</option>`).join('')}</select></label>${fld('date','Dátum',today(),'date')}${fld('motorH','Motor üó',v.motorH,'number')}${fld('gkaH','GKA üó',v.gkaH,'number')}${fld('km','km',v.km,'number')}${fld('note','Megjegyzés',''  ,'text','full')}</div>`,async fd=>{
     const e={code:fd.code,date:fd.date||today(),motorH:num(fd.motorH),gkaH:num(fd.gkaH),km:num(fd.km),note:fd.note||'',by:myName()};
-    await upd('vehicles',v.id,{tk:{...tk,log:[...(tk.log||[]),e]},...(e.gkaH!=null&&(v.gkaH==null||e.gkaH>v.gkaH)?{gkaH:e.gkaH}:{})});toast(`${fd.code==='E'?'E1–E4':fd.code} rögzítve`)},'Rögzítés')}
+    const ov={...(tk.ovr||{})};const c=fd.code;if(c.startsWith('F'))delete ov.F;if(c.startsWith('GKA')){delete ov.G;Object.keys(ov).filter(k=>k.startsWith('GH-')&&tkRank(k.slice(3))<=tkRank(c)).forEach(k=>delete ov[k])}if(c==='TW1')delete ov.TW1;if(c==='TW2'){delete ov.TW1;delete ov.TW2}if(c==='E')delete ov.E;
+    await upd('vehicles',v.id,{tk:{...tk,ovr:ov,log:[...(tk.log||[]),e]},...(e.gkaH!=null&&(v.gkaH==null||e.gkaH>v.gkaH)?{gkaH:e.gkaH}:{})});toast(`${fd.code==='E'?'E1–E4':fd.code} rögzítve`)},'Rögzítés')}
 function subLog(v){
   const all=[...arr('fuel').filter(f=>f.vid===v.id).map(f=>({k:'fuel',d:f.date,ts:f.ts,o:f})),...arr('moves').filter(m=>m.vid===v.id).map(m=>({k:'move',d:m.date,ts:m.ts,o:m}))].sort((a,b)=>a.d<b.d?1:a.d>b.d?-1:(b.ts||0)-(a.ts||0)).slice(0,60);
   const li=x=>{if(x.k==='fuel'){const f=x.o;return `<li class="fuel" style="--k:${reasonColor(f.reason)}"><div class="d">${fmtD(f.date)}</div><div><b>${n0(f.liters)} l</b> tankolás · ${esc(f.reason||'—')}${f.kind==='visszavetel'?' (visszavételkor)':''}${f.note?' · '+esc(f.note):''}${stampOf(f)} <button class="btn sm line" data-act="editFuel" data-id="${f.id}" ${ro()} style="padding:1px 8px">Szerk.</button></div></li>`}
@@ -1497,7 +1618,7 @@ function renderFaults(){const r={'üzemképtelen':0,'közepes':1,'alacsony':2};c
 const fmtTs=t=>{if(!t)return '–';const d=new Date(t);return `${pad(d.getMonth()+1)}.${pad(d.getDate())}. ${pad(d.getHours())}:${pad(d.getMinutes())}`};
 function reqPhotos(r){const out=[];(r.ops||[]).forEach(o=>{const ph=o.data&&o.data.photos;if(Array.isArray(ph))ph.forEach(x=>{if(typeof x==='string'&&x.startsWith('data:'))out.push(x)})});return out}
 /* ===== kérelem részletei ===== */
-const RQF={ghbH:'GHB üó',resolution:'Lezárás módja',closedDate:'Lezárás dátuma',part:'Cserélt alkatrész',log:'Hibanapló',vid:'Gép',date:'Dátum',liters:'Mennyiség (l)',reason:'Ok',kind:'Fajta',km:'km-óra',h:'Össz. üzemóra',motorH:'Motor üó',valtoH:'Váltó üó',apuH:'APU üó',gkaH:'GKA üó',apu:'APU üó',note:'Megjegyzés',num:'ML szám',driver:'Név',from:'Ettől',to:'Eddig',startKm:'Induló km',startH:'Induló üó',endKm:'Záró km',endH:'Záró üó',returned:'VisszaMEA dátum',returnLiters:'Visszatankolva (l)',closed:'Lezárva',title:'Hiba',sev:'Súlyosság',desc:'Leírás',status:'Állapot',place:'Helyszín',task:'Feladat',color:'Szín',reg:'Rendszám',variant:'Változat',musz:'Műszaki lejárat',serviceFrom:'Szerviz ettől',serviceUntil:'Szerviz eddig',driverId:'Driver',fuel:'Üzemanyagszint',tankCap:'Tartály (l)',photos:'Fotók',tripId:'Menetlevél',mgSn:'FN MAG sorozatszám',mainWeapon:'Fő fegyverzet',mainWeaponSn:'Fő fegyverzet sorozatszám',trackLinks:'Lánctag / oldal',start:'Indulás',end:'Érkezés',kmStart:'Induló km',kmEnd:'Érkező km',purpose:'Cél',maint:'Karbantartási ciklusok',tk:'KNDS kiszolgálás',lic:'Jogosítványok',rank:'Rendfokozat',name:'Név',count:'Darab',linksPerSide:'Lánctag / oldal',type:'Típus',measured:'VisszaMEA-zva',refueled:'Visszatankolva',group:'Csoportos kiadás'};
+const RQF={repLog:'Elvégzett szakjavítói tételek',rep:'Szakjavítói tételek',repSrc:'Adat forrása',ghbH:'GHB üó',resolution:'Lezárás módja',closedDate:'Lezárás dátuma',part:'Cserélt alkatrész',log:'Hibanapló',vid:'Gép',date:'Dátum',liters:'Mennyiség (l)',reason:'Ok',kind:'Fajta',km:'km-óra',h:'Össz. üzemóra',motorH:'Motor üó',valtoH:'Váltó üó',apuH:'APU üó',gkaH:'GKA üó',apu:'APU üó',note:'Megjegyzés',num:'ML szám',driver:'Név',from:'Ettől',to:'Eddig',startKm:'Induló km',startH:'Induló üó',endKm:'Záró km',endH:'Záró üó',returned:'VisszaMEA dátum',returnLiters:'Visszatankolva (l)',closed:'Lezárva',title:'Hiba',sev:'Súlyosság',desc:'Leírás',status:'Állapot',place:'Helyszín',task:'Feladat',color:'Szín',reg:'Rendszám',variant:'Változat',musz:'Műszaki lejárat',serviceFrom:'Szerviz ettől',serviceUntil:'Szerviz eddig',driverId:'Driver',fuel:'Üzemanyagszint',tankCap:'Tartály (l)',photos:'Fotók',tripId:'Menetlevél',mgSn:'FN MAG sorozatszám',mainWeapon:'Fő fegyverzet',mainWeaponSn:'Fő fegyverzet sorozatszám',trackLinks:'Lánctag / oldal',start:'Indulás',end:'Érkezés',kmStart:'Induló km',kmEnd:'Érkező km',purpose:'Cél',maint:'Karbantartási ciklusok',tk:'KNDS kiszolgálás',lic:'Jogosítványok',rank:'Rendfokozat',name:'Név',count:'Darab',linksPerSide:'Lánctag / oldal',type:'Típus',measured:'VisszaMEA-zva',refueled:'Visszatankolva',group:'Csoportos kiadás'};
 const RQSKIP=new Set(['ts','approvedBy','approvedAt','submittedBy','closedAt','id','by']);
 const OPNAME={add:'Új',upd:'Módosítás',del:'Törlés'};
 function rqVal(k,x){if(x==null||x==='')return '–';
@@ -1508,6 +1629,8 @@ function rqVal(k,x){if(x==null||x==='')return '–';
   if(k==='color')return `<span class="sw" style="background:${esc(x)}"></span>`;
   if(k==='fuel')return `${n0(x.l)} l`;
   if(k==='photos')return Array.isArray(x)?x.length+' db':'–';
+  if(k==='repLog')return Array.isArray(x)&&x.length?esc(x[x.length-1].name)+' ✔ '+fmtS(x[x.length-1].doneDate):'–';
+  if(k==='rep')return Array.isArray(x)?x.map(r=>esc(r.name)+(r.date?' '+fmtS(r.date):'')).join(', ')||'–':'–';
   if(k==='log')return Array.isArray(x)&&x.length?`${x.length} bejegyzés · utolsó: ${esc((x[x.length-1].note)||'')}`:'–';
   if(k==='resolution')return esc(FRES[x]||x);
   if(k==='maint')return Array.isArray(x)?x.length+' ciklus':'–';
@@ -1791,6 +1914,9 @@ document.addEventListener('click',async e=>{
     case 'printFleet':printFleet();break;case 'printVeh':printVehicle(S.vehicles[d.id]);break;case 'printArch':if(MODE==='fb'&&!ARCH_LOADED)await loadArchive();printArchive();break;
     case 'printFaults':printFaults();break;case 'printTrip':closeModal();printTrip(S.trips[d.id]);break;case 'printAudit':printAudit();break;case 'loadAudit':await loadAuditAll();break;
     case 'help':helpModal();break;case 'backup':await backupAll(!!$('#bkph')?.checked);break;case 'restore':restoreForm();break;case 'cleanRq':await cleanupRequests();break;
+    case 'repShop':{const x=S.vehicles[d.id];if(x)repShopForm(x,d.k);break}
+    case 'repNew':repItemForm(S.vehicles[d.id]);break;case 'repEdit':repItemForm(S.vehicles[d.id],d.r);break;case 'repDel':repDelForm(S.vehicles[d.id],d.r);break;
+    case 'repDone':repDoneForm(S.vehicles[d.id],d.r);break;case 'repHistDel':repHistDelForm(S.vehicles[d.id],d.r);break;case 'repOvrDel':repOvrDelForm(S.vehicles[d.id],d.k);break;
     case 'userEdit':userEditForm(d.id);break;case 'userDel':userDelForm(d.id);break;
     case 'pzCnt':{const x=S.vehicles[d.id];if(!x)break;if(READONLY){openVehicle(x.id);break}counterForm(x,d.f);break}
     case 'fuelLvl':{const x=S.vehicles[d.id];if(!x)break;if(READONLY){openVehicle(x.id);break}fuelLevelForm(x);break}
