@@ -269,7 +269,7 @@ body.nav7 nav.bottom button{font-size:10px;padding-inline:0}body.nav7 nav.bottom
 @media (prefers-reduced-motion:no-preference){.cube{animation:drop .4s cubic-bezier(.2,.9,.3,1.2) both;animation-delay:calc(var(--i) * 18ms)}@keyframes drop{from{transform:translateY(-14px);opacity:0}}}
 .dchip .dn{display:inline-flex;align-items:center;gap:6px}
 body.nav7 nav.bottom button[data-view=menet] span:not(.cnt){letter-spacing:-.04em;font-size:9.5px}
-nav.bottom .mlic .pp{transition:fill .25s}nav.bottom button.mlon .mlic .pp{fill:#fff;stroke:#fff}nav.bottom button.mlon .mlic .pl{stroke:#3a3a3a}
+nav.bottom .mlic .pp{transition:fill .25s}nav.bottom button.mlon .mlic .pp{fill:#fff;stroke:currentColor}nav.bottom button.mlon .mlic .pl{stroke:#3a3a3a}
 .mlgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
 .mlt{border:0;border-radius:14px;background:var(--surface2);padding:10px 6px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:var(--fg);font:inherit;text-align:center;min-width:0}
 .mlt svg{width:34px;height:40px;fill:none;stroke:var(--muted);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;opacity:.55}
@@ -292,6 +292,24 @@ nav.bottom .mlic .pp{transition:fill .25s}nav.bottom button.mlon .mlic .pp{fill:
 .badge2{display:inline-block;font-size:11.5px;font-weight:800;padding:1px 8px;border-radius:999px;background:var(--ok-bg);color:var(--ok);margin-right:4px}
 .badge2.no{background:var(--surface);color:var(--muted)}
 .archq{margin-bottom:8px}
+.sync{border:0;border-radius:999px;padding:3px 9px;font:inherit;font-size:11px;font-weight:800;background:rgba(255,255,255,.18);color:inherit;white-space:nowrap;cursor:pointer}
+.sync.off{background:#F4C04E;color:#3a2600}
+.netbar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 66px);z-index:19;margin:8px 14px 0;padding:7px 12px;border-radius:12px;background:var(--warn-bg);color:var(--warn);font-size:13px;font-weight:700;text-align:center}
+.today .tgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:480px){.today .tgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.today .tk{background:var(--surface2);border-radius:14px;padding:9px 10px;display:flex;flex-direction:column;gap:2px}
+.today .tk b{font-family:var(--f-display);font-size:28px;line-height:1;font-weight:400;color:var(--accent)}
+.today .tk span{font-size:12px;color:var(--muted);font-weight:700;line-height:1.2}
+.today .tk.warn b{color:var(--warn)}.today .tk.bad b{color:var(--bad)}
+.today .tl{margin:14px 0 6px}
+.tchips{display:flex;flex-wrap:wrap;gap:6px}
+.tchip{border:0;font:inherit;cursor:pointer;border-radius:12px;padding:6px 10px;background:linear-gradient(160deg,var(--accent-deep),var(--accent));color:#fff;display:flex;flex-direction:column;align-items:flex-start;line-height:1.2}
+.tchip b{font-size:14px}.tchip span{font-size:11.5px;font-weight:700;opacity:.92}
+.tchip.warn span{color:#FFE08A;opacity:1}.tchip.svc{background:var(--surface2);color:var(--fg)}.tchip.svc span{color:var(--muted)}
+.tdl{border:0;font:inherit;color:var(--fg);text-align:left;cursor:pointer;align-items:center;flex-wrap:nowrap;justify-content:flex-start}
+.tdl .main{flex:1;min-width:0}
+.consw{display:flex;gap:8px;align-items:flex-start;margin-top:10px;padding:9px 12px;border-radius:12px;background:var(--warn-bg);color:var(--warn);font-size:13.5px;font-weight:700}
+.consw svg{width:18px;height:18px;flex:none;margin-top:1px}
 .lics{display:flex;gap:3px;flex-wrap:wrap}
 .lic{display:inline-flex;align-items:center;gap:2px;background:rgba(255,255,255,.18);border-radius:6px;padding:1px 4px;font-size:9.5px;font-weight:800;letter-spacing:.02em;line-height:1.4}
 .lic svg{width:13px;height:13px}
@@ -348,8 +366,9 @@ body.role-cmd{--bg:#EEF1F7;--surface2:#E9EEF8;--line:#D3DBEA;--accent:#1F4FA8;--
 <header class="topbar">
   <svg class="badge-bear" viewBox="0 0 100 100" aria-hidden="true" id="bearSmall"></svg>
   <div><div class="brand">N(app)ra Gépek</div><div class="sub">Tüzér technikai nyilvántartás</div></div>
-  <div class="tools"><span class="mode" id="mode">Betöltés…</span><button class="iconbtn" id="snd" aria-label="Hang be/ki"></button></div>
+  <div class="tools"><button class="sync" id="sync" hidden></button><span class="mode" id="mode">Betöltés…</span><button class="iconbtn" id="snd" aria-label="Hang be/ki"></button></div>
 </header>
+<div class="netbar" id="netbar" hidden>Nincs kapcsolat – az adatok a készüléken várnak, és szinkronizálnak, ha visszajön a net.</div>
 <main class="page" id="main"><div class="empty">Adatok betöltése…</div></main>
 <nav class="bottom" aria-label="Fő navigáció"><div class="in" id="nav"></div></nav>
 <div id="modalRoot"></div><div id="toastRoot"></div>
@@ -482,13 +501,22 @@ $('#snd').addEventListener('click',()=>{SOUND=!SOUND;try{localStorage.setItem('n
 const LS='napra-gepek-local';
 function saveLocal(){try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}}
 function loadLocal(){try{const j=JSON.parse(localStorage.getItem(LS)||'null');if(j)COLS.forEach(c=>S[c]=j[c]||{})}catch(e){}}
+let PENDING=0;
+function syncUI(){const off=!navigator.onLine,b=$('#sync'),nb=$('#netbar');if(!b)return;
+  b.hidden=!off&&!PENDING;b.classList.toggle('off',off);b.textContent=off?(PENDING?`Offline · ${PENDING} vár`:'Offline'):`Szinkron… ${PENDING}`;
+  if(nb)nb.hidden=!(off&&MODE==='fb')}
+addEventListener('online',()=>{syncUI();if(!PENDING)toast('Újra van kapcsolat')});addEventListener('offline',syncUI);
+function writeErr(e){if(e&&e.code==='permission-denied')toast('Ehhez nincs jogosultságod.');
+    else if(e&&e.code==='resource-exhausted')toast('Elérted a napi ingyenes keretet, holnap újra próbáld.');
+    else if(e&&e.message!=='ro')toast('Mentés sikertelen, próbáld újra.')}
+/* Írás: ha a szerver 4 mp-en belül (offline: azonnal) nem igazolja vissza, a készüléken sorba áll, és a háttérben szinkronizál. */
 async function write(fn){
   if(READONLY){toast('Csak olvasási jogod van.');throw new Error('ro')}
-  try{await fn()}catch(e){
-    if(e&&e.code==='permission-denied')toast('Ehhez nincs jogosultságod.');
-    else if(e&&e.code==='resource-exhausted')toast('Elérted a napi ingyenes keretet, holnap újra próbáld.');
-    else if(e&&e.message!=='ro')toast('Mentés sikertelen, próbáld újra.');
-    throw e}
+  let settled=false;const done=Promise.resolve().then(fn).then(()=>{settled=true},e=>{settled=true;throw e});
+  const slow=new Promise(r=>setTimeout(()=>r('slow'),navigator.onLine?4000:350));
+  try{const r=await Promise.race([done,slow]);
+    if(r==='slow'&&!settled){PENDING++;syncUI();done.then(()=>{PENDING--;syncUI();if(!PENDING)toast('Szinkronizálva a szerverre')},e=>{PENDING--;syncUI();writeErr(e)})}
+  }catch(e){writeErr(e);throw e}
 }
 /* ===== jogosultság és jóváhagyás ===== */
 const STAMPED=new Set(['fuel','faults','trips','moves','events']);
@@ -569,11 +597,12 @@ function rejectForm(id){const r=S.requests[id];
   modal('Elutasítás',`<p class="hint" style="margin-top:0">${esc(r.byName)} · ${esc(r.lines.join(' · '))}</p><div class="form">${fld('reason','Indoklás (a beküldő látja)','','text','full')}</div>`,async fd=>{
     await write(()=>DB.doc('requests/'+id).update({status:'rejected',reason:fd.reason||'',reviewer:myName(),reviewerId:UID,reviewedAt:Date.now()}));sndRemove();toast('Elutasítva')},'Elutasítás',{direct:true})}
 function regForm(){if($('#scrim'))return;const p=myProfile()||{};
-  modal('Profilom',`<p class="hint" style="margin-top:0">Felhasználónév: <b>${esc(p.username||'')}</b> · szerep: <b>${roleName(ROLE)}</b> · azonosító <span class="mono">${esc((UID||'').slice(0,10))}</span></p><div class="form">${fld('rank','Rendfokozat',p.rank,'text','placeholder="pl. őrv."')}${fld('name','Név',p.name,'text','required')}${fld('post','Beosztás',p.post,'text','full')}${fld('pw','Új jelszó (ha cserélnéd)','','password','full autocomplete="new-password"')}</div>`,async fd=>{
+  modal('Profilom',`<p class="hint" style="margin-top:0">Felhasználónév: <b>${esc(p.username||'')}</b> · szerep: <b>${roleName(ROLE)}</b> · azonosító <span class="mono">${esc((UID||'').slice(0,10))}</span></p><div class="form">${fld('rank','Rendfokozat',p.rank,'text','placeholder="pl. őrv."')}${fld('name','Név',p.name,'text','required')}${fld('post','Beosztás',p.post,'text','full')}${fld('pw','Új jelszó (ha cserélnéd, min. 8 karakter)','','password','full autocomplete="new-password"')}</div>`,async fd=>{
     if(!fd.name?.trim())throw 'Add meg a nevedet.';
     await write(()=>DB.doc('users/'+UID).update({name:fd.name.trim(),rank:fd.rank?.trim()||'',post:fd.post||''}));
-    if(fd.pw){if(fd.pw.length<6)throw 'A jelszó legalább 6 karakter legyen.';try{await updatePassword(AUTH.currentUser,fd.pw)}catch(e){throw e.code==='auth/requires-recent-login'?'Jelszócseréhez lépj ki és be újra.':'A jelszócsere nem sikerült.'}}
+    if(fd.pw){const pe=pwErr(fd.pw);if(pe)throw pe;try{await updatePassword(AUTH.currentUser,fd.pw)}catch(e){throw e.code==='auth/requires-recent-login'?'Jelszócseréhez lépj ki és be újra.':'A jelszócsere nem sikerült.'}}
     sndDrum();toast('Profil mentve')},'Mentés',`<button type="button" class="btn sm" data-act="qr">QR-kód</button><button type="button" class="btn sm danger" data-act="logout">Kilépés</button>`,{direct:true})}
+function pwErr(pw){if(pw.length<8)return 'A jelszó legalább 8 karakter legyen.';if(/^(.)\1+$/.test(pw)||/^(0123456789|12345678|123456789|87654321|password|jelszo|jelszó|qwertzui|qwertyui|abcdefgh)/i.test(pw))return 'Ez a jelszó túl könnyen kitalálható, válassz mást.';return ''}
 const roleName=r=>({admin:'Admin',tech:'Technikus',commander:'Parancsnok',member:'Beíró',pending:'Aktiválásra vár'})[r]||'—';
 
 /* ===== Firebase: bejelentkezés, élő adatok ===== */
@@ -627,6 +656,15 @@ function litersIn(vid,s,e){return arr('fuel').filter(f=>f.vid===vid&&f.date>=s&&
 function avgCons(v){const rs=readingsOf(v.id),fs=arr('fuel').filter(f=>f.vid===v.id);if(!fs.length||rs.length<2)return {};
   const first=rs[0].date,L=fs.filter(f=>f.date>=first).reduce((t,f)=>t+(f.liters||0),0),km=delta(rs,first,'9999','km'),h=delta(rs,first,'9999','h');
   return {l100:km>0&&L>0?L/km*100:null,lh:h>0&&L>0?L/h:null,L,km,h}}
+/* Kiugró fogyasztás: az utolsó 30 nap átlaga vs. a gép korábbi saját átlaga (PzH: l/üó, többi: l/100 km). */
+function consCheck(v){const t=TYPES[v.type]||{};const f=v.type==='pzh'&&t.hours?'h':'km';const rs=readingsOf(v.id);if(rs.length<3)return null;
+  const S0=addDays(today(),-30),first=rs[0].date;if(first>=S0)return null;const end=addDays(today(),1);
+  const dB=delta(rs,first,S0,f),dR=delta(rs,S0,end,f);const LB=litersIn(v.id,first,S0),LR=litersIn(v.id,S0,end);
+  const minB=f==='h'?10:200,minR=f==='h'?4:80;if(!(dB>=minB&&dR>=minR&&LB>0&&LR>0))return null;
+  const k=f==='h'?1:100,base=LB/dB*k,rec=LR/dR*k,dev=rec/base-1;
+  return {unit:f==='h'?'l/üó':'l/100 km',base,rec,dev,bad:Math.abs(dev)>0.3}}
+const consWarn=v=>{const c=consCheck(v);return c&&c.bad?c:null};
+const consTxt=c=>`Kiugró fogyasztás: ${n1(c.rec)} ${c.unit} (szokásos ${n1(c.base)}, ${c.dev>0?'+':''}${Math.round(c.dev*100)}%) – ellenőrizd az adatot vagy a gépet.`;
 const tripLive=t=>!t.closed&&!(t.to&&t.to<today());
 const tripExpired=t=>!t.closed&&t.to&&t.to<today();
 function activeTrip(vid){return arr('trips').filter(t=>t.vid===vid&&tripLive(t)).sort((a,b)=>(b.ts||0)-(a.ts||0))[0]}
@@ -677,7 +715,7 @@ function tkItems(v){const tk=v.tk||{},log=tk.log||[],out=[];if(v.type!=='pzh')re
   return out}
 function tkWorst(v){const r={bad:0,warn:1,ok:2};return tkItems(v).filter(i=>i.st!=='ok').sort((a,b)=>r[a.st]-r[b.st])[0]}
 const tkLeftTxt=i=>{const p=[];if(i.left!=null)p.push(i.left<0?`${-i.left} napja esedékes`:`${i.left} nap`);if(i.hoursLeft!=null)p.push(i.hoursLeft<0?`túllépve ${n0(-i.hoursLeft)} ${i.unit}`:`${n0(i.hoursLeft)} ${i.unit}`);return p.join(' / ')};
-function pillsHTML(v){const p=[];const t=activeTrip(v.id);
+function pillsHTML(v){const p=[];{const cw=consWarn(v);if(cw)p.push(`<span class="pill warn" title="${esc(consTxt(cw))}">Kiugró fogyasztás ${cw.dev>0?'+':''}${Math.round(cw.dev*100)}%</span>`)}const t=activeTrip(v.id);
   if(t){const s=tripState(t);p.push(`<span class="pill ${s.cls}">ML ${esc(t.num)} · ${s.txt}</span>`)}
   const tw=v.type==='pzh'?tkWorst(v):null;if(tw)p.push(`<span class="pill ${tw.st}">${tw.code==='E'?'E1–E4':tw.code}: ${tkLeftTxt(tw)}</span>`);
   const ms=maintSummary(v);if(ms&&ms.s.worst!=='ok'){const o=ms.s.out.slice().sort((a,b)=>a.left-b.left)[0];p.push(`<span class="pill ${ms.s.worst}">${esc(ms.m.name)}: ${leftTxt(o)}</span>`)}
@@ -691,7 +729,7 @@ const stBtn=(v,big)=>{const s=st(v);return `<button class="stbtn ${s}" data-act=
 function render(){
   const cmd=ROLE==='commander',adm=MODE==='fb'&&ROLE==='admin';document.body.classList.toggle('role-cmd',cmd);document.body.classList.toggle('role-adm',adm);const tc=document.querySelector('meta[name=theme-color]');if(tc)tc.content=cmd?'#0F2D66':adm?'#06524E':'#6E0B13';
   if(MODE==='fb'&&(!UID||USERDOC===undefined||!USERDOC||!['member','commander','tech','admin'].includes(ROLE))){$('#mode').innerHTML='';$('#nav').innerHTML='';$('#main').innerHTML=renderGate();return}
-  $('#mode').innerHTML=MODE==='fb'?`<button class="who" data-act="profile">${esc(myName())}<span>${roleName(ROLE)}</span></button>`:MODE==='local'?'demó mód':'betöltés…';
+  syncUI();$('#mode').innerHTML=MODE==='fb'?`<button class="who" data-act="profile">${esc(myName())}<span>${roleName(ROLE)}</span></button>`:MODE==='local'?'demó mód':'betöltés…';
   const nf=arr('faults').filter(f=>f.status!=='lezárva').length,nt=arr('trips').filter(tripLive).length;
   const np=arr('requests').filter(r=>r.status==='pending'&&(seesAll()||r.by===UID)).length
   const nu=isAdmin()&&MODE==='fb'?arr('users').filter(u=>u.role==='pending').length:0;
@@ -742,10 +780,27 @@ function renderParade(){
     <div class="ready" role="img" aria-label="${c.ok} hadra fogható, ${c.limited} korlátozott, ${c.service} szervizben">${N?`<i style="width:${c.ok/N*100}%;background:var(--hero-fg)"></i><i style="width:${c.limited/N*100}%;background:var(--brass)"></i><i style="width:${c.service/N*100}%;background:rgba(255,243,241,.3)"></i>`:''}</div>
     <div class="ranks">${ranks}</div>
     <div class="legend"><span><span class="dot" style="background:var(--hero-fg)"></span>Hadra fogható ${c.ok}</span><span><span class="dot" style="background:var(--brass)"></span>Korlátozottan ${c.limited}</span><span><span class="dot" style="background:rgba(255,243,241,.32)"></span>Szervizben ${c.service}</span></div></div>
+   ${todayPanel(trips,nf,wl)}
    ${stockPanel()}
-   <div class="cols" style="margin-top:14px"><div class="panel"><h3>Mai helyzet</h3><dl class="kv"><dt>Kint lévő menetlevél</dt><dd>${trips.length}${trips.some(t=>tripState(t).cls==='bad')?' (van lejárt)':''}</dd><dt>Nyitott hiba</dt><dd>${nf.length}</dd><dt>Lejárt / közelgő határidő</dt><dd>${due}</dd><dt>${isoWeek(today())}. heti tankolás</dt><dd>${n0(wl)} l</dd></dl></div>
+   <div class="cols" style="margin-top:14px">
    <div class="panel"><h3>Kezelés</h3><p class="hint" style="margin:0">Lapozz oldalra a típusokhoz. A <b>+</b> és <b>−</b> gombbal adsz hozzá vagy veszel el gépet, a pajzs / háromszög / villáskulcs gombbal állítod a hadrafoghatóságot.</p></div></div>`;
 }
+function todayPanel(trips,nf,wl){const vs=orderedVehicles().filter(v=>v.reg);
+  const chip=(v,txt,cls='')=>`<button class="tchip ${cls}" data-open="${v.id}"><b>${esc(vLabel(v))}</b><span>${txt}</span></button>`;
+  const ml=trips.slice().sort((a,b)=>(a.to||'9')<(b.to||'9')?-1:1).map(t=>{const v=S.vehicles[t.vid];if(!v)return '';const d=t.to?diffDays(today(),t.to):null;return chip(v,t.to?(d===0?'ma lejár':fmtS(t.to)+'-ig'):'érvényes',d!=null&&d<=1?'warn':'')}).join('');
+  const sv=vs.filter(v=>st(v)==='service').map(v=>chip(v,v.serviceUntil?fmtS(v.serviceUntil)+'-ig':'határidő nélkül','svc')).join('');
+  const dl=[];const R={bad:0,warn:1};
+  vs.forEach(v=>{const mu=TYPES[v.type]?.musz&&muszState(v);if(mu&&mu.cls!=='ok')dl.push({v,cls:mu.cls,txt:mu.txt});
+    if(v.type==='pzh')tkItems(v).filter(i=>i.st!=='ok').forEach(i=>dl.push({v,cls:i.st,txt:`${i.code==='E'?'Bejáratás E1–E4':i.code}: ${tkLeftTxt(i)}`}));
+    (v.maint||[]).forEach(m=>{const s=maintStatus(v,m);if(s.worst==='bad'||s.worst==='warn')dl.push({v,cls:s.worst,txt:`${m.name}: ${s.out.map(leftTxt).join(' / ')}`})});
+    const cw=consWarn(v);if(cw)dl.push({v,cls:'warn',txt:`Kiugró fogyasztás ${cw.dev>0?'+':''}${Math.round(cw.dev*100)}%`})});
+  dl.sort((a,b)=>R[a.cls]-R[b.cls]);
+  return `<div class="panel today" style="margin-top:14px"><h3>Mai helyzet · ${fmtD(today())}</h3>
+   <div class="tgrid"><div class="tk"><b>${trips.length}</b><span>kint lévő ML</span></div><div class="tk"><b>${vs.filter(v=>st(v)==='service').length}</b><span>szervizben</span></div><div class="tk ${dl.some(x=>x.cls==='bad')?'bad':dl.length?'warn':''}"><b>${dl.length}</b><span>határidő / jelzés</span></div><div class="tk"><b>${n0(wl)}</b><span>l tankolva (${isoWeek(today())}. hét)</span></div></div>
+   <div class="lbl tl">Menetlevéllel kint</div>${ml?`<div class="tchips">${ml}</div>`:'<div class="hint">Most egy gépen sincs érvényes menetlevél.</div>'}
+   <div class="lbl tl">Szervizben</div>${sv?`<div class="tchips">${sv}</div>`:'<div class="hint">Nincs gép szervizben.</div>'}
+   <div class="lbl tl">Esedékes határidők és jelzések</div>${dl.length?`<div class="list">${dl.slice(0,12).map(x=>`<button class="item tdl" data-open="${x.v.id}"><span class="pill ${x.cls}">${x.cls==='bad'?'lejárt':'közeleg'}</span><span class="main"><b>${esc(vLabel(x.v))}</b> · ${esc(x.txt)}</span></button>`).join('')}${dl.length>12?`<div class="hint">…és még ${dl.length-12}</div>`:''}</div>`:'<div class="hint">Nincs lejárt vagy 30 napon belül esedékes tétel.</div>'}
+   ${nf.length?`<div class="hint" style="margin-top:10px">Nyitott hibabejelentés: <b>${nf.length}</b> — a Hibák menüben.</div>`:''}</div>`}
 function renderTypePage(t){
   const T=TYPES[t],list=byType(t);const c={ok:0,limited:0,service:0};list.forEach(v=>c[st(v)]++);
   const cards=list.map(v=>{const d=driverOf(v),pl=placeToday(v.id);const s=st(v);
@@ -793,7 +848,7 @@ function subOverview(v){
   let ref='';if(v.type==='pzh')ref=`<div class="ref">Gyári: ${t.tank} l gázolaj · ${t.range} km hatótáv papíron (≈ ${n1(t.tank/t.range*100)} l/100 km) · alapjáraton ${t.idle} l/h.</div>`;if(v.type==='gidran')ref=`<div class="ref">Tartály: ${t.tank} l gázolaj. Gyári fogyasztási adat nincs, az átlag a tankolásokból számolódik.</div>`;
   return `${metricsHTML(v)}${pillsHTML(v)?`<div style="margin:10px 0">${pillsHTML(v)}</div>`:'<div style="height:12px"></div>'}
    <div class="cols"><div class="panel"><h3>Menetlevél</h3>${tripHTML}</div>
-   <div class="panel"><h3>Fogyasztás</h3><dl class="kv"><dt>Átlag l/100 km</dt><dd>${n1(a.l100)}</dd>${t.hours?`<dt>Átlag l/üzemóra</dt><dd>${n1(a.lh)}</dd>`:''}<dt>Alap</dt><dd>${a.L!=null?`${n0(a.L)} l · ${n0(a.km)} km${t.hours?' · '+n1(a.h)+' üó':''}`:'legalább 2 óraállás és 1 tankolás kell'}</dd></dl>${ref}</div>
+   <div class="panel"><h3>Fogyasztás</h3><dl class="kv"><dt>Átlag l/100 km</dt><dd>${n1(a.l100)}</dd>${t.hours?`<dt>Átlag l/üzemóra</dt><dd>${n1(a.lh)}</dd>`:''}<dt>Alap</dt><dd>${a.L!=null?`${n0(a.L)} l · ${n0(a.km)} km${t.hours?' · '+n1(a.h)+' üó':''}`:'legalább 2 óraállás és 1 tankolás kell'}</dd>${(()=>{const c=consCheck(v);return c?`<dt>Utolsó 30 nap</dt><dd>${n1(c.rec)} ${c.unit}</dd>`:''})()}</dl>${(()=>{const c=consWarn(v);return c?`<div class="consw">${IC.hibak}<span>${esc(consTxt(c))}</span></div>`:''})()}${ref}</div>
    <div class="panel"><h3>Beosztás <button class="btn sm" data-act="addEvent" data-vid="${v.id}" ${ro()}>+ Beosztás</button></h3>${up.length?`<div class="list">${up.map(eventItem).join('')}</div>`:'<div class="empty">Nincs előre rögzített helyszín vagy feladat.</div>'}</div></div>`;
 }
 function eventItem(e){const v=S.vehicles[e.vid];return `<div class="item"><div class="main"><div class="t">${esc(e.place)}${V.view!=='gep'&&v?` · <span class="muted">${esc(vLabel(v))}</span>`:''}</div><div class="hint">${fmtD(e.from)}${e.to&&e.to!==e.from?' – '+fmtD(e.to):''}${e.task?' · '+esc(e.task):''}</div></div><button class="btn sm line" data-act="editEvent" data-id="${e.id}" ${ro()}>Szerk.</button></div>`}
@@ -868,7 +923,7 @@ function weaponKV(v){if(v.type==='pzh'){const L=v.trackLinks??94;return `<dt>FN 
 function subData(v){const t=TYPES[v.type]||{};const rs=readingsOf(v.id).slice().reverse().slice(0,15);
   return `<div class="cols"><div class="panel"><h3>Eszköz adatai</h3><dl class="kv"><dt>Rendszám / azonosító</dt><dd>${esc(v.reg||'–')}</dd><dt>Típus</dt><dd>${esc(vName(v))}</dd><dt>Állapot</dt><dd>${STATUS[st(v)][0]}</dd>${t.musz?`<dt>Műszaki lejárat</dt><dd>${fmtD(v.musz)}</dd>`:''}<dt>Megjegyzés</dt><dd>${esc(v.note||'–')}</dd><dt>Beosztott sofőr</dt><dd>${esc(dName(driverOf(v))||'–')}</dd>${weaponKV(v)}</dl>
   <div class="actions" style="justify-content:flex-start"><button class="btn pri" data-act="editVehicle" ${ro()}>Szerkesztés</button><button class="btn danger" data-act="delVehicle" ${ro()}>Törlés</button></div></div>
-  <div class="panel"><h3>Óraállás-előzmények</h3>${rs.length?`<div class="tblwrap"><table><thead><tr><th>Dátum</th><th class="r">km</th>${t.hours?'<th class="r">üó</th>':''}${t.apu?'<th class="r">APU</th>':''}</tr></thead><tbody>${rs.map(r=>`<tr><td class="mono">${fmtD(r.date)}</td><td class="r mono">${n0(r.km)}</td>${t.hours?`<td class="r mono">${n0(r.h)}</td>`:''}${t.apu?`<td class="r mono">${r.apu==null?'–':nf2.format(r.apu)}</td>`:''}</tr>`).join('')}</tbody></table></div>`:'<div class="empty">Nincs rögzített óraállás.</div>'}</div></div>`}
+  <div class="panel"><h3>Óraállás-előzmények <button class="btn sm line" data-act="expVeh">Export (CSV)</button></h3>${rs.length?`<div class="tblwrap"><table><thead><tr><th>Dátum</th><th class="r">km</th>${t.hours?'<th class="r">üó</th>':''}${t.apu?'<th class="r">APU</th>':''}</tr></thead><tbody>${rs.map(r=>`<tr><td class="mono">${fmtD(r.date)}</td><td class="r mono">${n0(r.km)}</td>${t.hours?`<td class="r mono">${n0(r.h)}</td>`:''}${t.apu?`<td class="r mono">${r.apu==null?'–':nf2.format(r.apu)}</td>`:''}</tr>`).join('')}</tbody></table></div>`:'<div class="empty">Nincs rögzített óraállás.</div>'}</div></div>`}
 function faultItem(f){const v=S.vehicles[f.vid];const cls=f.status==='lezárva'?'':f.sev==='üzemképtelen'?'bad':f.sev==='közepes'?'warn':'ok';
   return `<div class="item"><div class="main"><div class="t">${esc(f.title)}${V.view!=='gep'&&v?` · <span class="muted">${esc(vLabel(v))}</span>`:''}</div><div class="hint">${fmtD(f.date)}${f.by?' · '+esc(f.by):''}${stampOf(f)}</div>${f.desc?`<div style="margin-top:4px">${esc(f.desc)}</div>`:''}${thumbs(f.photos)}</div>
    <div class="row"><span class="pill ${cls}">${esc(f.sev)} · ${esc(f.status)}</span>${f.status!=='lezárva'?`<button class="btn sm line" data-act="faultNext" data-id="${f.id}" ${ro()}>${f.status==='nyitott'?'Javítás alatt':'Lezárás'}</button>`:''}</div></div>`}
@@ -913,6 +968,22 @@ function archItem(t){const v=S.vehicles[t.vid];const km=t.endKm!=null&&t.startKm
 let ARCH_LOADED=false;
 async function loadArchive(){if(MODE!=='fb'||ARCH_LOADED)return;ARCH_LOADED=true;
   try{const snap=await getDocs(query(collection(FS,'trips'),where('closed','==',true)));snap.docs.forEach(d=>{HIST.trips[d.id]={...d.data(),id:d.id}});recompute('trips');toast(`Gyűjtő betöltve: ${snap.size} menetlevél`);scheduleRender()}catch(e){ARCH_LOADED=false;toast('A gyűjtő betöltése nem sikerült.')}}
+function csvDownload(name,rows){const q=x=>{x=x==null?'':String(x);return /[";\n]/.test(x)?'"'+x.replace(/"/g,'""')+'"':x};
+  const txt='\ufeff'+rows.map(r=>r.map(q).join(';')).join('\r\n');const b=new Blob([txt],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);toast('Export letöltve: '+name)}
+const nCsv=x=>x==null||x===''?'':String(Math.round(x*10)/10).replace('.',',');
+function exportArchive(){const vf=V.moveVid==='all'?null:V.moveVid;const l=arr('trips').filter(t=>t.closed&&(!vf||t.vid===vf)).sort((a,b)=>(a.returned||'')<(b.returned||'')?1:-1);
+  if(!l.length){toast('A gyűjtő üres, nincs mit exportálni.');return}
+  const rows=[['ML szám','Rendszám','Típus','Sofőr','Érvényes ettől','Érvényes eddig','Feladat','VisszaMEA dátum','Induló km','Záró km','Megtett km','Induló üó','Záró üó','Tankolt liter','Jóváhagyta']];
+  l.forEach(t=>{const v=S.vehicles[t.vid];rows.push([t.num,v?vLabel(v):'',v?vName(v):'',t.driver,t.from,t.to,t.note,t.returned,nCsv(t.startKm),nCsv(t.endKm),t.endKm!=null&&t.startKm!=null?nCsv(t.endKm-t.startKm):'',nCsv(t.startH),nCsv(t.endH),nCsv(t.returnLiters||0),t.approvedBy||''])});
+  csvDownload(`gyujto_${vf&&S.vehicles[vf]?slugF(vLabel(S.vehicles[vf]))+'_':''}${today()}.csv`,rows)}
+const slugF=x=>String(x).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]+/g,'-').replace(/^-|-$/g,'');
+function exportVehicle(v){const t=TYPES[v.type]||{};const rows=[[vName(v)+' · '+vLabel(v)+' · export '+today()],[],['ÓRAÁLLÁSOK'],['Dátum','km',...(t.hours?['Össz. üó']:[]),...(t.apu?['APU üó']:[])]];
+  readingsOf(v.id).slice().reverse().forEach(r=>rows.push([r.date,nCsv(r.km),...(t.hours?[nCsv(r.h)]:[]),...(t.apu?[nCsv(r.apu)]:[])]));
+  rows.push([],['TANKOLÁSOK'],['Dátum','Liter','Ok','km','Fajta','Megjegyzés','Jóváhagyta']);
+  arr('fuel').filter(f=>f.vid===v.id).sort((a,b)=>a.date<b.date?1:-1).forEach(f=>rows.push([f.date,nCsv(f.liters),f.reason,nCsv(f.km),f.kind==='visszavetel'?'visszatankolás':'tankolás',f.note,f.approvedBy||'']));
+  rows.push([],['MENETLEVELEK'],['ML szám','Sofőr','Ettől','Eddig','VisszaMEA','Induló km','Záró km','Tankolt liter']);
+  arr('trips').filter(x=>x.vid===v.id).sort((a,b)=>(a.from||'')<(b.from||'')?1:-1).forEach(x=>rows.push([x.num,x.driver,x.from,x.to,x.closed?x.returned:'kint',nCsv(x.startKm),nCsv(x.endKm),nCsv(x.returnLiters)]));
+  csvDownload(`${slugF(vLabel(v))}_${today()}.csv`,rows)}
 function tripView(trip){const v=S.vehicles[trip.vid];const tt=TYPES[v?.type]||{};const ms=arr('moves').filter(m=>m.tripId===trip.id);const mkm=ms.reduce((x,m)=>x+(m.km||0),0);
   const s=trip.closed?{cls:'ok',txt:'visszaMEA-zva · gyűjtőben'}:tripState(trip);const km=trip.endKm!=null&&trip.startKm!=null?trip.endKm-trip.startKm:null;
   const body=`<div class="row" style="justify-content:space-between;margin-bottom:6px"><div><div class="hint">${esc(v?vName(v):'')}</div><div style="font-weight:800;font-size:20px">${esc(v?vLabel(v):'?')} · ML ${esc(trip.num)}</div></div><span class="pill ${s.cls}">${s.txt}</span></div>
@@ -959,7 +1030,7 @@ function renderMoves(){
   return `<div class="row" style="justify-content:space-between;margin-bottom:12px"><h2 class="h2">Menetlevél</h2><select id="moveVid" style="width:auto;flex:0 1 220px;min-width:0" aria-label="Gép szűrő"><option value="all">Minden gép</option>${orderedVehicles().map(v=>`<option value="${v.id}" ${V.moveVid===v.id?'selected':''}>${esc(vLabel(v))} — ${esc(vName(v))}</option>`).join('')}</select></div>
    <div class="panel" style="margin-bottom:14px"><h3>Gyors nézet <span class="row" style="gap:6px">${isTech()?`<button class="btn sm pri" data-act="groupTrip">+ Menetlevél írása</button>`:`<button class="btn sm pri" data-act="groupTrip" ${ro()}>+ Menetlevél kérelem</button>`}</span></h3><p class="hint" style="margin:0 0 10px">Fehér papír = érvényes, jóváhagyott menetlevél, alatta a lejárat. Koppints rá a részletekért. Üres gépre koppintva kiadhatsz neki menetlevelet.</p>${tiles||'<div class="empty">Még nincs rendszámmal felvett gép.</div>'}
    ${expd.length?`<div class="lbl" style="margin:16px 0 6px">Lejárt, nincs visszaMEA-zva · ${expd.length}</div><p class="hint" style="margin:0 0 6px">A gép a lejárat napján automatikusan felszabadult. A km- és tankolási adatokhoz MEA-zd vissza utólag.</p><div class="list">${expd.map(t=>{const v=S.vehicles[t.vid];return `<div class="item"><div class="main" data-act="tripView" data-id="${t.id}" style="cursor:pointer"><div class="t">ML ${esc(t.num)} · ${esc(v?vLabel(v):'?')}</div><div class="hint">${esc(t.driver)} · lejárt ${fmtD(t.to)}</div></div><button class="btn sm" data-act="closeTrip" data-id="${t.id}" ${ro()}>VisszaMEA</button></div>`}).join('')}</div>`:''}</div>
-   <div class="cols"><div class="panel"><h3>Gyűjtő <span class="pill">${closed.length} db</span></h3><input id="archq" class="archq" type="search" placeholder="Keresés: szám, név, rendszám, feladat…" aria-label="Keresés a gyűjtőben">${MODE==='fb'&&!ARCH_LOADED?'<button class="btn sm line" data-act="loadArch" style="margin-bottom:8px">Teljes gyűjtő betöltése (régebbiek is)</button>':''}<div id="archlist">${archHTML}</div></div>
+   <div class="cols"><div class="panel"><h3>Gyűjtő <span class="row" style="gap:6px"><span class="pill">${closed.length} db</span><button class="btn sm line" data-act="expArch">Export</button></span></h3><input id="archq" class="archq" type="search" placeholder="Keresés: szám, név, rendszám, feladat…" aria-label="Keresés a gyűjtőben">${MODE==='fb'&&!ARCH_LOADED?'<button class="btn sm line" data-act="loadArch" style="margin-bottom:8px">Teljes gyűjtő betöltése (régebbiek is)</button>':''}<div id="archlist">${archHTML}</div></div>
    <div class="panel"><h3>Mozgási napló <button class="btn sm" data-act="addMove" data-vid="${vf||''}" ${ro()}>+ Mozgás</button></h3>${mv.length?Object.entries(groups).map(([d,ms])=>`<div class="lbl" style="margin:10px 0 6px">${fmtD(d)} · ${n0(ms.reduce((x,m)=>x+(m.km||0),0))} km</div><div class="list">${ms.map(moveItem).join('')}</div>`).join(''):'<div class="empty">Még nincs mozgás rögzítve. A mozgás a menetlevélhez kötődik: honnan, hová, mikor, mi célból, hány km.</div>'}</div></div>`;
 }
 
@@ -1002,6 +1073,7 @@ function renderMembers(){let users='';
     users=`<div class="panel" style="margin-top:16px"><h3>Felhasználók és szerepek</h3><p class="hint" style="margin-top:0"><b>Beíró</b>: kérelmet küldhet. <b>Parancsnok</b>: mindent lát, minden kérelmet követ, kérelmet küldhet. <b>Technikus</b>: jóváhagy és közvetlenül ír. <b>Admin</b>: ezen felül szerepeket oszt. Az <b>Aktiválásra vár</b> fiók semmit nem lát.</p>${ps.length?`<div class="list">${ps.map(p=>`<div class="item"><div class="main"><div class="t">${esc((p.rank?p.rank+' ':'')+p.name)} ${p.role==='pending'?'<span class="pill pend">új regisztráció</span>':''}</div><div class="hint">${esc(p.post||'')}${p.post?' · ':''}@${esc(p.username||'')} · ${fmtTs(p.ts)}</div></div>${p.id===UID?`<span class="pill ok">${roleName(p.role)} (te)</span>`:`<span class="seg">${['pending','member','commander','tech','admin'].map(r=>`<button data-act="setRole" data-id="${p.id}" data-role="${r}" aria-pressed="${p.role===r}">${{pending:'Tiltva',member:'Beíró',commander:'Parancsnok',tech:'Technikus',admin:'Admin'}[r]}</button>`).join('')}</span>`}</div>`).join('')}</div>`:'<div class="empty">Még senki nem regisztrált.</div>'}</div>`}
   const np=arr('users').filter(u=>u.role==='pending').length;
   return `<div class="row" style="justify-content:space-between;margin-bottom:6px"><h2 class="h2">Tagok</h2><button class="btn pri" data-act="qr">QR-kód</button></div>
+   ${MODE==='fb'&&arr('users').filter(u=>u.role==='admin').length<2?'<div class="banner">Csak egy adminisztrátor van — érdemes legalább kettőt kijelölni, hogy a fiókod kiesése esetén is maradjon, aki aktivál.</div>':''}
    <p class="hint" style="margin-top:0">${np?`<b>${np} új regisztráció</b> vár aktiválásra — a lista tetején vannak.`:'Nincs aktiválásra váró regisztráció.'} Új tag a QR-kóddal regisztrál, itt kapja meg a szerepét.</p>${users}`}
 function renderRequests(){
   const tech=isTech();const all=arr('requests');
@@ -1023,7 +1095,7 @@ function renderGate(){
      <form class="authform panel" id="authForm" data-mode="${reg?'reg':'login'}" novalidate>
       ${reg?`<label><span class="lbl">Rendfokozat</span><input name="rank" id="a_rank" placeholder="pl. őrv."></label><label><span class="lbl">Név</span><input name="name" id="a_name" required autocomplete="name"></label><label><span class="lbl">Beosztás</span><input name="post" id="a_post" placeholder="pl. tüzér harckocsivezető"></label>`:''}
       <label><span class="lbl">Felhasználónév</span><input name="user" id="a_user" required autocomplete="username" autocapitalize="none" spellcheck="false"></label>
-      <label><span class="lbl">Jelszó</span><input name="pw" id="a_pw" type="password" required autocomplete="${reg?'new-password':'current-password'}"></label>
+      <label><span class="lbl">Jelszó</span><input name="pw" id="a_pw" type="password" required autocomplete="${reg?'new-password':'current-password'}"></label>${reg?'<div class="hint" style="margin-top:-4px">Legalább 8 karakter.</div>':''}
       ${reg?`<label><span class="lbl">Jelszó újra</span><input name="pw2" id="a_pw2" type="password" required autocomplete="new-password"></label>`:''}
       <div class="hint" id="aerr" style="color:var(--bad);font-weight:700"></div>
       <button class="btn pri" type="submit">${reg?'Regisztráció':'Belépés'}</button>
@@ -1042,7 +1114,7 @@ document.addEventListener('submit',async e=>{const f=e.target;if(f.id!=='authFor
     const u=slugUser(fd.user);if(u.length<3)throw 'A felhasználónév legalább 3 karakter (betű, szám, pont, kötőjel).';
     const email=u+'@'+EMAIL_DOMAIN;
     if(mode==='login'){try{await signInWithEmailAndPassword(AUTH,email,fd.pw||'');sndDrum()}catch(x){throw x.code==='auth/too-many-requests'?'Túl sok próbálkozás, várj pár percet.':'Hibás felhasználónév vagy jelszó.'}return}
-    if(!fd.name?.trim())throw 'Add meg a nevedet.';if((fd.pw||'').length<6)throw 'A jelszó legalább 6 karakter legyen.';if(fd.pw!==fd.pw2)throw 'A két jelszó nem egyezik.';
+    if(!fd.name?.trim())throw 'Add meg a nevedet.';const pe=pwErr(fd.pw||'');if(pe)throw pe;if(fd.pw!==fd.pw2)throw 'A két jelszó nem egyezik.';
     let cred;try{cred=await createUserWithEmailAndPassword(AUTH,email,fd.pw)}catch(x){throw x.code==='auth/email-already-in-use'?'Ez a felhasználónév már foglalt.':x.code==='auth/weak-password'?'Túl gyenge jelszó.':'A regisztráció nem sikerült.'}
     await setDoc(doc(FS,'users',cred.user.uid),{name:fd.name.trim(),rank:fd.rank?.trim()||'',post:fd.post||'',username:u,role:'pending',ts:Date.now()});sndAdd();
   }catch(x){b.disabled=false;err(typeof x==='string'?x:'Hiba történt, próbáld újra.')}
@@ -1093,7 +1165,7 @@ function fuelForm(vid,date,f){if(!arr('vehicles').length){toast('Előbb vegyél 
     const km=num(fd.km),data={vid:fd.vid,date:fd.date||today(),liters:L,km,reason:fd.reason,note:fd.note||''};
     if(isNew){data.kind='tank';await add('fuel',data)}else await upd('fuel',f.id,data);
     if(km!=null&&(v.km==null||km>v.km)){await add('readings',{vid:v.id,date:data.date,km},true);await upd('vehicles',v.id,{km})}
-    toast(`${n0(L)} l · ${fd.reason}`)},'Mentés',isNew?'':delBtn);
+    toast(`${n0(L)} l · ${fd.reason}`);const vv=fd.vid;setTimeout(()=>{const c=S.vehicles[vv]&&consWarn(S.vehicles[vv]);if(c)toast(vLabel(S.vehicles[vv])+': kiugró fogyasztás – ellenőrizd az adatot vagy a gépet.')},2800)},'Mentés',isNew?'':delBtn);
   if(!isNew)$('#mdel').onclick=()=>act(async()=>{try{await del('fuel',f.id);closeModal();toast('Tankolás törölve')}catch(e){}})}
 function tripForm(v,trip){const t=TYPES[v.type];const isNew=!trip;const d=driverOf(v);trip=trip||{from:today(),to:addDays(today(),1),startKm:v.km,startH:v.h,driver:d?dName(d):''};
   modal(isNew?'Menetlevél kiadása':'Menetlevél szerkesztése',`<div class="form">${fld('num','Menetlevél száma',trip.num,'text','required')}<label><span class="lbl">Menetlevélen szereplő név</span><input id="f_driver" name="driver" list="dlist" value="${esc(trip.driver)}" required></label><datalist id="dlist">${arr('drivers').map(x=>`<option value="${esc(dName(x))}">`).join('')}</datalist>${fld('from','Érvényes ettől',trip.from,'date')}${fld('to','Érvényes eddig',trip.to,'date')}${fld('startKm','Induló km',trip.startKm,'number')}${t.hours?fld('startH','Induló üzemóra',trip.startH,'number'):''}${fld('note','Feladat',trip.note,'text','full')}</div>${isNew?'<label style="display:block;margin-top:10px"><span class="lbl">Menetlevél fotója</span><input type="file" id="f_photo" accept="image/*" capture="environment" multiple></label>':''}`,async fd=>{
@@ -1145,7 +1217,7 @@ function faultForm(vid){if(!arr('vehicles').length){toast('Előbb vegyél fel eg
     if(fd.toService)await upd('vehicles',fd.vid,{status:'service'});toast('Hiba bejelentve')},'Bejelentés')}
 
 async function shrink(file){try{const img=await createImageBitmap(file);const k=Math.min(1,1800/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);return await new Promise(r=>c.toBlob(b=>r(b||file),'image/jpeg',.82))}catch(e){return file}}
-async function toDataUrl(file){const img=await createImageBitmap(file);const k=Math.min(1,1100/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);return c.toDataURL('image/jpeg',.62)}
+async function toDataUrl(file){const img=await createImageBitmap(file);const k=Math.min(1,1000/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);return c.toDataURL('image/jpeg',.55)}
 async function uploadPhotos(files){
   if(!isTech()||MODE!=='fb'){if(files.length>2)throw 'Egyszerre legfeljebb 2 fotót csatolhatsz.';const out=[];for(const f of files){try{out.push(await toDataUrl(f))}catch(e){throw 'A kép nem olvasható.'}}return out}
   const ids=[];for(const f of files){let u;try{u=await toDataUrl(f)}catch(e){throw 'A kép nem olvasható.'}ids.push(await dataUrlToAsset(u))}return ids}
@@ -1197,7 +1269,7 @@ document.addEventListener('click',async e=>{
     case 'addFuel':fuelForm(d.vid||v?.id||(V.calVid!=='all'?V.calVid:null),d.date);break;
     case 'editFuel':fuelForm(null,null,S.fuel[d.id]);break;
     case 'newTrip':tripForm(v||S.vehicles[d.vid]);break;case 'editTrip':{const tr=S.trips[d.id];tripForm(S.vehicles[tr.vid],tr);break}case 'closeTrip':closeTripForm(S.trips[d.id]);break;
-    case 'groupTrip':groupTripForm();break;case 'tripView':tripView(S.trips[d.id]);break;case 'delTrip':delTrip(S.trips[d.id]);break;case 'loadArch':await loadArchive();break;
+    case 'groupTrip':groupTripForm();break;case 'tripView':tripView(S.trips[d.id]);break;case 'delTrip':delTrip(S.trips[d.id]);break;case 'loadArch':await loadArchive();break;case 'expArch':if(MODE==='fb'&&!ARCH_LOADED)await loadArchive();exportArchive();break;case 'expVeh':exportVehicle(v);break;
     case 'mlTile':{const tr=activeTrip(d.vid);if(tr)tripView(tr);else if(!READONLY)groupTripForm(d.vid);break}
     case 'tripPhoto':photoAdd(S.trips[d.id]);break;
     case 'addMove':moveForm(d.vid||v?.id||(V.moveVid!=='all'?V.moveVid:null));break;case 'editMove':moveForm(null,S.moves[d.id]);break;
