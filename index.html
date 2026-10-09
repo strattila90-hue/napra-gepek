@@ -11,7 +11,6 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Napra Gépek">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <title>N(app)ra Gépek</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap&subset=latin-ext">
@@ -292,6 +291,8 @@ nav.bottom .mlic .pp{transition:fill .25s}nav.bottom button.mlon .mlic .pp{fill:
 .badge2{display:inline-block;font-size:11.5px;font-weight:800;padding:1px 8px;border-radius:999px;background:var(--ok-bg);color:var(--ok);margin-right:4px}
 .badge2.no{background:var(--surface);color:var(--muted)}
 .archq{margin-bottom:8px}
+.invlink{background:var(--surface2);border-radius:14px;padding:12px 14px;font-size:15px;font-weight:700;overflow-wrap:anywhere;user-select:all;-webkit-user-select:all}
+.btn .bi{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;vertical-align:-3px;margin-right:5px}
 #splash{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--hero1),var(--hero2));color:var(--hero-fg);transition:opacity .45s ease}
 #splash.out{opacity:0;pointer-events:none}
 #splash .spin{display:flex;flex-direction:column;align-items:center;gap:6px;padding:24px;text-align:center;width:min(320px,86vw)}
@@ -465,6 +466,7 @@ const IC={
  ora:'<svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 13l4-4M12 3v2"/></svg>',
  tank:'<svg viewBox="0 0 24 24"><path d="M5 21V5a2 2 0 012-2h6a2 2 0 012 2v16M3 21h14M15 8h2l2 2v7a1.5 1.5 0 003 0V9l-3-3"/><rect x="7" y="6" width="6" height="4"/></svg>',
  ml:'<svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg>',
+ link:'<svg class="bi" viewBox="0 0 24 24"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1.2 1.2"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1.2-1.2"/></svg>',
  gear:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg>',
  send:'<svg viewBox="0 0 24 24"><path d="M3 11.5L21 3l-6.5 18-3-7.5z"/><path d="M11.5 13.5L21 3"/></svg>',
  edit:'<svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>',
@@ -651,7 +653,7 @@ function regForm(){if($('#scrim'))return;const p=myProfile()||{};
     if(!fd.name?.trim())throw 'Add meg a nevedet.';
     await write(()=>DB.doc('users/'+UID).update({name:fd.name.trim(),rank:fd.rank?.trim()||'',post:fd.post||''}));
     if(fd.pw){const pe=pwErr(fd.pw);if(pe)throw pe;try{await updatePassword(AUTH.currentUser,fd.pw)}catch(e){throw e.code==='auth/requires-recent-login'?'Jelszócseréhez lépj ki és be újra.':'A jelszócsere nem sikerült.'}}
-    sndDrum();toast('Profil mentve')},'Mentés',`<button type="button" class="btn sm" data-act="qr">QR-kód</button><button type="button" class="btn sm danger" data-act="logout">Kilépés</button>`,{direct:true})}
+    sndDrum();toast('Profil mentve')},'Mentés',`<button type="button" class="btn sm" data-act="qr">Meghívó link</button><button type="button" class="btn sm danger" data-act="logout">Kilépés</button>`,{direct:true})}
 function pwErr(pw){if(pw.length<8)return 'A jelszó legalább 8 karakter legyen.';if(/^(.)\1+$/.test(pw)||/^(0123456789|12345678|123456789|87654321|password|jelszo|jelszó|qwertzui|qwertyui|abcdefgh)/i.test(pw))return 'Ez a jelszó túl könnyen kitalálható, válassz mást.';return ''}
 const roleName=r=>({admin:'Admin',tech:'Technikus',commander:'Parancsnok',member:'Beíró',pending:'Aktiválásra vár'})[r]||'—';
 
@@ -814,7 +816,7 @@ function chatPanel(){const ms=arr('messages').sort((a,b)=>a.ts-b.ts).slice(-80);
    ${can?`<form class="chatin" id="chatForm"><textarea id="chatIn" rows="1" maxlength="1000" placeholder="Üzenet a csapatnak…" aria-label="Üzenet">${esc(CHAT_DRAFT)}</textarea><button class="btn pri" type="submit" aria-label="Küldés">${IC.send}</button></form>`:'<p class="hint" style="margin:8px 0 0">Ide az admin, a parancsnok és a technikus ír. Új üzenetnél értesítést kapsz — a Beállításokban (fogaskerék) kapcsolhatod.</p>'}</div>`}
 document.addEventListener('submit',async e=>{if(e.target.id!=='chatForm')return;e.preventDefault();const ta=$('#chatIn');const txt=(ta.value||'').trim();if(!txt)return;if(!canChat()){toast('Ide csak admin, parancsnok és technikus írhat.');return}
   const data={text:txt.slice(0,1000),by:UID||'local',byName:myName(),role:ROLE||'admin',ts:Date.now()};const id=uid();CHAT_DRAFT='';ta.value='';CHAT_KNOWN.add(id);
-  try{if(DB)await write(()=>DB.collection('messages').doc(id).set(data));else{S.messages[id]={...data,id};saveLocal();render()}markChatSeen()}catch(x){CHAT_DRAFT=txt}});
+  try{if(DB)await write(()=>DB.collection('messages').doc(id).set(data));else{S.messages[id]={...data,id};saveLocal();render()}markChatSeen()}catch(x){CHAT_DRAFT=txt;ta.value=txt;if(x&&x.code==='permission-denied')modal('Az üzenet nem ment el','<p>A szerver elutasította az üzenetet. Ennek oka szinte mindig az, hogy a <b>Firebase szabályok még nincsenek frissítve</b> az üzenőfalhoz.</p><p class="hint">Admin teendő: Firebase konzol → Firestore Database → <b>Rules</b> → a firestore.rules teljes tartalmát bemásolni → <b>Publish</b>. Utána az üzenet újraküldhető.</p>',null)}});
 document.addEventListener('input',e=>{if(e.target.id==='chatIn'){CHAT_DRAFT=e.target.value;e.target.style.height='auto';e.target.style.height=Math.min(140,e.target.scrollHeight)+'px'}});
 document.addEventListener('keydown',e=>{if(e.target.id==='chatIn'&&e.key==='Enter'&&!e.shiftKey&&matchMedia('(pointer:fine)').matches){e.preventDefault();$('#chatForm').requestSubmit()}});
 
@@ -1185,12 +1187,12 @@ function renderMembers(){let users='';
     users=`<div class="panel" style="margin-top:16px"><h3>Felhasználók és szerepek</h3><p class="hint" style="margin-top:0"><b>Beíró</b>: kérelmet küldhet. <b>Parancsnok</b>: mindent lát, minden kérelmet követ, kérelmet küldhet. <b>Technikus</b>: jóváhagy és közvetlenül ír. <b>Admin</b>: ezen felül szerepeket oszt. Az <b>Aktiválásra vár</b> fiók semmit nem lát.</p>${ps.length?`<div class="list">${ps.map(p=>`<div class="item"><div class="main"><div class="t">${esc((p.rank?p.rank+' ':'')+p.name)} ${p.role==='pending'?'<span class="pill pend">új regisztráció</span>':''}</div><div class="hint">${esc(p.post||'')}${p.post?' · ':''}@${esc(p.username||'')} · ${fmtTs(p.ts)}</div></div>${p.id===UID?`<span class="pill ok">${roleName(p.role)} (te)</span>`:`<span class="seg">${['pending','member','commander','tech','admin'].map(r=>`<button data-act="setRole" data-id="${p.id}" data-role="${r}" aria-pressed="${p.role===r}">${{pending:'Tiltva',member:'Beíró',commander:'Parancsnok',tech:'Technikus',admin:'Admin'}[r]}</button>`).join('')}</span>`}</div>`).join('')}</div>`:'<div class="empty">Még senki nem regisztrált.</div>'}</div>`}
   const np=arr('users').filter(u=>u.role==='pending').length;
   if(!isAdmin()||MODE!=='fb'){const order={admin:0,commander:1,tech:2,member:3};const ps=arr('users').filter(u=>u.role in order).sort((a,b)=>order[a.role]-order[b.role]||String(a.name).localeCompare(String(b.name),'hu'));
-    return `<div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 class="h2">Tagok</h2><button class="btn line" data-act="qr">QR-kód</button></div>${chatPanel()}
+    return `<div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 class="h2">Tagok</h2><button class="btn line" data-act="qr">${IC.link}Meghívó link</button></div>${chatPanel()}
      ${ps.length?`<div class="panel" style="margin-top:14px"><h3>Állomány <span class="pill">${ps.length} fő</span></h3><div class="list">${ps.map(p=>`<div class="item"><div class="main"><div class="t">${esc((p.rank?p.rank+' ':'')+p.name)}</div><div class="hint">${esc(p.post||'')}</div></div><span class="pill">${roleName(p.role)}</span></div>`).join('')}</div></div>`:''}${verLine()}`}
-  return `<div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 class="h2">Tagok</h2><button class="btn pri" data-act="qr">QR-kód</button></div>
+  return `<div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 class="h2">Tagok</h2><button class="btn pri" data-act="qr">${IC.link}Meghívó link</button></div>
    ${chatPanel()}<div style="height:14px"></div>
    ${MODE==='fb'&&arr('users').filter(u=>u.role==='admin').length<2?'<div class="banner">Csak egy adminisztrátor van — érdemes legalább kettőt kijelölni, hogy a fiókod kiesése esetén is maradjon, aki aktivál.</div>':''}
-   <p class="hint" style="margin-top:0">${np?`<b>${np} új regisztráció</b> vár aktiválásra — a lista tetején vannak.`:'Nincs aktiválásra váró regisztráció.'} Új tag a QR-kóddal regisztrál, itt kapja meg a szerepét.</p>${users}${verLine()}`}
+   <p class="hint" style="margin-top:0">${np?`<b>${np} új regisztráció</b> vár aktiválásra — a lista tetején vannak.`:'Nincs aktiválásra váró regisztráció.'} Új tag a meghívó linkkel regisztrál, itt kapja meg a szerepét.</p>${users}${verLine()}`}
 const verLine=()=>`<div class="verline">N(app)ra Gépek · v${APP_VER} · ${APP_DATE}</div>`;
 function renderRequests(){
   const tech=isTech();const all=arr('requests');
@@ -1236,11 +1238,19 @@ document.addEventListener('submit',async e=>{const f=e.target;if(f.id!=='authFor
     await setDoc(doc(FS,'users',cred.user.uid),{name:fd.name.trim(),rank:fd.rank?.trim()||'',post:fd.post||'',username:u,role:'pending',ts:Date.now()});sndAdd();
   }catch(x){b.disabled=false;err(typeof x==='string'?x:'Hiba történt, próbáld újra.')}
 });
-function qrModal(){const url=location.origin+location.pathname.replace(/index\.html$/,'');let svg='<p>A QR-kód könyvtár nem töltődött be.</p>';
-  try{const q=qrcode(0,'M');q.addData(url);q.make();svg=q.createSvgTag({cellSize:8,margin:2,scalable:true})}catch(e){}
-  modal('Telepítés QR-kóddal',`<div class="qrprint"><div class="qrbox">${svg}</div><div style="text-align:center"><div style="font-family:var(--f-display);font-size:26px">N(app)ra Gépek</div><div class="mono" style="font-size:13px;overflow-wrap:anywhere">${esc(url)}</div></div></div>
-   <div class="list" style="margin-top:14px"><div class="item"><div class="main"><div class="t">Android (Chrome)</div><div class="hint">Olvasd be a kódot → megnyílik → ⋮ menü → <b>Alkalmazás telepítése</b> / <b>Hozzáadás a kezdőképernyőhöz</b>.</div></div></div>
-   <div class="item"><div class="main"><div class="t">iPhone (Safari)</div><div class="hint">Olvasd be a kamerával → Safariban nyílik → Megosztás gomb → <b>Főképernyőhöz adás</b>.</div></div></div></div>`,null,'',`<button type="button" class="btn pri" data-act="printqr">Nyomtatás</button>`)}
+const appUrl=()=>/^https?:/.test(location.protocol)&&!/claudeusercontent|claude\.ai/.test(location.host)?location.origin+location.pathname.replace(/index\.html$/,''):'https://napra-gepek.vercel.app/';
+const inviteText=()=>`N(app)ra Gépek – tüzér technikai nyilvántartás.\nNyisd meg a linket, regisztrálj a nevedre, és tedd ki a kezdőképernyőre:\n${appUrl()}`;
+function qrModal(){const url=appUrl();
+  modal('Meghívó link',`<p class="hint" style="margin-top:0">Küldd el a linket az új tagnak (Messenger, Signal, WhatsApp, SMS). Megnyitja, regisztrál, te pedig itt, a Tagok fülön aktiválod.</p>
+   <div class="invlink"><span class="mono" id="invUrl">${esc(url)}</span></div>
+   <div class="row" style="gap:8px;margin-top:10px;flex-wrap:wrap">${navigator.share?'<button type="button" class="btn pri" data-inv="share">Megosztás…</button>':''}<button type="button" class="btn ${navigator.share?'line':'pri'}" data-inv="copy">Link másolása</button><button type="button" class="btn line" data-inv="copytxt">Üzenet másolása</button></div>
+   <div class="list" style="margin-top:14px"><div class="item"><div class="main"><div class="t">Android (Chrome)</div><div class="hint">Link megnyitása Chrome-ban → ⋮ menü → <b>Alkalmazás telepítése</b> / <b>Hozzáadás a kezdőképernyőhöz</b>.</div></div></div>
+   <div class="item"><div class="main"><div class="t">iPhone (Safari)</div><div class="hint">A linket <b>Safariban</b> nyisd meg (Messengerből: ⋯ → Megnyitás böngészőben) → Megosztás gomb → <b>Főképernyőhöz adás</b>.</div></div></div></div>`,null);
+  const f=$('#mform');
+  const copy=async t=>{try{await navigator.clipboard.writeText(t);return true}catch(e){const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(x){}ta.remove();return ok}};
+  f.addEventListener('click',async e=>{const b=e.target.closest('[data-inv]');if(!b)return;e.stopPropagation();
+    if(b.dataset.inv==='share'){try{await navigator.share({title:'N(app)ra Gépek',text:inviteText().replace(/\n[^\n]*$/,''),url})}catch(x){}}
+    else{const ok=await copy(b.dataset.inv==='copy'?url:inviteText());toast(ok?(b.dataset.inv==='copy'?'Link a vágólapon':'Meghívó üzenet a vágólapon – illeszd be a csoportba'):'Nem sikerült másolni, jelöld ki a linket kézzel.')}})}
 
 /* ===== űrlapok ===== */
 function modal(title,inner,onSubmit,label='Mentés',extra='',opt={}){if(typeof extra==='object'){opt=extra;extra=''}
