@@ -1,6 +1,6 @@
 // Egyszerű offline gyorsítótár az app vázához. Az adatokat a Firebase saját offline tárolója kezeli.
-const CACHE = 'napra-gepek-v1.7.0';
-const SHELL = ['./', './index.html', './manifest.webmanifest', './firebase-config.js', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
+const CACHE = 'medve-v1.8.0';
+const SHELL = ['./', './index.html', './manifest.webmanifest', './firebase-config.js', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './icon-maskable.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).catch(() => {}));
