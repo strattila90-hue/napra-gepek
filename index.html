@@ -292,6 +292,40 @@ nav.bottom .mlic .pp{transition:fill .25s}nav.bottom button.mlon .mlic .pp{fill:
 .badge2{display:inline-block;font-size:11.5px;font-weight:800;padding:1px 8px;border-radius:999px;background:var(--ok-bg);color:var(--ok);margin-right:4px}
 .badge2.no{background:var(--surface);color:var(--muted)}
 .archq{margin-bottom:8px}
+#splash{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--hero1),var(--hero2));color:var(--hero-fg);transition:opacity .45s ease}
+#splash.out{opacity:0;pointer-events:none}
+#splash .spin{display:flex;flex-direction:column;align-items:center;gap:6px;padding:24px;text-align:center;width:min(320px,86vw)}
+#splash svg{width:132px;height:132px;filter:drop-shadow(0 8px 18px rgba(0,0,0,.25))}
+@media (prefers-reduced-motion:no-preference){#splash svg{animation:spb 1.6s ease-in-out infinite}@keyframes spb{50%{transform:translateY(-6px)}}}
+#splash .spt{font-family:var(--f-display);font-size:40px;line-height:1;margin-top:8px}
+#splash .sps{font-weight:700;opacity:.85}
+#splash .spbar{width:100%;height:6px;border-radius:99px;background:rgba(255,255,255,.2);overflow:hidden;margin-top:18px}
+#splash .spbar i{display:block;height:100%;width:5%;background:var(--hero-fg);border-radius:99px;transition:width .35s ease}
+#splash .spst{font-size:13px;font-weight:700;opacity:.9;min-height:18px}
+#splash .spv{font-family:var(--f-mono);font-size:12px;opacity:.7;margin-top:10px}
+#dim{position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;z-index:99;transition:opacity .2s}
+.pver{float:right;font-family:var(--f-mono);letter-spacing:0;text-transform:none;opacity:.85}
+.verline{text-align:center;font-family:var(--f-mono);font-size:12px;color:var(--muted);margin:18px 0 6px}
+.chat .chatlog{max-height:min(46vh,420px);overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:4px 2px;overscroll-behavior:contain}
+.msg{max-width:86%;background:var(--surface2);border-radius:16px 16px 16px 4px;padding:8px 12px;align-self:flex-start}
+.msg.me{align-self:flex-end;background:linear-gradient(160deg,var(--accent-deep),var(--accent));color:#fff;border-radius:16px 16px 4px 16px}
+.msg .mh{display:flex;align-items:center;gap:6px;font-size:12px;flex-wrap:nowrap;min-width:0}.msg .mh b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}.msg .rchip{flex:none}
+.msg .mt{opacity:.7;font-family:var(--f-mono);font-size:11px;margin-left:auto}
+.msg .mb{margin-top:3px;font-size:15px;line-height:1.4;overflow-wrap:anywhere}
+.msg .mx{border:0;background:none;color:inherit;opacity:.6;font-size:18px;line-height:1;cursor:pointer;padding:0 2px}
+.rchip{font-size:10.5px;font-weight:800;padding:0 7px;border-radius:99px;background:rgba(127,127,127,.18);line-height:1.6}
+.rchip.adm{background:#0E8E88;color:#fff}.rchip.cmd{background:#1F4FA8;color:#fff}.rchip.tech{background:#B0121E;color:#fff}
+.chatin{display:flex;gap:8px;margin-top:10px;align-items:flex-end}
+.chatin textarea{flex:1;resize:none;min-height:44px;max-height:140px;font:inherit;border-radius:14px;padding:10px 12px}
+.chatin .btn{width:48px;height:44px;padding:0;display:inline-flex;align-items:center;justify-content:center}
+.chatin svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.setg{border-top:1px dashed var(--line);padding:12px 0 4px}.setg:first-child{border-top:0;padding-top:0}
+.setg .lbl{margin-bottom:6px}
+.swr{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 0;font-weight:700;cursor:pointer}
+.swr input{appearance:none;-webkit-appearance:none;width:46px;height:28px;border-radius:99px;background:var(--line);position:relative;cursor:pointer;flex:none;margin:0;transition:background .2s}
+.swr input::after{content:'';position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s}
+.swr input:checked{background:var(--accent)}.swr input:checked::after{transform:translateX(18px)}
+.slr{display:flex;flex-direction:column;gap:4px;padding:6px 0;font-weight:700}.slr input{width:100%;accent-color:var(--accent)}
 .vedit{grid-column:1/-1;display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;padding-top:8px;border-top:1px dashed var(--line)}
 .vedit .btn{display:inline-flex;align-items:center;gap:5px}.vedit svg,.vtop .arrow svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .vtop .arrow{display:inline-flex;align-items:center;justify-content:center}.vtop .back,.vtop .pos{white-space:nowrap}.vtop{gap:6px}@media (max-width:420px){.vtop .arrow{width:38px;height:38px}.vtop .pos{font-size:12px}}.vtop .arrow.del{color:var(--bad)}
@@ -354,6 +388,8 @@ body.role-cmd{--bg:#EEF1F7;--surface2:#E9EEF8;--line:#D3DBEA;--accent:#1F4FA8;--
 
 </head>
 <body>
+<div id="splash" role="status" aria-live="polite"><div class="spin"><svg viewBox="0 0 100 100" aria-hidden="true" id="bearSplash"></svg><div class="spt">N(app)ra Gépek</div><div class="sps">Tüzér technikai nyilvántartás</div><div class="spbar"><i id="spbar"></i></div><div class="spst" id="spst">Indítás…</div><div class="spv" id="spv"></div></div></div>
+<div id="dim" aria-hidden="true"></div>
 <svg class="saint" viewBox="0 0 200 400" aria-hidden="true" fill="currentColor">
   <!-- Szent Borbála: korona, glória, kehely, torony (eredeti, stilizált rajz) -->
   <circle cx="92" cy="58" r="40" fill="none" stroke="currentColor" stroke-width="3"/>
@@ -392,7 +428,8 @@ const BEAR=`<g>
  <path d="M36 62c4-6 24-6 28 0l-2 14H38z"/></g>
  <g style="fill:var(--hero-fg)"><path d="M40 63l3 7 3-7zM54 63l3 7 3-7z"/><ellipse cx="50" cy="57" rx="6" ry="4"/></g>
 </g>`;
-document.getElementById('bearSmall').innerHTML=BEAR;
+document.getElementById('bearSmall').innerHTML=BEAR;document.getElementById('bearSplash').innerHTML=BEAR;
+const APP_VER='1.6.0',APP_DATE='2026.10.09.';document.getElementById('spv').textContent='v'+APP_VER;
 
 /* ===== típusok és sziluettek (oldalnézet, jobbra néz) ===== */
 const SIL={
@@ -428,6 +465,8 @@ const IC={
  ora:'<svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 13l4-4M12 3v2"/></svg>',
  tank:'<svg viewBox="0 0 24 24"><path d="M5 21V5a2 2 0 012-2h6a2 2 0 012 2v16M3 21h14M15 8h2l2 2v7a1.5 1.5 0 003 0V9l-3-3"/><rect x="7" y="6" width="6" height="4"/></svg>',
  ml:'<svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg>',
+ gear:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg>',
+ send:'<svg viewBox="0 0 24 24"><path d="M3 11.5L21 3l-6.5 18-3-7.5z"/><path d="M11.5 13.5L21 3"/></svg>',
  edit:'<svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>',
  trash:'<svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg>',
  mlnav:'<svg class="mlic" viewBox="0 0 24 24"><path class="pp" d="M5.5 2.5h9.5l4.5 4.5v14.5h-14z"/><path class="pl" d="M14.5 2.5v5h5M8.5 11.5h8M8.5 15h8M8.5 18.5h5"/></svg>',
@@ -448,12 +487,17 @@ const LIC=[
  ['HLX','Hilux','<path d="M2 15v-3h8l3-4h5l3 4 1 3z"/><circle cx="6.5" cy="16" r="1.8"/><circle cx="17.5" cy="16" r="1.8"/>'],
  ['CSSZ','Csoportos személyszállítás','<circle cx="7" cy="7" r="2.6"/><circle cx="17" cy="7" r="2.6"/><circle cx="12" cy="9" r="2.8"/><path d="M2 19c.5-4 2.5-6 5-6s3 1 3 1 1-1 2-1 1.5 1 1.5 1 1-1 3.5-1 4.5 2 5 6z"/>']];
 const licIcons=(d,small)=>{const l=(d.lic||[]).filter(k=>LIC.some(x=>x[0]===k));if(!l.length)return '';return `<span class="lics">${l.map(k=>{const x=LIC.find(y=>y[0]===k);return `<span class="lic" title="${esc(x[1])}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${x[2]}</svg>${small?'':`<b>${esc(x[0]==='CE'?'C+E':x[0])}</b>`}</span>`}).join('')}</span>`};
-const COLS=['vehicles','readings','fuel','trips','faults','drivers','events','moves','requests','users','stock'];
+const COLS=['vehicles','readings','fuel','trips','faults','drivers','events','moves','requests','users','stock','messages'];
 const S=Object.fromEntries(COLS.map(c=>[c,{}]));
 const V={view:'flotta',page:0,vid:null,sub:'att',period:'het',calMonth:null,calDay:null,calVid:'all',faultFilter:'open',moveVid:'all',selDriver:null};
 let DB=null,ASSETS=null,MODE='init',READONLY=false;const LOADED=new Set();
 let UID=null,ROLE=null,AUTH=null,FS=null,AUTHED=false,USERDOC=undefined,DATA_STARTED=false;const PHOTOS={};
 let SOUND=true;try{SOUND=localStorage.getItem('napra-snd')!=='0'}catch(e){}
+let SET={vol:70,notif:true,notifSnd:true,theme:'auto',bright:100};try{Object.assign(SET,JSON.parse(localStorage.getItem('napra-set')||'{}'))}catch(e){}
+function saveSet(){try{localStorage.setItem('napra-set',JSON.stringify(SET));localStorage.setItem('napra-snd',SOUND?'1':'0')}catch(e){}}
+function applySet(){const r=document.documentElement;if(SET.theme==='auto')delete r.dataset.theme;else r.dataset.theme=SET.theme;
+  const d=document.getElementById('dim');if(d)d.style.opacity=String(Math.max(0,Math.min(.6,(100-SET.bright)/100)));if(MASTER)MASTER.gain.value=SET.vol/100}
+let AUTHSEEN=false;
 
 /* ===== segédek ===== */
 const $=s=>document.querySelector(s);
@@ -486,21 +530,22 @@ const byType=t=>arr('vehicles').filter(v=>v.type===t).sort((a,b)=>(a.ts||0)-(b.t
 function orderedVehicles(){return TORDER.flatMap(byType)}
 
 /* ===== hangok (WebAudio, saját szintetizált hangok) ===== */
-let AC=null,NOISE=null;
-function ac(){if(!AC){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;AC=new C();const b=AC.createBuffer(1,AC.sampleRate*1,AC.sampleRate);const d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;NOISE=b}if(AC.state==='suspended')AC.resume();return AC}
-function snare(t,vol){const a=AC,n=a.createBufferSource();n.buffer=NOISE;const hp=a.createBiquadFilter();hp.type='highpass';hp.frequency.value=1600;const g=a.createGain();g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+.09);n.connect(hp).connect(g).connect(a.destination);n.start(t,Math.random()*.5,.12);
-  const o=a.createOscillator();o.type='triangle';o.frequency.setValueAtTime(220,t);o.frequency.exponentialRampToValueAtTime(140,t+.05);const g2=a.createGain();g2.gain.setValueAtTime(vol*.6,t);g2.gain.exponentialRampToValueAtTime(.001,t+.06);o.connect(g2).connect(a.destination);o.start(t);o.stop(t+.08)}
-function boom(t,vol,f=70){const a=AC,o=a.createOscillator();o.type='sine';o.frequency.setValueAtTime(f*1.8,t);o.frequency.exponentialRampToValueAtTime(f,t+.12);const g=a.createGain();g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+.45);o.connect(g).connect(a.destination);o.start(t);o.stop(t+.5)}
+let AC=null,NOISE=null,MASTER=null;
+function ac(){if(!AC){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;AC=new C();MASTER=AC.createGain();MASTER.gain.value=SET.vol/100;MASTER.connect(AC.destination);const b=AC.createBuffer(1,AC.sampleRate*1,AC.sampleRate);const d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;NOISE=b}if(AC.state==='suspended')AC.resume();return AC}
+function snare(t,vol){const a=AC,n=a.createBufferSource();n.buffer=NOISE;const hp=a.createBiquadFilter();hp.type='highpass';hp.frequency.value=1600;const g=a.createGain();g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+.09);n.connect(hp).connect(g).connect(MASTER);n.start(t,Math.random()*.5,.12);
+  const o=a.createOscillator();o.type='triangle';o.frequency.setValueAtTime(220,t);o.frequency.exponentialRampToValueAtTime(140,t+.05);const g2=a.createGain();g2.gain.setValueAtTime(vol*.6,t);g2.gain.exponentialRampToValueAtTime(.001,t+.06);o.connect(g2).connect(MASTER);o.start(t);o.stop(t+.08)}
+function boom(t,vol,f=70){const a=AC,o=a.createOscillator();o.type='sine';o.frequency.setValueAtTime(f*1.8,t);o.frequency.exponentialRampToValueAtTime(f,t+.12);const g=a.createGain();g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+.45);o.connect(g).connect(MASTER);o.start(t);o.stop(t+.5)}
 function brass(t,f,dur,vol){const a=AC,lp=a.createBiquadFilter();lp.type='lowpass';lp.frequency.setValueAtTime(700,t);lp.frequency.linearRampToValueAtTime(2400,t+.06);lp.Q.value=2;const g=a.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.03);g.gain.setValueAtTime(vol*.85,t+dur-.04);g.gain.linearRampToValueAtTime(0,t+dur);
-  [0,-6].forEach(det=>{const o=a.createOscillator();o.type='sawtooth';o.frequency.value=f;o.detune.value=det;o.connect(lp);o.start(t);o.stop(t+dur+.02)});lp.connect(g).connect(a.destination)}
+  [0,-6].forEach(det=>{const o=a.createOscillator();o.type='sawtooth';o.frequency.value=f;o.detune.value=det;o.connect(lp);o.start(t);o.stop(t+dur+.02)});lp.connect(g).connect(MASTER)}
 function sndDrum(){if(!SOUND||!ac())return;const t=AC.currentTime+.02;for(let i=0;i<16;i++)snare(t+i*.042,.05+.22*(i/16));snare(t+.7,.4);boom(t+.7,.35,90)}
 function sndAdd(){if(!SOUND||!ac())return;const t=AC.currentTime+.02;snare(t,.25);snare(t+.06,.18);boom(t,.3,80);
   [[392,0,.12],[523.25,.13,.12],[659.25,.26,.12],[783.99,.39,.16]].forEach(([f,d,l])=>brass(t+.1+d,f,l,.09));
   [523.25,659.25,783.99].forEach(f=>brass(t+.68,f,.55,.06));boom(t+.68,.4,65);snare(t+.68,.3)}
+function sndMsg(){if(!SET.notifSnd||!ac())return;const t=AC.currentTime+.02;brass(t,659.25,.1,.08);brass(t+.12,880,.22,.08)}
 function sndRemove(){if(!SOUND||!ac())return;const t=AC.currentTime+.02;brass(t,392,.16,.07);brass(t+.17,293.66,.3,.07);boom(t+.17,.35,55)}
 let SQ=null;function queueSound(k){const r={remove:3,add:2,upd:1};if(!SQ||r[k]>r[SQ]){SQ=k}clearTimeout(queueSound.t);queueSound.t=setTimeout(()=>{const k2=SQ;SQ=null;k2==='add'?sndAdd():k2==='remove'?sndRemove():sndDrum()},40)}
-function drawSnd(){const b=$('#snd');b.innerHTML=SOUND?IC.sndOn:IC.sndOff;b.setAttribute('aria-pressed',SOUND)}
-$('#snd').addEventListener('click',()=>{SOUND=!SOUND;try{localStorage.setItem('napra-snd',SOUND?'1':'0')}catch(e){}drawSnd();if(SOUND)sndDrum()});drawSnd();
+function drawSnd(){const b=$('#snd');b.innerHTML=IC.gear;b.setAttribute('aria-label','Beállítások')}
+$('#snd').addEventListener('click',()=>settingsForm());drawSnd();applySet();
 
 /* ===== tároló ===== */
 const LS='napra-gepek-local';
@@ -616,7 +661,7 @@ const slugUser=u=>String(u||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerC
 const LIVE={},HIST={};COLS.forEach(c=>{LIVE[c]={};HIST[c]={}});
 function recompute(c){const o={...HIST[c]};Object.values(LIVE[c]).forEach(p=>Object.assign(o,p));S[c]=o}
 let rT=null;function scheduleRender(){if(DRAG&&DRAG.moved)return;cancelAnimationFrame(rT);rT=requestAnimationFrame(()=>{if(!$('#scrim')||V.view!=='flotta')render();else render()})}
-function sub(c,key,q){onSnapshot(q,snap=>{const o={};snap.docs.forEach(d=>{o[d.id]={...d.data(),id:d.id}});LIVE[c][key]=o;recompute(c);LOADED.add(c);scheduleRender()},err=>{console.warn(c,err);LOADED.add(c);scheduleRender()})}
+function sub(c,key,q){onSnapshot(q,snap=>{const o={};snap.docs.forEach(d=>{o[d.id]={...d.data(),id:d.id}});LIVE[c][key]=o;recompute(c);LOADED.add(c);if(c==='messages')onMessages();scheduleRender()},err=>{console.warn(c,err);LOADED.add(c);scheduleRender()})}
 function startData(){if(DATA_STARTED)return;DATA_STARTED=true;
   const since=addDays(today(),-45),col=c=>collection(FS,c);
   ['vehicles','drivers','users','stock'].forEach(c=>sub(c,'all',col(c)));
@@ -624,6 +669,7 @@ function startData(){if(DATA_STARTED)return;DATA_STARTED=true;
   sub('faults','open',query(col('faults'),where('status','!=','lezárva')));sub('faults','recent',query(col('faults'),where('date','>=',since)));
   sub('trips','open',query(col('trips'),where('closed','==',false)));sub('trips','recent',query(col('trips'),where('from','>=',since)));
   sub('events','recent',query(col('events'),where('to','>=',since)));
+  sub('messages','recent',query(col('messages'),where('ts','>=',Date.now()-60*864e5)));
   sub('requests','pending',query(col('requests'),where('status','==','pending')));sub('requests','recent',query(col('requests'),where('ts','>=',Date.now()-30*864e5)));
 }
 const histLoaded=new Set();
@@ -644,8 +690,8 @@ function boot(){
   ASSETS=true;MODE='fb';let unsubMe=null;
   onAuthStateChanged(AUTH,u=>{
     if(unsubMe){unsubMe();unsubMe=null}
-    if(!u){if(AUTHED){location.reload();return}UID=null;ROLE=null;USERDOC=null;render();return}
-    AUTHED=true;UID=u.uid;USERDOC=undefined;render();
+    if(!u){AUTHSEEN=true;if(AUTHED){location.reload();return}UID=null;ROLE=null;USERDOC=null;render();return}
+    AUTHSEEN=true;AUTHED=true;UID=u.uid;USERDOC=undefined;render();
     unsubMe=onSnapshot(doc(FS,'users',u.uid),d=>{USERDOC=d.exists()?{...d.data(),id:d.id}:null;ROLE=USERDOC?USERDOC.role:null;
       if(['member','commander','tech','admin'].includes(ROLE))startData();render()},()=>{USERDOC=null;render()});
   });
@@ -731,20 +777,81 @@ function pillsHTML(v){const p=[];{const cw=consWarn(v);if(cw)p.push(`<span class
 const stBtn=(v,big)=>{const s=st(v);return `<button class="stbtn ${s}" data-act="cycleStatus" data-id="${v.id}" ${ro()} aria-label="Állapot: ${STATUS[s][0]} — koppintásra vált">${IC[s]}${big||s!=='ok'?STATUS[s][0]+svcTxt(v):''}</button>`};
 
 /* ===== render ===== */
+/* ===== nyitóképernyő ===== */
+const T0=Date.now();let SPLASH_DONE=false;
+function splashTick(){if(SPLASH_DONE)return;let pct=12,txt='Kapcsolódás a szerverhez…',fin=false;
+  if(MODE==='local'){fin=true;txt='Helyi adatok betöltve'}
+  else if(MODE==='fb'){if(!AUTHSEEN){pct=18}else if(!UID){fin=true;txt='Belépés'}else if(USERDOC===undefined){pct=32;txt='Bejelentkezés…'}
+    else if(!['member','commander','tech','admin'].includes(ROLE)){fin=true}
+    else if(LOADED.size<COLS.length){pct=38+Math.round(58*LOADED.size/COLS.length);txt=`Adatok szinkronizálása… ${LOADED.size}/${COLS.length}`}else{fin=true;txt='Szinkronizálva'}}
+  if(!navigator.onLine&&MODE==='fb')txt+=' · offline, a készüléken tárolt adatokból';
+  const b=$('#spbar'),st=$('#spst');if(b)b.style.width=(fin?100:pct)+'%';if(st)st.textContent=txt;
+  if(fin)splashHide()}
+function splashHide(){if(SPLASH_DONE)return;SPLASH_DONE=true;const sp=$('#splash');if(!sp)return;setTimeout(()=>{sp.classList.add('out');setTimeout(()=>sp.remove(),500)},Math.max(250,1300-(Date.now()-T0)))}
+setTimeout(()=>{if(!SPLASH_DONE){const st=$('#spst');if(st)st.textContent='Lassú kapcsolat – indítás a tárolt adatokkal';setTimeout(splashHide,900)}},9000);
+
+/* ===== üzenőfal (Tagok) ===== */
+const canChat=()=>MODE==='local'||['commander','tech','admin'].includes(ROLE);
+let CHAT_SEEN=0;try{CHAT_SEEN=Number(localStorage.getItem('napra-chat-seen')||0)}catch(e){}
+let CHAT_INIT=false,CHAT_KNOWN=new Set(),CHAT_DRAFT='';
+const unreadMsgs=()=>arr('messages').filter(m=>m.ts>CHAT_SEEN&&m.by!==UID);
+function markChatSeen(){const mx=Math.max(CHAT_SEEN,...arr('messages').map(m=>m.ts||0));if(mx>CHAT_SEEN){CHAT_SEEN=mx;try{localStorage.setItem('napra-chat-seen',String(mx))}catch(e){}}try{navigator.clearAppBadge&&navigator.clearAppBadge()}catch(e){}}
+function onMessages(){const ms=arr('messages');
+  if(!CHAT_INIT){CHAT_INIT=true;ms.forEach(m=>CHAT_KNOWN.add(m.id));return}
+  const fresh=ms.filter(m=>!CHAT_KNOWN.has(m.id));fresh.forEach(m=>CHAT_KNOWN.add(m.id));
+  const other=fresh.filter(m=>m.by!==UID).sort((a,b)=>a.ts-b.ts);if(!other.length)return;
+  const visible=V.view==='tagok'&&!document.hidden;if(visible){markChatSeen();sndMsg();return}
+  try{const n=unreadMsgs().length;navigator.setAppBadge&&navigator.setAppBadge(n)}catch(e){}
+  if(!SET.notif)return;const m=other[other.length-1];
+  sndMsg();toast(`Új üzenet – ${m.byName}: ${String(m.text).slice(0,60)}`);
+  if(document.hidden&&'Notification' in window&&Notification.permission==='granted'){const body=String(m.text).slice(0,180),opt={body,icon:'icon-192.png',badge:'icon-192.png',tag:'napra-chat',renotify:true,silent:!SET.notifSnd,data:{view:'tagok'}};
+    (navigator.serviceWorker?.ready||Promise.reject()).then(r=>r.showNotification('N(app)ra Gépek · '+m.byName,opt)).catch(()=>{try{new Notification('N(app)ra Gépek · '+m.byName,opt)}catch(e){}})}}
+const fmtMsgT=ts=>{const d=new Date(ts),t=today(),k=iso(d);return (k===t?'':fmtS(k)+' ')+d.toTimeString().slice(0,5)};
+function chatPanel(){const ms=arr('messages').sort((a,b)=>a.ts-b.ts).slice(-80);const can=canChat();
+  const RC={admin:'adm',commander:'cmd',tech:'tech'};
+  const log=ms.length?ms.map(m=>{const mine=m.by===UID;return `<div class="msg ${mine?'me':''}"><div class="mh"><b>${esc(m.byName||'?')}</b><span class="rchip ${RC[m.role]||''}">${roleName(m.role)}</span><span class="mt">${fmtMsgT(m.ts)}</span>${(mine||isAdmin())&&MODE==='fb'?`<button class="mx" data-act="delMsg" data-id="${m.id}" aria-label="Üzenet törlése">×</button>`:''}</div><div class="mb">${esc(m.text).replace(/\n/g,'<br>')}</div></div>`}).join(''):'<div class="hint" style="text-align:center;padding:18px 0">Még nincs üzenet. Az admin, a parancsnok és a technikus ír ide, mindenki más értesítést kap.</div>';
+  return `<div class="panel chat"><h3>Üzenőfal <span class="hint" style="font-weight:600">${can?'mindenki látja':'csak olvasás'}</span></h3><div class="chatlog" id="chatlog">${log}</div>
+   ${can?`<form class="chatin" id="chatForm"><textarea id="chatIn" rows="1" maxlength="1000" placeholder="Üzenet a csapatnak…" aria-label="Üzenet">${esc(CHAT_DRAFT)}</textarea><button class="btn pri" type="submit" aria-label="Küldés">${IC.send}</button></form>`:'<p class="hint" style="margin:8px 0 0">Ide az admin, a parancsnok és a technikus ír. Új üzenetnél értesítést kapsz — a Beállításokban (fogaskerék) kapcsolhatod.</p>'}</div>`}
+document.addEventListener('submit',async e=>{if(e.target.id!=='chatForm')return;e.preventDefault();const ta=$('#chatIn');const txt=(ta.value||'').trim();if(!txt)return;if(!canChat()){toast('Ide csak admin, parancsnok és technikus írhat.');return}
+  const data={text:txt.slice(0,1000),by:UID||'local',byName:myName(),role:ROLE||'admin',ts:Date.now()};const id=uid();CHAT_DRAFT='';ta.value='';CHAT_KNOWN.add(id);
+  try{if(DB)await write(()=>DB.collection('messages').doc(id).set(data));else{S.messages[id]={...data,id};saveLocal();render()}markChatSeen()}catch(x){CHAT_DRAFT=txt}});
+document.addEventListener('input',e=>{if(e.target.id==='chatIn'){CHAT_DRAFT=e.target.value;e.target.style.height='auto';e.target.style.height=Math.min(140,e.target.scrollHeight)+'px'}});
+document.addEventListener('keydown',e=>{if(e.target.id==='chatIn'&&e.key==='Enter'&&!e.shiftKey&&matchMedia('(pointer:fine)').matches){e.preventDefault();$('#chatForm').requestSubmit()}});
+
+/* ===== beállítások ===== */
+function notifState(){if(!('Notification' in window))return 'Ez a böngésző nem támogat rendszerértesítést (iPhone-on csak a főképernyőre telepített app tudja).';return {granted:'Rendszerértesítés engedélyezve.',denied:'A rendszerértesítés le van tiltva – a telefon beállításaiban engedélyezheted.',default:'A rendszerértesítés még nincs engedélyezve.'}[Notification.permission]}
+function settingsForm(){const sw=(k,l,on)=>`<label class="swr"><span>${l}</span><input type="checkbox" data-set="${k}" ${on?'checked':''}></label>`;
+  modal('Beállítások',`<div class="setg"><div class="lbl">Hang</div>${sw('sound','Hangeffektek (fanfár, dobpergés)',SOUND)}<label class="slr"><span>Hangerő <b id="volv">${SET.vol}%</b></span><input type="range" min="0" max="100" step="5" value="${SET.vol}" data-set="vol"></label><button type="button" class="btn sm line" data-act="sndTest">Próbahang</button></div>
+   <div class="setg"><div class="lbl">Értesítések</div>${sw('notif','Értesítés új üzenetről',SET.notif)}${sw('notifSnd','Értesítés hangja',SET.notifSnd)}<p class="hint" id="nst" style="margin:4px 0 6px">${notifState()}</p>${'Notification' in window&&Notification.permission==='default'?'<button type="button" class="btn sm pri" data-act="askNotif">Rendszerértesítés engedélyezése</button>':''}</div>
+   <div class="setg"><div class="lbl">Megjelenés</div><span class="seg" style="margin-bottom:8px">${[['auto','Automatikus'],['light','Világos'],['dark','Sötét']].map(([k,l])=>`<button type="button" data-theme-set="${k}" aria-pressed="${SET.theme===k}">${l}</button>`).join('')}</span><label class="slr"><span>Fényerő <b id="brv">${SET.bright}%</b></span><input type="range" min="40" max="100" step="5" value="${SET.bright}" data-set="bright"></label><p class="hint" style="margin:2px 0 0">Éjszakai használathoz tompítja az app képét (a telefon saját fényerejét nem állítja).</p></div>
+   <div class="setg"><div class="lbl">Az appról</div><p style="margin:0">N(app)ra Gépek <b>v${APP_VER}</b> · ${APP_DATE}</p><button type="button" class="btn sm line" data-act="reloadApp" style="margin-top:8px">Frissítés keresése / újratöltés</button></div>`,null);
+  const f=$('#mform');
+  f.addEventListener('input',e=>{const k=e.target.dataset.set;if(!k)return;
+    if(k==='sound'){SOUND=e.target.checked;if(SOUND)sndDrum()}else if(k==='vol'){SET.vol=Number(e.target.value);$('#volv').textContent=SET.vol+'%'}else if(k==='bright'){SET.bright=Number(e.target.value);$('#brv').textContent=SET.bright+'%'}else SET[k]=e.target.checked;
+    saveSet();applySet()});
+  f.addEventListener('change',e=>{if(e.target.dataset.set==='vol'&&SOUND)sndAdd()});
+  f.addEventListener('click',async e=>{const t=e.target.closest('[data-theme-set],[data-act]');if(!t)return;
+    if(t.dataset.themeSet){SET.theme=t.dataset.themeSet;saveSet();applySet();f.querySelectorAll('[data-theme-set]').forEach(b=>b.setAttribute('aria-pressed',b===t))}
+    else if(t.dataset.act==='sndTest'){e.stopPropagation();const o=SOUND;SOUND=true;sndAdd();SOUND=o}
+    else if(t.dataset.act==='askNotif'){e.stopPropagation();try{await Notification.requestPermission()}catch(x){}$('#nst').textContent=notifState();if(Notification.permission!=='default')t.remove()}
+    else if(t.dataset.act==='reloadApp'){e.stopPropagation();try{const r=await navigator.serviceWorker?.getRegistration();await r?.update()}catch(x){}location.reload()}})}
 function render(){
   const cmd=ROLE==='commander',adm=MODE==='fb'&&ROLE==='admin';document.body.classList.toggle('role-cmd',cmd);document.body.classList.toggle('role-adm',adm);const tc=document.querySelector('meta[name=theme-color]');if(tc)tc.content=cmd?'#0F2D66':adm?'#06524E':'#6E0B13';
-  if(MODE==='fb'&&(!UID||USERDOC===undefined||!USERDOC||!['member','commander','tech','admin'].includes(ROLE))){$('#mode').innerHTML='';$('#nav').innerHTML='';$('#main').innerHTML=renderGate();return}
+  if(MODE==='fb'&&(!UID||USERDOC===undefined||!USERDOC||!['member','commander','tech','admin'].includes(ROLE))){$('#mode').innerHTML='';$('#nav').innerHTML='';$('#main').innerHTML=renderGate();splashTick();return}
   syncUI();$('#mode').innerHTML=MODE==='fb'?`<button class="who" data-act="profile">${esc(myName())}<span>${roleName(ROLE)}</span></button>`:MODE==='local'?'demó mód':'betöltés…';
   const nf=arr('faults').filter(f=>f.status!=='lezárva').length,nt=arr('trips').filter(tripLive).length;
   const np=arr('requests').filter(r=>r.status==='pending'&&(seesAll()||r.by===UID)).length
   const nu=isAdmin()&&MODE==='fb'?arr('users').filter(u=>u.role==='pending').length:0;
-  const items=[['flotta','Gépek',0],['naptar','Naptár',0],['menet','Menetlevél',nt],['sofor','Sofőrök',0],['hibak','Hibák',nf],['kerelmek','Kérelmek',np]];if(isAdmin()&&MODE==='fb')items.push(['tagok','Tagok',nu]);document.body.classList.toggle('nav7',items.length>6);
+  const items=[['flotta','Gépek',0],['naptar','Naptár',0],['menet','Menetlevél',nt],['sofor','Sofőrök',0],['hibak','Hibák',nf],['kerelmek','Kérelmek',np]];{const un=unreadMsgs().length;items.push(['tagok','Tagok',nu+un])}document.body.classList.toggle('nav7',items.length>6);
   $('#nav').innerHTML=items.map(([k,l,c])=>`<button data-view="${k}" ${k==='menet'&&nt?'class="mlon" ':''}${(V.view===k||(k==='flotta'&&V.view==='gep'))?'aria-current="page"':''}>${k==='menet'?IC.mlnav:IC[k]}<span>${l}</span>${c?`<span class="cnt">${c}</span>`:''}</button>`).join('');
-  if(LOADED.size<COLS.length){$('#main').innerHTML='<div class="empty">Adatok betöltése…</div>';return}
+  if(LOADED.size<COLS.length){$('#main').innerHTML='<div class="empty">Adatok betöltése…</div>';splashTick();return}
   const banner=MODE==='local'?'<div class="banner">Demó mód: a firebase-config.js még nincs kitöltve, az adatok csak ezen az eszközön maradnak meg.</div>':'';
   if(V.view==='gep'&&!S.vehicles[V.vid])V.view='flotta';
   const html=V.view==='gep'?renderVehicle(S.vehicles[V.vid]):V.view==='naptar'?renderCalendar():V.view==='menet'?renderMoves():V.view==='sofor'?renderDrivers():V.view==='hibak'?renderFaults():V.view==='tagok'?renderMembers():V.view==='kerelmek'?renderRequests():renderFleet();
+  const hadFocus=document.activeElement?.id==='chatIn';
   $('#main').innerHTML=banner+html;
+  if(V.view==='tagok'){markChatSeen();const cl=$('#chatlog');if(cl)cl.scrollTop=cl.scrollHeight;if(hadFocus){const ta=$('#chatIn');if(ta){ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length)}}}
+  splashTick();
   hydratePhotos();
   if(V.view==='flotta')bindTrack();
 }
@@ -780,7 +887,7 @@ function renderParade(){
   const ws=weekStart(today()),wl=arr('fuel').filter(f=>f.date>=ws&&f.date<addDays(ws,7)).reduce((t,f)=>t+(f.liters||0),0);
   let due=0;vs.forEach(v=>{const ms=maintSummary(v);if(ms&&ms.s.worst!=='ok')due++;const mu=TYPES[v.type]?.musz&&muszState(v);if(mu&&mu.cls!=='ok')due++});
   return `<div class="parade"><svg class="bearbig" viewBox="0 0 100 100" aria-hidden="true">${BEAR}</svg>
-    <div class="lbl" style="color:var(--hero-fg);opacity:.8">Díszszemle · ${fmtD(today())}</div><h2>Technikai állomány</h2>
+    <div class="lbl" style="color:var(--hero-fg);opacity:.8">Díszszemle · ${fmtD(today())}<span class="pver">v${APP_VER}</span></div><h2>Technikai állomány</h2>
     <div class="kpis"><div class="kpi"><b>${N}</b><span>Összes gép</span></div><div class="kpi"><b>${N?pct+'%':'–'}</b><span>Hadra fogható</span></div><div class="kpi"><b>${c.service}</b><span>Szervizben</span></div></div>
     <div class="ready" role="img" aria-label="${c.ok} hadra fogható, ${c.limited} korlátozott, ${c.service} szervizben">${N?`<i style="width:${c.ok/N*100}%;background:var(--hero-fg)"></i><i style="width:${c.limited/N*100}%;background:var(--brass)"></i><i style="width:${c.service/N*100}%;background:rgba(255,243,241,.3)"></i>`:''}</div>
     <div class="ranks">${ranks}</div>
@@ -788,7 +895,7 @@ function renderParade(){
    ${todayPanel(trips,nf,wl)}
    ${stockPanel()}
    <div class="cols" style="margin-top:14px">
-   <div class="panel"><h3>Kezelés</h3><p class="hint" style="margin:0">Lapozz oldalra a típusokhoz. A <b>+</b> és <b>−</b> gombbal adsz hozzá vagy veszel el gépet, a pajzs / háromszög / villáskulcs gombbal állítod a hadrafoghatóságot.</p></div></div>`;
+   <div class="panel"><h3>Kezelés <span class="pill">v${APP_VER}</span></h3><p class="hint" style="margin:0">Lapozz oldalra a típusokhoz. A <b>+</b> és <b>−</b> gombbal adsz hozzá vagy veszel el gépet, a pajzs / háromszög / villáskulcs gombbal állítod a hadrafoghatóságot.</p></div></div>`;
 }
 function todayPanel(trips,nf,wl){const vs=orderedVehicles().filter(v=>v.reg);
   const chip=(v,txt,cls='')=>`<button class="tchip ${cls}" data-open="${v.id}"><b>${esc(vLabel(v))}</b><span>${txt}</span></button>`;
@@ -1077,9 +1184,14 @@ function renderMembers(){let users='';
   if(isAdmin()&&MODE==='fb'){const order={pending:0,admin:1,commander:2,tech:3,member:4};const ps=arr('users').sort((a,b)=>(order[a.role]??9)-(order[b.role]??9)||String(a.name).localeCompare(String(b.name),'hu'));
     users=`<div class="panel" style="margin-top:16px"><h3>Felhasználók és szerepek</h3><p class="hint" style="margin-top:0"><b>Beíró</b>: kérelmet küldhet. <b>Parancsnok</b>: mindent lát, minden kérelmet követ, kérelmet küldhet. <b>Technikus</b>: jóváhagy és közvetlenül ír. <b>Admin</b>: ezen felül szerepeket oszt. Az <b>Aktiválásra vár</b> fiók semmit nem lát.</p>${ps.length?`<div class="list">${ps.map(p=>`<div class="item"><div class="main"><div class="t">${esc((p.rank?p.rank+' ':'')+p.name)} ${p.role==='pending'?'<span class="pill pend">új regisztráció</span>':''}</div><div class="hint">${esc(p.post||'')}${p.post?' · ':''}@${esc(p.username||'')} · ${fmtTs(p.ts)}</div></div>${p.id===UID?`<span class="pill ok">${roleName(p.role)} (te)</span>`:`<span class="seg">${['pending','member','commander','tech','admin'].map(r=>`<button data-act="setRole" data-id="${p.id}" data-role="${r}" aria-pressed="${p.role===r}">${{pending:'Tiltva',member:'Beíró',commander:'Parancsnok',tech:'Technikus',admin:'Admin'}[r]}</button>`).join('')}</span>`}</div>`).join('')}</div>`:'<div class="empty">Még senki nem regisztrált.</div>'}</div>`}
   const np=arr('users').filter(u=>u.role==='pending').length;
-  return `<div class="row" style="justify-content:space-between;margin-bottom:6px"><h2 class="h2">Tagok</h2><button class="btn pri" data-act="qr">QR-kód</button></div>
+  if(!isAdmin()||MODE!=='fb'){const order={admin:0,commander:1,tech:2,member:3};const ps=arr('users').filter(u=>u.role in order).sort((a,b)=>order[a.role]-order[b.role]||String(a.name).localeCompare(String(b.name),'hu'));
+    return `<div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 class="h2">Tagok</h2><button class="btn line" data-act="qr">QR-kód</button></div>${chatPanel()}
+     ${ps.length?`<div class="panel" style="margin-top:14px"><h3>Állomány <span class="pill">${ps.length} fő</span></h3><div class="list">${ps.map(p=>`<div class="item"><div class="main"><div class="t">${esc((p.rank?p.rank+' ':'')+p.name)}</div><div class="hint">${esc(p.post||'')}</div></div><span class="pill">${roleName(p.role)}</span></div>`).join('')}</div></div>`:''}${verLine()}`}
+  return `<div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 class="h2">Tagok</h2><button class="btn pri" data-act="qr">QR-kód</button></div>
+   ${chatPanel()}<div style="height:14px"></div>
    ${MODE==='fb'&&arr('users').filter(u=>u.role==='admin').length<2?'<div class="banner">Csak egy adminisztrátor van — érdemes legalább kettőt kijelölni, hogy a fiókod kiesése esetén is maradjon, aki aktivál.</div>':''}
-   <p class="hint" style="margin-top:0">${np?`<b>${np} új regisztráció</b> vár aktiválásra — a lista tetején vannak.`:'Nincs aktiválásra váró regisztráció.'} Új tag a QR-kóddal regisztrál, itt kapja meg a szerepét.</p>${users}`}
+   <p class="hint" style="margin-top:0">${np?`<b>${np} új regisztráció</b> vár aktiválásra — a lista tetején vannak.`:'Nincs aktiválásra váró regisztráció.'} Új tag a QR-kóddal regisztrál, itt kapja meg a szerepét.</p>${users}${verLine()}`}
+const verLine=()=>`<div class="verline">N(app)ra Gépek · v${APP_VER} · ${APP_DATE}</div>`;
 function renderRequests(){
   const tech=isTech();const all=arr('requests');
   const pend=all.filter(r=>r.status==='pending'&&(seesAll()||r.by===UID)).sort((a,b)=>a.ts-b.ts);
@@ -1269,6 +1381,7 @@ document.addEventListener('click',async e=>{
     case 'plus':await plus(d.type);break;
     case 'minus':minus(d.type);break;
     case 'editVehicle':vehicleForm(v);break;
+    case 'delMsg':{const m=S.messages[d.id];if(!m)break;modal('Üzenet törlése',`<p>„${esc(String(m.text).slice(0,80))}” törlődik mindenkinél.</p>`,async()=>{await write(()=>DB.doc('messages/'+m.id).delete());toast('Üzenet törölve')},'Törlés',{direct:true});break}
     case 'vEdit':vehicleForm(S.vehicles[d.id]);break;
     case 'vDel':{const x=S.vehicles[d.id];const nT=arr('trips').filter(t=>t.vid===x.id).length,nF=arr('fuel').filter(f=>f.vid===x.id).length;
       confirmBox('Gép törlése',`Biztosan törlöd: <b>${esc(vLabel(x))}</b> (${esc(vName(x))})?${nT||nF?` A hozzá tartozó ${nF} tankolás és ${nT} menetlevél a naplóban megmarad.`:''} Ha csak a rendszám rossz, inkább a <b>Szerkesztés</b> gombbal javítsd.`,'Törlés',async()=>{const t=x.type;await del('vehicles',x.id);if(V.view==='gep'){V.view='flotta';V.page=PAGES.indexOf(t)}toast('Gép törölve');render()});break}
