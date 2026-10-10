@@ -729,6 +729,8 @@ body.setopen nav.bottom{z-index:96}body.setopen.navR .scrim{padding-right:72px}b
 .dkmr .nm2{flex:1;min-width:0;position:relative;padding-bottom:7px}.dkmr .nm2 b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dkmr .nm2 small{font-size:11px;opacity:.7}
 .dkmr .nm2 i{position:absolute;left:0;bottom:0;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent),#c9a227)}
 .dkmr .km{font-family:var(--f-mono,monospace);font-size:16px;white-space:nowrap}.dkmr .km small{font-size:11px;opacity:.7}
+.seg.vas{display:flex;flex-wrap:wrap;width:100%}.seg.vas button{flex:1 1 40%;padding:9px 4px;font-size:13px}
+.vasbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#2e3338;color:#f6f2e7;border-radius:14px;padding:8px 12px;margin-bottom:12px;font-size:13px;box-shadow:inset 4px 0 0 #c9a227}.vasbar .btn{margin-left:auto;background:#c9a227;color:#1d2125;border:0}
 </style>
 
 </head>
@@ -777,7 +779,7 @@ const BEAR=`<g>
  <g style="fill:var(--hero-fg)"><path d="M40 63l3 7 3-7zM54 63l3 7 3-7z"/><ellipse cx="50" cy="57" rx="6" ry="4"/></g>
 </g>`;
 const LOGO_FULL=document.getElementById('splashLogo')?.src||'';
-const APP_VER='3.5.1',APP_DATE='2026.10.10.';document.getElementById('spv').textContent='v'+APP_VER;
+const APP_VER='3.6.0',APP_DATE='2026.10.10.';document.getElementById('spv').textContent='v'+APP_VER;
 
 /* ===== típusok és sziluettek (oldalnézet, jobbra néz) ===== */
 const SIL={
@@ -851,7 +853,7 @@ const COLS=['vehicles','readings','fuel','trips','faults','drivers','events','mo
 const S=Object.fromEntries(COLS.map(c=>[c,{}]));
 const V={view:'flotta',page:0,vid:null,sub:'att',period:'het',calMonth:null,calDay:null,calVid:'all',faultFilter:'open',moveVid:'all',selDriver:null};
 let DB=null,ASSETS=null,MODE='init',READONLY=false;const LOADED=new Set();
-let UID=null,ROLE=null,AUTH=null,FS=null,AUTHED=false,USERDOC=undefined,DATA_STARTED=false;const PHOTOS={};
+let REALROLE=null,VIEWAS=(()=>{try{return localStorage.getItem('medve-viewas')||null}catch(e){return null}})();let UID=null,ROLE=null,AUTH=null,FS=null,AUTHED=false,USERDOC=undefined,DATA_STARTED=false;const PHOTOS={};
 let SOUND=true;try{SOUND=localStorage.getItem('napra-snd')!=='0'}catch(e){}
 let SET={vol:70,notif:true,notifSnd:true,theme:'auto',bright:100};try{Object.assign(SET,JSON.parse(localStorage.getItem('napra-set')||'{}'))}catch(e){}
 function saveSet(){try{localStorage.setItem('napra-set',JSON.stringify(SET));localStorage.setItem('napra-snd',SOUND?'1':'0')}catch(e){}}
@@ -2212,7 +2214,7 @@ function boot(){installHelper();
     if(unsubMe){unsubMe();unsubMe=null}
     if(!u){AUTHSEEN=true;if(AUTHED){location.reload();return}UID=null;ROLE=null;USERDOC=null;render();return}
     AUTHSEEN=true;AUTHED=true;UID=u.uid;USERDOC=undefined;render();
-    unsubMe=onSnapshot(doc(FS,'users',u.uid),d=>{USERDOC=d.exists()?{...d.data(),id:d.id}:null;ROLE=USERDOC?USERDOC.role:null;
+    unsubMe=onSnapshot(doc(FS,'users',u.uid),d=>{USERDOC=d.exists()?{...d.data(),id:d.id}:null;ROLE=USERDOC?USERDOC.role:null;REALROLE=ROLE;if(REALROLE==='admin'&&VIEWAS)ROLE=VIEWAS;
       if(['member','commander','tech','admin'].includes(ROLE))startData();render()},()=>{USERDOC=null;render()});
   });
 }
@@ -2460,7 +2462,7 @@ function settingsForm(){const sw=(k,l,on)=>`<label class="swr"><span>${l}</span>
   modal('Beállítások',`<div class="setg"><div class="lbl">Hang</div>${sw('sound','Hangeffektek (fanfár, dobpergés)',SOUND)}<label class="slr"><span>Hangerő <b id="volv">${SET.vol}%</b></span><input type="range" min="0" max="100" step="5" value="${SET.vol}" data-set="vol"></label><button type="button" class="btn sm line" data-act="sndTest">Próbahang</button></div>
    <div class="setg"><div class="lbl">Értesítések</div>${sw('notif','Értesítés új üzenetről',SET.notif)}${sw('notifSnd','Értesítés hangja',SET.notifSnd)}<p class="hint" id="nst" style="margin:4px 0 6px">${notifState()}</p>${'Notification' in window&&Notification.permission==='default'?'<button type="button" class="btn sm pri" data-act="askNotif">Rendszerértesítés engedélyezése</button>':''}</div>
    <div class="setg"><div class="lbl">Megjelenés</div><span class="seg" style="margin-bottom:8px">${[['auto','Automatikus'],['light','Világos'],['dark','Sötét']].map(([k,l])=>`<button type="button" data-theme-set="${k}" aria-pressed="${SET.theme===k}">${l}</button>`).join('')}</span><label class="slr"><span>Fényerő <b id="brv">${SET.bright}%</b></span><input type="range" min="40" max="100" step="5" value="${SET.bright}" data-set="bright"></label><p class="hint" style="margin:2px 0 0">Éjszakai használathoz tompítja az app képét (a telefon saját fényerejét nem állítja).</p></div>
-   <div class="setg"><div class="lbl">Az appról</div><p style="margin:0">M.E.D.V.E. <b>v${APP_VER}</b> · ${APP_DATE}</p><div class="row" style="gap:8px;margin-top:8px;flex-wrap:wrap"><button type="button" class="btn sm line" data-act="reloadApp">Frissítés keresése / újratöltés</button><button type="button" class="btn sm line" data-act="help2">${IC.help}Súgó</button></div></div>`,null);
+   ${(REALROLE||ROLE)==='admin'?`<div class="setg"><div class="lbl">Nézet váltása (csak admin)</div><div class="seg vas">${[['admin','Admin'],['tech','Technikus'],['commander','Parancsnok'],['member','Beíró']].map(([k,l])=>`<button type="button" data-viewas="${k}" aria-pressed="${(VIEWAS||'admin')===k}">${l}</button>`).join('')}</div><p class="hint" style="margin:6px 0 0">Megnézheted, mit lát és mit tehet a többi szerep. Csak ezen a készüléken, a jogosultságod nem változik.</p></div>`:''}<div class="setg"><div class="lbl">Az appról</div><p style="margin:0">M.E.D.V.E. <b>v${APP_VER}</b> · ${APP_DATE}</p><div class="row" style="gap:8px;margin-top:8px;flex-wrap:wrap"><button type="button" class="btn sm line" data-act="reloadApp">Frissítés keresése / újratöltés</button><button type="button" class="btn sm line" data-act="help2">${IC.help}Súgó</button></div></div>`,null);
   const f=$('#mform');
   f.addEventListener('input',e=>{const k=e.target.dataset.set;if(!k)return;
     if(k==='sound'){SOUND=e.target.checked;if(SOUND)sndDrum()}else if(k==='vol'){SET.vol=Number(e.target.value);$('#volv').textContent=SET.vol+'%'}else if(k==='bright'){SET.bright=Number(e.target.value);$('#brv').textContent=SET.bright+'%'}else SET[k]=e.target.checked;
@@ -2482,7 +2484,7 @@ function render(){
   const items=[['flotta','Gépek',0],['naptar','Naptár',0],['menet','Menetlevél',nt],['sofor','Driverek',0],['hibak','Hibák',nf],['kerelmek','Kérelmek',np]];{const un=unreadMsgs().length;items.push(['tagok','Tagok',nu+un])}items.push(['harc','Játék',0]);document.body.classList.toggle('nav8',items.length>7);document.body.classList.toggle('nav7',items.length>6);
   navRender(items,nt);
   if(LOADED.size<COLS.length){$('#main').innerHTML='<div class="empty">Adatok betöltése…</div>';splashTick();return}
-  const banner=(MODE==='local'?'<div class="banner">Demó mód: a firebase-config.js még nincs kitöltve, az adatok csak ezen az eszközön maradnak meg.</div>':'')+iconBanner();reportIcon();
+  const banner=(REALROLE==='admin'&&VIEWAS?`<div class="vasbar">👁 Előnézet: <b>${roleName(ROLE)}</b> nézet <button type="button" class="btn sm" data-viewas="admin">Vissza adminra</button></div>`:'')+(MODE==='local'?'<div class="banner">Demó mód: a firebase-config.js még nincs kitöltve, az adatok csak ezen az eszközön maradnak meg.</div>':'')+iconBanner();reportIcon();
   if(V.view==='gep'&&!S.vehicles[V.vid])V.view='flotta';
   const html=V.view==='gep'?renderVehicle(S.vehicles[V.vid]):V.view==='naptar'?renderCalendar():V.view==='menet'?renderMoves():V.view==='sofor'?renderDrivers():V.view==='hibak'?renderFaults():V.view==='tagok'?renderMembers():V.view==='kerelmek'?renderRequests():V.view==='harc'?renderGames():renderFleet();
   const hadFocus=document.activeElement?.id==='chatIn';
@@ -3008,6 +3010,9 @@ function modal(title,inner,onSubmit,label='Mentés',extra='',opt={}){if(typeof e
   const fi=f.querySelector('input,select,textarea');if(fi)fi.focus();
 }
 function closeModal(){$('#modalRoot').innerHTML='';if(document.body.classList.contains('setopen')){document.body.classList.remove('setopen');navMark(null)}}
+function setViewAs(k){if((REALROLE||ROLE)!=='admin')return;if(!REALROLE)REALROLE=ROLE;VIEWAS=k==='admin'?null:k;try{VIEWAS?localStorage.setItem('medve-viewas',VIEWAS):localStorage.removeItem('medve-viewas')}catch(e){}ROLE=VIEWAS||'admin';
+  document.querySelectorAll('[data-viewas]').forEach(b=>b.setAttribute('aria-pressed',(VIEWAS||'admin')===b.dataset.viewas));render();toast('👁 Nézet: '+roleName(ROLE))}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-viewas]');if(!b)return;e.preventDefault();e.stopPropagation();setViewAs(b.dataset.viewas)},true);
 function navMark(k){document.querySelectorAll('#nav button.tab').forEach(b=>{const on=k?b.dataset.view===k:b.hasAttribute('aria-current');b.classList.toggle('on',on);b.classList.toggle('navhome',!k&&on&&b.dataset.view!=='flotta')})}
 const fld=(n,l,v='',t='text',x='')=>`<label ${x.includes('full')?'class="full"':''}><span class="lbl">${l}</span><input id="f_${n}" name="${n}" type="${t}" value="${esc(v??'')}" ${t==='number'?'inputmode="decimal" step="any"':''} ${x.replace('full','')}></label>`;
 const vOpts=sel=>orderedVehicles().map(v=>`<option value="${v.id}" ${v.id===sel?'selected':''}>${esc(vLabel(v))} — ${esc(vName(v))}</option>`).join('');
