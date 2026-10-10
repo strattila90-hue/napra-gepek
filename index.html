@@ -769,6 +769,8 @@ body.setopen nav.bottom{z-index:96}body.setopen.navR .scrim{padding-right:72px}b
 .roster .dchip.arming::after{content:'';position:absolute;left:0;bottom:0;height:3px;width:100%;background:#ff8a00;transform-origin:left;animation:arm 3s linear forwards}
 @keyframes arm{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 .roster .dchip.arming{box-shadow:0 0 0 2px rgba(255,138,0,.5)}
+.btn.dangerline{color:var(--bad,#c0392b);border-color:currentColor;margin-left:6px}
+.selbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.selbar .sba{display:flex;gap:6px;margin-left:auto}.selbar .sba .btn{margin:0}
 </style>
 
 </head>
@@ -817,7 +819,7 @@ const BEAR=`<g>
  <g style="fill:var(--hero-fg)"><path d="M40 63l3 7 3-7zM54 63l3 7 3-7z"/><ellipse cx="50" cy="57" rx="6" ry="4"/></g>
 </g>`;
 const LOGO_FULL=document.getElementById('splashLogo')?.src||'';
-const APP_VER='3.7.1',APP_DATE='2026.10.10.';document.getElementById('spv').textContent='v'+APP_VER;
+const APP_VER='3.7.3',APP_DATE='2026.10.10.';document.getElementById('spv').textContent='v'+APP_VER;
 
 /* ===== típusok és sziluettek (oldalnézet, jobbra néz) ===== */
 const SIL={
@@ -2871,7 +2873,7 @@ function rsInit(){const r=document.querySelector('.rbox .roster');if(!r)return;r
 function drvKmPanel(ds){const rows=ds.map(d=>({d,o:DRVKM[d.id]})).filter(x=>x.o).sort((a,b)=>b.o.km-a.o.km);const tot=rows.reduce((a,x)=>a+x.o.km,0);
   if(!rows.length)return `<div class="panel" style="margin-top:16px"><h3>Levezetett km</h3><p class="hint" style="margin:0">Még nincs lezárt (VisszaMEA-zott) menetlevél, amelynek a neve egyezik egy driverrel.</p></div>`;
   const mx=rows[0].o.km||1;return `<div class="panel dkmp" style="margin-top:16px"><h3>Levezetett km <span class="pill">${n0(tot)} km</span></h3><div class="hint" style="margin:-4px 0 10px">Lezárt menetlevelek alapján (záró − induló km), a menetlevélre írt név szerint.</div>
-   ${rows.map((x,i)=>`<div class="dkmr"><span class="pos">${i+1}.</span><div class="nm2"><b>${esc(dName(x.d))}</b><small>${x.o.n} menetlevél</small><i style="width:${Math.max(3,x.o.km/mx*100).toFixed(1)}%"></i></div><b class="km">${n0(x.o.km)}<small> km</small></b></div>`).join('')}</div>`}
+   ${rows.map((x,i)=>`<div class="dkmr"><span class="pos">${i+1}.</span><div class="nm2"><b>${esc(dName(x.d))}</b><small>${x.o.n} menetlevél</small><i style="width:${Math.max(3,x.o.km/mx*100).toFixed(1)}%"></i></div><b class="km">${n0(x.o.km)}<small> km</small></b><button class="btn sm line dangerline" data-act="delDriver" data-id="${x.d.id}" ${ro()} aria-label="Eltávolítás">🗑</button></div>`).join('')}</div>`}
 function dchip(d,inSlot){return `<span class="dchip" data-drag="${d.id}" ${V.selDriver===d.id?'aria-pressed="true"':''} role="button" tabindex="0" aria-label="${esc(dName(d))} — húzd egy gépre${(d.lic||[]).length?' · jogosultság: '+esc((d.lic||[]).map(k=>(LIC.find(x=>x[0]===k)||[,k])[1]).join(', ')):''}"><span class="dn">${d.rank?`<span class="rk">${esc(d.rank)}</span>`:''}<span class="nm">${esc(d.name)}</span>${!inSlot&&DRVKM&&DRVKM[d.id]?`<span class="dkm">${n0(DRVKM[d.id].km)} km</span>`:''}${inSlot?`<button class="x" data-act="unassign" data-id="${inSlot}" aria-label="Levétel a gépről" ${ro()}>✕</button>`:''}</span>${inSlot?'':licIcons(d)}</span>`}
 function renderDrivers(){DRVKM=drvKmMap();
   const ds=arr('drivers').sort(byRank);
@@ -2879,12 +2881,12 @@ function renderDrivers(){DRVKM=drvKmMap();
   const free=ds.filter(d=>!assigned.has(d.id));const rpn=Math.max(1,Math.ceil(free.length/6));const rp=V.rpage=Math.min(V.rpage||0,rpn-1);const sel=V.selDriver&&S.drivers[V.selDriver];
   const slots=orderedVehicles().map(v=>{const d=driverOf(v);return `<div class="slot ${d?'filled':''}" data-drop="${v.id}" data-act="slotTap" role="button" tabindex="0" aria-label="${esc(vLabel(v))} — driver ide"><div class="sv">${SIL[v.type]}</div><div class="sr">${esc(vLabel(v))}</div>${d?dchip(d,v.id):'<span class="hint sfree">üres</span>'}</div>`}).join('');
   return `<div class="h-sec" style="margin-top:0"><h2 class="h2">Driverek</h2><button class="btn pri" data-act="addDriver" ${ro()}>+ Driver</button></div>
-   ${sel?`<div class="selbar">${esc(dName(sel))} → koppints a gépre</div>`:'<p class="hint dtip">⇄ Tartsd az ujjad 3 mp-ig a néven, majd húzd a gépre · vagy koppints: név → gép</p>'}
+   ${sel?`<div class="selbar"><span>${esc(dName(sel))} → koppints a gépre</span><span class="sba"><button type="button" class="btn sm line" data-act="editDriver" data-id="${sel.id}" ${ro()}>✎</button><button type="button" class="btn sm line dangerline" data-act="delDriver" data-id="${sel.id}" ${ro()} aria-label="Eltávolítás">🗑 Eltávolítás</button><button type="button" class="btn sm line" data-act="selClear" aria-label="Mégse">✕</button></span></div>`:'<p class="hint dtip">⇄ Tartsd az ujjad 3 mp-ig a néven, majd húzd a gépre · vagy koppints: név → gép</p>'}
    <div class="rosterwrap"><div class="lbl" style="margin-bottom:6px">Szabad állomány · ${free.length}${rpn>1?`<span class="rcnt"> · ${rp+1}/${rpn}. oldal</span>`:''}</div>
    <div class="rbox"><div class="roster" data-drop="none" data-act="slotTap">${free.length?free.slice(rp*6,rp*6+6).map(d=>dchip(d)).join(''):`<span class="hint">${ds.length?'Mindenki beosztva. Ide húzva leveheted a gépről.':'Még nincs driver. Vedd fel az állományt a + Driver gombbal.'}</span>`}</div></div>${rpn>1?`<div class="rpager noswipe" role="navigation" aria-label="Oldalak">${Array.from({length:rpn},(_,i)=>`<button type="button" data-rpage="${i}" ${i===rp?'aria-current="page"':''}>${i+1}</button>`).join('')}</div>`:''}</div>
    <div class="h-sec"><h2 style="font-weight:800;font-size:17px">Gépek</h2></div><div class="slots">${slots||'<div class="empty">Nincs gép. A Gépek oldalon a + gombbal vehetsz fel.</div>'}</div>
    ${drvKmPanel(ds)}
-   <div class="panel" style="margin-top:16px"><h3>Állomány szerkesztése</h3>${ds.length?`<div class="list">${ds.map(d=>{const v=arr('vehicles').find(x=>x.driverId===d.id);return `<div class="item"><div class="main"><div class="t">${esc(dName(d))}</div>${licIcons(d)}<div class="hint">${v?'Gép: '+esc(vLabel(v)):'Szabad'}${DRVKM[d.id]?` · <b>${n0(DRVKM[d.id].km)} km</b> (${DRVKM[d.id].n} menetlevél)`:''}${d.note?' · '+esc(d.note):''}</div></div><button class="btn sm line" data-act="editDriver" data-id="${d.id}" ${ro()}>Szerk.</button></div>`}).join('')}</div>`:'<div class="empty">Nincs felvett driver.</div>'}</div>`;
+   <div class="panel" style="margin-top:16px"><h3>Állomány szerkesztése</h3>${ds.length?`<div class="list">${ds.map(d=>{const v=arr('vehicles').find(x=>x.driverId===d.id);return `<div class="item"><div class="main"><div class="t">${esc(dName(d))}</div>${licIcons(d)}<div class="hint">${v?'Gép: '+esc(vLabel(v)):'Szabad'}${DRVKM[d.id]?` · <b>${n0(DRVKM[d.id].km)} km</b> (${DRVKM[d.id].n} menetlevél)`:''}${d.note?' · '+esc(d.note):''}</div></div><button class="btn sm line" data-act="editDriver" data-id="${d.id}" ${ro()}>Szerk.</button><button class="btn sm line dangerline" data-act="delDriver" data-id="${d.id}" ${ro()} aria-label="${esc(dName(d))} eltávolítása">🗑</button></div>`}).join('')}</div>`:'<div class="empty">Nincs felvett driver.</div>'}</div>`;
 }
 async function assign(did,target){
   if(READONLY){toast('Csak olvasási jogod van.');return}
@@ -3154,7 +3156,9 @@ function driverForm(d){const isNew=!d;d=d||{};
   modal(isNew?'Új driver':'Driver szerkesztése',`<div class="form">${fld('rank','Rendfokozat',d.rank,'text','placeholder="pl. őrv."')}${fld('name','Név',d.name,'text','required')}<div class="full"><span class="lbl">Jogosítvány / jogosultság</span><div class="licpick">${LIC.map(([k,l,ic],i)=>`<label class="licopt"><input type="checkbox" name="lic_${i}" value="${k}" ${(d.lic||[]).includes(k)?'checked':''}><span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${ic}</svg>${esc(l)}</span></label>`).join('')}</div></div>${fld('note','Megjegyzés',d.note,'text','full')}</div>`,async fd=>{
     if(!fd.name?.trim())throw 'Add meg a nevet.';const data={name:fd.name.trim(),rank:fd.rank?.trim()||'',note:fd.note||'',lic:LIC.map((_,i)=>fd['lic_'+i]).filter(Boolean)};
     if(isNew)await add('drivers',data);else await upd('drivers',d.id,data);toast('Mentve')},'Mentés',isNew?'':delBtn);
-  if(!isNew)$('#mdel').onclick=()=>act(async()=>{try{for(const v of arr('vehicles').filter(x=>x.driverId===d.id))await upd('vehicles',v.id,{driverId:null});await del('drivers',d.id);closeModal();toast('Driver törölve')}catch(e){}})}
+  if(!isNew)$('#mdel').onclick=()=>delDriverAsk(d)}
+function delDriverAsk(d){if(!d)return;const v=arr('vehicles').find(x=>x.driverId===d.id);const km=(typeof drvKmMap==='function'?drvKmMap()[d.id]:null);
+  confirmBox('Driver eltávolítása',`Biztosan eltávolítod <b>${esc(dName(d))}</b> drivert az állományból?${v?`<br>Jelenleg a <b>${esc(vLabel(v))}</b> gépen ül – onnan is lekerül.`:''}${km?`<br><span class="hint">A menetleveleken (${km.n} db, ${n0(km.km)} km) a neve megmarad, a gyűjtő nem változik.</span>`:''}`,'Eltávolítás',async()=>{for(const x of arr('vehicles').filter(x=>x.driverId===d.id))await upd('vehicles',x.id,{driverId:null});await del('drivers',d.id);if(V.selDriver===d.id)V.selDriver=null;toast(`${dName(d)} eltávolítva`)})}
 function maintForm(v,m){const isNew=!m;const t=TYPES[v.type];m=m||{lastDate:today(),lastH:v.h,lastKm:v.km};
   modal(isNew?'Karbantartási ciklus':'Ciklus szerkesztése',`<div class="form">${fld('name','Megnevezés',m.name,'text','full required')}${fld('days','Ciklus (nap)',m.days,'number')}${t.hours?fld('hours','Ciklus (üzemóra)',m.hours,'number'):''}${fld('km','Ciklus (km)',m.km,'number')}${fld('lastDate','Utoljára elvégezve',m.lastDate,'date')}${t.hours?fld('lastH','Üzemóra akkor',m.lastH,'number'):''}${fld('lastKm','km akkor',m.lastKm,'number')}</div><p class="hint">Amelyik határ előbb jön el, az számít.</p>`,async fd=>{
     if(!fd.name?.trim())throw 'Adj nevet a ciklusnak.';const it={id:m.id||uid(),name:fd.name.trim(),days:num(fd.days),hours:t.hours?num(fd.hours):null,km:num(fd.km),lastDate:fd.lastDate||null,lastH:t.hours?num(fd.lastH):null,lastKm:num(fd.lastKm)};
@@ -3245,7 +3249,7 @@ document.addEventListener('click',async e=>{
     case 'addFault':faultForm(d.vid||v?.id);break;
     case 'faultSt':faultStatusForm(S.faults[d.id]);break;
     case 'faultNext':{const f=S.faults[d.id];await upd('faults',f.id,{status:f.status==='nyitott'?'javítás alatt':'lezárva'});break}
-    case 'addDriver':driverForm();break;case 'editDriver':driverForm(S.drivers[d.id]);break;
+    case 'addDriver':driverForm();break;case 'selClear':V.selDriver=null;render();break;case 'delDriver':delDriverAsk(S.drivers[d.id]);break;case 'editDriver':driverForm(S.drivers[d.id]);break;
     case 'unassign':await upd('vehicles',d.id,{driverId:null});toast('Levéve a gépről');break;
     case 'slotTap':if(V.selDriver)await assign(V.selDriver,el.dataset.drop);break;
   }})}catch(err){if(typeof err==='string')toast(err)}
