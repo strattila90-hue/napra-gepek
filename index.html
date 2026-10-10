@@ -779,7 +779,7 @@ const BEAR=`<g>
  <g style="fill:var(--hero-fg)"><path d="M40 63l3 7 3-7zM54 63l3 7 3-7z"/><ellipse cx="50" cy="57" rx="6" ry="4"/></g>
 </g>`;
 const LOGO_FULL=document.getElementById('splashLogo')?.src||'';
-const APP_VER='3.6.0',APP_DATE='2026.10.10.';document.getElementById('spv').textContent='v'+APP_VER;
+const APP_VER='3.6.1',APP_DATE='2026.10.10.';document.getElementById('spv').textContent='v'+APP_VER;
 
 /* ===== típusok és sziluettek (oldalnézet, jobbra néz) ===== */
 const SIL={
@@ -2746,7 +2746,7 @@ function mlTile(v){const t=activeTrip(v.id);let cls='',txt='nincs';
   return `<button class="mlt ${cls}" data-act="mlTile" data-vid="${v.id}" aria-label="${esc(vLabel(v))} menetlevél">${IC.mlnav.replace('class="mlic"','')}<span class="r">${esc(vLabel(v))}</span><span class="v">${txt}</span></button>`}
 function archItem(t){const v=S.vehicles[t.vid];const km=t.endKm!=null&&t.startKm!=null?t.endKm-t.startKm:null;const tt=TYPES[v?.type]||{};
   const srch=[t.num,t.driver,v?vLabel(v):'',t.note,t.returned].join(' ').toLowerCase();
-  return `<div class="item" data-s="${esc(srch)}" data-act="tripView" data-id="${t.id}" style="cursor:pointer"><div class="main"><div class="t">ML ${esc(t.num)} · ${esc(v?vLabel(v):'?')}</div><div class="hint">${esc(t.driver)} · ${fmtD(t.from)} – ${fmtD(t.to)} · vissza ${fmtD(t.returned)}${km!=null?` · ${n0(km)} km`:''}${tt.hours&&t.endH!=null&&t.startH!=null?` · ${n1(t.endH-t.startH)} üó`:''}</div><div style="margin-top:4px"><span class="badge2">VisszaMEA-zva</span>${t.returnLiters?`<span class="badge2">Visszatankolva ${n0(t.returnLiters)} l</span>`:'<span class="badge2 no">Tankolás nélkül</span>'}${(t.photos||[]).length?`<span class="badge2 no">${t.photos.length} fotó</span>`:''}</div></div></div>`}
+  return `<div class="item" data-s="${esc(srch)}" data-act="tripView" data-id="${t.id}" style="cursor:pointer"><div class="main"><div class="t">ML ${esc(t.num)} · ${esc(v?vLabel(v):'?')}</div><div class="hint">${esc(t.driver)} · ${fmtD(t.from)} – ${fmtD(t.to)} · vissza ${fmtD(t.returned)}${km!=null?` · ${n0(km)} km`:''}${tt.hours&&t.endH!=null&&t.startH!=null?` · ${n1(t.endH-t.startH)} üó`:''}</div><div style="margin-top:4px"><span class="badge2">VisszaMEA-zva</span>${t.returnLiters?`<span class="badge2">Visszatankolva ${n0(t.returnLiters)} l</span>`:'<span class="badge2 no">Tankolás nélkül</span>'}${(t.photos||[]).length?`<span class="badge2 no">${t.photos.length} fotó</span>`:''}${t.editedAt?`<span class="badge2 no">szerkesztve</span>`:''}</div></div>${isTech()?`<button type="button" class="btn sm line" data-act="archEdit" data-id="${t.id}" aria-label="Szerkesztés">✎</button>`:''}</div>`}
 let ARCH_LOADED=false;
 async function loadArchive(){if(MODE!=='fb'||ARCH_LOADED)return;ARCH_LOADED=true;
   try{const snap=await getDocs(query(collection(FS,'trips'),where('closed','==',true)));snap.docs.forEach(d=>{HIST.trips[d.id]={...d.data(),id:d.id}});recompute('trips');toast(`Gyűjtő betöltve: ${snap.size} menetlevél`);scheduleRender()}catch(e){ARCH_LOADED=false;toast('A gyűjtő betöltése nem sikerült.')}}
@@ -2772,7 +2772,7 @@ function tripView(trip){const v=S.vehicles[trip.vid];const tt=TYPES[v?.type]||{}
    <dl class="kv"><dt>Név</dt><dd>${esc(trip.driver)}</dd><dt>Érvényes</dt><dd>${fmtD(trip.from)} – ${fmtD(trip.to)}</dd>${trip.note?`<dt>Feladat</dt><dd>${esc(trip.note)}</dd>`:''}<dt>Induló km</dt><dd>${n0(trip.startKm)}</dd>${tt.hours?`<dt>Induló üó</dt><dd>${n0(trip.startH)}</dd>`:''}<dt>Mozgások</dt><dd>${ms.length} db · ${n0(mkm)} km</dd>
    ${trip.closed?`<dt>VisszaMEA-zva</dt><dd>${fmtD(trip.returned)} · ${n0(trip.endKm)} km${km!=null?` (${n0(km)} km)`:''}</dd>${tt.hours&&trip.endH!=null?`<dt>Záró üó</dt><dd>${n0(trip.endH)}${trip.startH!=null?` (${n1(trip.endH-trip.startH)} üó)`:''}</dd>`:''}<dt>Visszatankolva</dt><dd>${trip.returnLiters?n0(trip.returnLiters)+' l':'nem'}</dd>`:''}</dl>
    <div class="hint" style="margin-top:6px">${stampOf(trip)}</div>${thumbs(trip.photos)}
-   <div class="actions" style="justify-content:flex-start;flex-wrap:wrap;margin-top:12px"><button type="button" class="btn sm line" data-act="tripPhoto" data-id="${trip.id}" ${ro()}>+ Fotó</button><button type="button" class="btn sm line" data-act="editTrip" data-id="${trip.id}" ${ro()}>Szerkesztés</button>${trip.closed?'':`<button type="button" class="btn sm line" data-act="addMove" data-vid="${trip.vid}" ${ro()}>+ Mozgás</button><button type="button" class="btn sm pri" data-act="closeTrip" data-id="${trip.id}" ${ro()}>VisszaMEA</button>`}</div>`;
+   <div class="actions" style="justify-content:flex-start;flex-wrap:wrap;margin-top:12px"><button type="button" class="btn sm line" data-act="tripPhoto" data-id="${trip.id}" ${ro()}>+ Fotó</button>${trip.closed?(isTech()?`<button type="button" class="btn sm line" data-act="archEdit" data-id="${trip.id}">✎ Szerkesztés</button>`:''):`<button type="button" class="btn sm line" data-act="editTrip" data-id="${trip.id}" ${ro()}>Szerkesztés</button>`}${trip.closed?'':`<button type="button" class="btn sm line" data-act="addMove" data-vid="${trip.vid}" ${ro()}>+ Mozgás</button><button type="button" class="btn sm pri" data-act="closeTrip" data-id="${trip.id}" ${ro()}>VisszaMEA</button>`}</div>`;
   modal('Menetlevél',body,null,'',`<button type="button" class="btn sm danger" data-act="delTrip" data-id="${trip.id}" ${ro()}>Hibás / törlés</button><button type="button" class="btn sm line" data-act="printTrip" data-id="${trip.id}">${IC.print}A4</button>`);hydratePhotos()}
 function delTrip(trip){const v=S.vehicles[trip.vid];const fl=arr('fuel').filter(f=>f.tripId===trip.id);
   confirmBox('Menetlevél törlése',`<b>ML ${esc(trip.num)}</b> · ${esc(v?vLabel(v):'')} · ${esc(trip.driver)} végleg törlődik${fl.length?`, a hozzá tartozó visszavételi tankolással (${n0(fl.reduce((x,f)=>x+(f.liters||0),0))} l) együtt`:''}. A rögzített mozgások megmaradnak. Hibás kiadásnál utána újra kiadhatod.`,'Törlés',async()=>{for(const f of fl)await del('fuel',f.id);await del('trips',trip.id);toast('Menetlevél törölve')})}
@@ -3046,6 +3046,24 @@ function fuelForm(vid,date,f){if(!arr('vehicles').length){toast('Előbb vegyél 
     if(km!=null&&(v.km==null||km>v.km)){await add('readings',{vid:v.id,date:data.date,km},true);await upd('vehicles',v.id,{km})}
     toast(`${n0(L)} l · ${fd.reason}`);const vv=fd.vid;setTimeout(()=>{const c=S.vehicles[vv]&&consWarn(S.vehicles[vv]);if(c)toast(vLabel(S.vehicles[vv])+': kiugró fogyasztás – ellenőrizd az adatot vagy a gépet.')},2800)},'Mentés',isNew?'':delBtn);
   if(!isNew)$('#mdel').onclick=()=>act(async()=>{try{await del('fuel',f.id);closeModal();toast('Tankolás törölve')}catch(e){}})}
+/* visszaMEA-zott (gyűjtőben lévő) menetlevél szerkesztése – csak admin és technikus */
+function archEditForm(trip){if(!isTech()){toast('A gyűjtőben lévő menetlevelet csak technikus vagy admin szerkesztheti.');return}const v0=S.vehicles[trip.vid];const vs=orderedVehicles();
+  const t0=TYPES[v0?.type]||{};const fuel=arr('fuel').find(f=>f.tripId===trip.id);
+  modal('Gyűjtő · menetlevél szerkesztése',`<p class="hint" style="margin-top:0">Lezárt (visszaMEA-zott) menetlevél – a módosítás az eseménynaplóba kerül.</p><div class="form">${fld('num','Menetlevél száma',trip.num,'text','required')}
+    <label><span class="lbl">Gép</span><select name="vid">${vs.map(x=>`<option value="${x.id}" ${x.id===trip.vid?'selected':''}>${esc(vLabel(x))} · ${esc(vName(x))}</option>`).join('')}</select></label>
+    <label><span class="lbl">Menetlevélen szereplő név</span><input name="driver" list="dlist2" value="${esc(trip.driver||'')}" required></label><datalist id="dlist2">${arr('drivers').map(x=>`<option value="${esc(dName(x))}">`).join('')}</datalist>
+    ${fld('from','Érvényes ettől',trip.from,'date')}${fld('to','Érvényes eddig',trip.to,'date')}${fld('note','Feladat',trip.note,'text','full')}
+    ${fld('startKm','Induló km',trip.startKm,'number')}${fld('endKm','Záró km (visszaMEA)',trip.endKm,'number','required')}
+    ${t0.hours?fld('startH','Induló üzemóra',trip.startH,'number')+fld('endH','Záró üzemóra',trip.endH,'number'):''}
+    ${fld('returned','VisszaMEA dátuma',trip.returned,'date')}${fld('returnLiters','Visszatankolva (l)',trip.returnLiters||0,'number')}</div>`,async fd=>{
+    if(!fd.num?.trim()||!fd.driver?.trim())throw 'A szám és a név kötelező.';if(fd.to&&fd.from&&fd.to<fd.from)throw 'Az érvényesség vége nem lehet a kezdete előtt.';
+    const sK=num(fd.startKm),eK=num(fd.endKm);if(eK==null)throw 'Add meg a záró km-t.';if(sK!=null&&eK<sK)throw 'A záró km nem lehet kisebb az indulónál.';
+    const v=S.vehicles[fd.vid]||v0;const t=TYPES[v?.type]||{};const L=num(fd.returnLiters)||0;if(t.tank&&L>t.tank*1.05)throw `Ez több, mint a tartály (${t.tank} l).`;
+    const data={vid:v.id,num:fd.num.trim(),driver:fd.driver.trim(),from:fd.from||trip.from,to:fd.to||null,note:fd.note||'',startKm:sK,endKm:eK,returned:fd.returned||trip.returned,returnLiters:L,refueled:L>0,editedAt:Date.now(),editedBy:myName()};
+    if(t.hours){data.startH=num(fd.startH);data.endH=num(fd.endH)}
+    await upd('trips',trip.id,data);
+    if(fuel){if(L>0)await upd('fuel',fuel.id,{liters:L,date:data.returned,km:eK,vid:v.id,note:'ML '+data.num});else await del('fuel',fuel.id)}else if(L>0)await add('fuel',{vid:v.id,date:data.returned,liters:L,km:eK,kind:'visszavetel',reason:'Visszavétel',tripId:trip.id,note:'ML '+data.num},true);
+    toast('Gyűjtő: menetlevél mentve')},'Mentés')}
 function tripForm(v,trip){const t=TYPES[v.type];const isNew=!trip;const d=driverOf(v);trip=trip||{from:today(),to:addDays(today(),1),startKm:v.km,startH:v.h,driver:d?dName(d):''};
   modal(isNew?'Menetlevél kiadása':'Menetlevél szerkesztése',`<div class="form">${fld('num','Menetlevél száma',trip.num,'text','required')}<label><span class="lbl">Menetlevélen szereplő név</span><input id="f_driver" name="driver" list="dlist" value="${esc(trip.driver)}" required></label><datalist id="dlist">${arr('drivers').map(x=>`<option value="${esc(dName(x))}">`).join('')}</datalist>${fld('from','Érvényes ettől',trip.from,'date')}${fld('to','Érvényes eddig',trip.to,'date')}${fld('startKm','Induló km',trip.startKm,'number')}${t.hours?fld('startH','Induló üzemóra',trip.startH,'number'):''}${fld('note','Feladat',trip.note,'text','full')}</div>${isNew?`<div style="display:block;margin-top:10px"><span class="lbl">Menetlevél fotója</span>${photoPicker()}</div>`:''}`,async fd=>{
     if(!fd.num?.trim()||!fd.driver?.trim())throw 'A szám és a név kötelező.';if(fd.to&&fd.to<fd.from)throw 'Az érvényesség vége nem lehet a kezdete előtt.';
@@ -3170,7 +3188,7 @@ document.addEventListener('click',async e=>{
     case 'reading':readingForm(v);break;
     case 'addFuel':fuelForm(d.vid||v?.id||(V.calVid!=='all'?V.calVid:null),d.date);break;
     case 'editFuel':fuelForm(null,null,S.fuel[d.id]);break;
-    case 'newTrip':tripForm(v||S.vehicles[d.vid]);break;case 'editTrip':{const tr=S.trips[d.id];tripForm(S.vehicles[tr.vid],tr);break}case 'closeTrip':closeTripForm(S.trips[d.id]);break;
+    case 'newTrip':tripForm(v||S.vehicles[d.vid]);break;case 'editTrip':{const tr=S.trips[d.id];if(tr.closed){archEditForm(tr);break}tripForm(S.vehicles[tr.vid],tr);break}case 'archEdit':{const tr=S.trips[d.id];if(tr)archEditForm(tr);break}case 'closeTrip':closeTripForm(S.trips[d.id]);break;
     case 'groupTrip':groupTripForm();break;case 'tripView':tripView(S.trips[d.id]);break;case 'delTrip':delTrip(S.trips[d.id]);break;case 'loadArch':await loadArchive();break;case 'expArch':if(MODE==='fb'&&!ARCH_LOADED)await loadArchive();exportArchive();break;case 'expVeh':exportVehicle(v);break;
     case 'mlTile':{const tr=activeTrip(d.vid);if(tr)tripView(tr);else if(!READONLY)groupTripForm(d.vid);break}
     case 'tripPhoto':photoAdd(S.trips[d.id]);break;
