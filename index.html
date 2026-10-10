@@ -731,6 +731,16 @@ body.setopen nav.bottom{z-index:96}body.setopen.navR .scrim{padding-right:72px}b
 .dkmr .km{font-family:var(--f-mono,monospace);font-size:16px;white-space:nowrap}.dkmr .km small{font-size:11px;opacity:.7}
 .seg.vas{display:flex;flex-wrap:wrap;width:100%}.seg.vas button{flex:1 1 40%;padding:9px 4px;font-size:13px}
 .vasbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#2e3338;color:#f6f2e7;border-radius:14px;padding:8px 12px;margin-bottom:12px;font-size:13px;box-shadow:inset 4px 0 0 #c9a227}.vasbar .btn{margin-left:auto;background:#c9a227;color:#1d2125;border:0}
+
+/* ===== v3.6.2: sűrűbb, görgethető szabad állomány ===== */
+.rosterwrap .roster{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;padding:7px;max-height:min(34vh,232px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--accent) transparent}
+@media (min-width:520px){.rosterwrap .roster{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.rosterwrap .roster::-webkit-scrollbar{width:6px}.rosterwrap .roster::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}.rosterwrap .roster::-webkit-scrollbar-track{background:transparent}
+.roster .dchip{padding:4px 6px;border-radius:9px;font-size:11.5px;gap:1px;line-height:1.15}
+.roster .dchip .rk{font-size:8px;letter-spacing:.04em}
+.roster .dchip .dkm{font-size:9px}.roster .dchip .nm{white-space:normal;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:break-word;font-size:11px}
+.roster .dchip .lics{gap:2px;margin:2px 0 0}.roster .dchip .lic{font-size:7.5px;padding:0 3px;border-radius:4px;gap:1px}.roster .dchip .lic svg{width:9px;height:9px}
+.rosterwrap .lbl .rcnt{font-weight:600;opacity:.7}
 </style>
 
 </head>
@@ -779,7 +789,7 @@ const BEAR=`<g>
  <g style="fill:var(--hero-fg)"><path d="M40 63l3 7 3-7zM54 63l3 7 3-7z"/><ellipse cx="50" cy="57" rx="6" ry="4"/></g>
 </g>`;
 const LOGO_FULL=document.getElementById('splashLogo')?.src||'';
-const APP_VER='3.6.1',APP_DATE='2026.10.10.';document.getElementById('spv').textContent='v'+APP_VER;
+const APP_VER='3.6.2',APP_DATE='2026.10.10.';document.getElementById('spv').textContent='v'+APP_VER;
 
 /* ===== típusok és sziluettek (oldalnézet, jobbra néz) ===== */
 const SIL={
@@ -2836,7 +2846,7 @@ function renderDrivers(){DRVKM=drvKmMap();
   const slots=orderedVehicles().map(v=>{const d=driverOf(v);return `<div class="slot ${d?'filled':''}" data-drop="${v.id}" data-act="slotTap" role="button" tabindex="0" aria-label="${esc(vLabel(v))} — driver ide"><div class="sv">${SIL[v.type]}</div><div class="sr">${esc(vLabel(v))}</div>${d?dchip(d,v.id):'<span class="hint sfree">üres</span>'}</div>`}).join('');
   return `<div class="h-sec" style="margin-top:0"><h2 class="h2">Driverek</h2><button class="btn pri" data-act="addDriver" ${ro()}>+ Driver</button></div>
    ${sel?`<div class="selbar">${esc(dName(sel))} → koppints a gépre</div>`:'<p class="hint dtip">⇄ Húzd a nevet a gépre, vagy koppints: név → gép</p>'}
-   <div class="rosterwrap"><div class="lbl" style="margin-bottom:6px">Szabad állomány · ${free.length}</div>
+   <div class="rosterwrap"><div class="lbl" style="margin-bottom:6px">Szabad állomány · ${free.length}${free.length>9?'<span class="rcnt"> · görgesd ↕</span>':''}</div>
    <div class="roster" data-drop="none" data-act="slotTap">${free.length?free.map(d=>dchip(d)).join(''):`<span class="hint">${ds.length?'Mindenki beosztva. Ide húzva leveheted a gépről.':'Még nincs driver. Vedd fel az állományt a + Driver gombbal.'}</span>`}</div></div>
    <div class="h-sec"><h2 style="font-weight:800;font-size:17px">Gépek</h2></div><div class="slots">${slots||'<div class="empty">Nincs gép. A Gépek oldalon a + gombbal vehetsz fel.</div>'}</div>
    ${drvKmPanel(ds)}
